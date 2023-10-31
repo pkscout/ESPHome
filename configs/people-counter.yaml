@@ -1,0 +1,153 @@
+substitutions:
+  # the first two are meant to be overridden on the command line
+  name: default
+  ip: 172.16.1.254
+  # the next group are to customize for particular network
+  gateway: 172.16.1.1
+  subnet: 255.255.255.0
+  dns1: 172.16.2.1
+  dns2: 0.0.0.0
+  mqtt_broker: 172.16.1.5
+  # the last group can be left alone unless they really need to be changed
+  dname: ${name}-th
+  uname: ${name}_th
+  $wake_sleep_topic: homeassistant/sensor/esphome_${uname}
+  $ota_topic: esphome/${uname}/ota
+
+esphome:
+  name: $dname
+  includes:
+    - includes/MAX17048_component.h
+  on_boot:
+    # fix for I2C not reading after coming out of deep sleep
+    - priority: 600
+      then:
+       - lambda: |-
+          Wire.begin();
+          delay(100);
+    # sends to a topic for tracking awake/sleep
+    - priority: 100
+      then:
+        - mqtt.publish:
+            topic: ${wake_sleep_topic}
+            payload: awake
+            retain: true
+
+esp32:
+  board: adafruit_feather_esp32s3
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+ota:
+  password: ''
+
+wifi:
+  ssid: Johnson IoT
+  password: !secret wifi_ssid_password
+  fast_connect: true
+  manual_ip:
+    static_ip: ${ip}
+    gateway: ${gateway}
+    subnet: ${subnet}
+    dns1: ${dns1}
+    dns2: ${dns2}
+
+# use mqtt broker to communicate with Home Assistant
+# this is recommend when using something on battery that is coming out of deep sleep
+mqtt:
+  broker: ${mqtt_broker}
+  # don't mark sensor as available/unavailable
+  birth_message:
+  # sends to a topic for tracking awake/sleep
+  will_message:
+    topic: ${wake_sleep_topic}
+    payload: sleeping
+  on_message:
+    - topic: ${ota_topic}
+      payload: 'ON'
+      then:
+        - deep_sleep.prevent: deep_sleep_1
+    - topic: ${ota_topic}
+      payload: 'OFF'
+      then:
+        - deep_sleep.allow: deep_sleep_1
+
+# the ESP32 board used has i2c on non-standard pins
+i2c:
+  sda: 3
+  scl: 4
+
+# setup time of flight people counter hardware
+external_components:
+  - source: github://Lyr3x/Roode@master
+    refresh: always
+vl53l1x:
+roode:
+
+# wake up if PIR sensor active
+# stay awake at least 2s and as long as motion is detected
+deep_sleep:
+  id: deep_sleep_1
+  run_duration: 2s
+  wakeup_pin: 15
+  wakeup_pin_mode: KEEP_AWAKE
+
+# setup sensors
+number:
+  - platform: roode
+    people_counter:
+      name: ${name} people
+
+sensor:
+  - platform: roode
+    id: ${uname}
+    distance_entry:
+      name: ${name} entry
+      filters:
+        - delta: 100.0
+    distance_exit:
+      name: ${name} exit
+      filters:
+        - delta: 100.0
+    min_threshold_entry:
+      name: ${name} min entry
+    max_threshold_entry:
+      name: ${name} max entry
+    min_threshold_exit:
+      name: ${name} min exit
+    max_threshold_exit:
+      name: ${name} max exit
+    roi_height_entry:
+      name: ${name} height entry
+    roi_height_exit:
+      name: ${name} height exit
+    roi_width_entry:
+      name: ${name} width entry
+    roi_width_exit:
+      name: ${name} width exit
+  # this is to measure the battery voltage and percentage remaining
+  - platform: custom
+    lambda: |-
+      auto max17048_sensor = new MAX17048Sensor();
+      App.register_component(max17048_sensor);
+      return {max17048_sensor->voltage_sensor, max17048_sensor->percentage_sensor};
+    sensors:
+      - name: ${uname} voltage
+        unit_of_measurement: V
+        accuracy_decimals: 2
+        state_class: measurement
+      - name: ${uname} battery
+        unit_of_measurement: '%'
+        device_class: battery
+        state_class: measurement
+
+text_sensor:
+  - platform: roode
+    version:
+      name: ${name} roode version
+    entry_exit_event:
+      name: ${name} last direction
+
