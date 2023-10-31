@@ -2,13 +2,7 @@ substitutions:
   # the first two are meant to be overridden on the command line
   name: default
   ip: 172.16.1.254
-  # the next group are to customize for particular network
-  gateway: 172.16.1.1
-  subnet: 255.255.255.0
-  dns1: 172.16.2.1
-  dns2: 0.0.0.0
-  mqtt_broker: 172.16.1.5
-  # the last group can be left alone unless they really need to be changed
+  # this can be left alone unless they really need to be changed
   dname: ${name}-th
   uname: ${name}_th
   $wake_sleep_topic: homeassistant/sensor/esphome_${uname}
@@ -45,20 +39,20 @@ ota:
   password: ''
 
 wifi:
-  ssid: Johnson IoT
+  ssid: !secret wifi_ssid
   password: !secret wifi_ssid_password
   fast_connect: true
   manual_ip:
     static_ip: ${ip}
-    gateway: ${gateway}
-    subnet: ${subnet}
-    dns1: ${dns1}
-    dns2: ${dns2}
+    gateway: !secret gateway
+    subnet: !secret subnet
+    dns1: !secret dns1
+    dns2: !secret dns2
 
 # use mqtt broker to communicate with Home Assistant
 # this is recommend when using something on battery that is coming out of deep sleep
 mqtt:
-  broker: ${mqtt_broker}
+  broker: !secret mqtt_broker
   # don't mark sensor as available/unavailable
   birth_message:
   # sends to a topic for tracking awake/sleep
