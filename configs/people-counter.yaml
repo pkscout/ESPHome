@@ -58,14 +58,14 @@ mqtt:
   # sends to a topic for tracking awake/sleep
   will_message:
     topic: ${wake_sleep_topic}
-    payload: sleeping
+    payload: asleep
   on_message:
     - topic: ${ota_topic}
-      payload: 'ON'
+      payload: 'on'
       then:
         - deep_sleep.prevent: deep_sleep_1
     - topic: ${ota_topic}
-      payload: 'OFF'
+      payload: 'off'
       then:
         - deep_sleep.allow: deep_sleep_1
 
