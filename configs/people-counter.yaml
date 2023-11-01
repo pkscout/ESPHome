@@ -122,6 +122,7 @@ sensor:
       name: ${name} width entry
     roi_width_exit:
       name: ${name} width exit
+
   # this is to measure the battery voltage and percentage remaining
   - platform: custom
     lambda: |-
