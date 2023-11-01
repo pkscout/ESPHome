@@ -5,8 +5,8 @@ substitutions:
   # these can be left alone unless they really need to be changed
   dname: ${name}-th
   uname: ${name}_th
-  $wake_sleep_topic: ${uname}/wake_status
-  $stay_awake_topic: ${uname}/stay_awake
+  $wake_status_topic: ${uname}/binary_sensor/wake_status/state
+  $stay_awake_topic: ${uname}/binary_sensor/stay_awake/state
 
 esphome:
   name: $dname
@@ -16,16 +16,14 @@ esphome:
     # fix for I2C not reading after coming out of deep sleep
     - priority: 600
       then:
-       - lambda: |-
-          Wire.begin();
-          delay(100);
-    # sends to a topic for tracking awake/sleep
+        - lambda: |-
+           Wire.begin();
+           delay(100);
+    # sets status to awake
     - priority: 100
       then:
-        - mqtt.publish:
-            topic: ${wake_sleep_topic}
-            payload: awake
-            retain: true
+        - lambda: |-
+           id(wake_status).publish_state(true)
 
 esp32:
   board: adafruit_feather_esp32s3
@@ -55,20 +53,13 @@ mqtt:
   broker: !secret mqtt_broker
   # don't mark sensor as available/unavailable
   birth_message:
-  shutdown_message:
   # sends to a topic for tracking awake/sleep
+  shutdown_message:
+    topic: ${wake_status_topic}
+    payload: 'off'
   will_message:
-    topic: ${wake_sleep_topic}
-    payload: asleep
-  on_message:
-    - topic: ${stay_awake_topic}
-      payload: 'on'
-      then:
-        - deep_sleep.prevent: deep_sleep_1
-    - topic: ${stay_awake_topic}
-      payload: 'off'
-      then:
-        - deep_sleep.allow: deep_sleep_1
+    topic: ${wake_status_topic}
+    payload: 'off'
 
 # the ESP32 board used has i2c on non-standard pins
 i2c:
@@ -147,3 +138,22 @@ text_sensor:
     entry_exit_event:
       name: ${name} last direction
 
+binary_sensor:
+  - platform: status
+    name: wake status
+    id: wake_status
+    icon: mdi:bell-ring
+    retain: true
+  - platform: template
+    name: stay awake
+    id: stay_awake
+    retain: true
+    on_state:
+      then:
+        if:
+          condition:
+            binary_sensor.is_on: stay_awake
+          then:
+            deep_sleep.prevent: deep_sleep_1
+          else:
+            deep_sleep.allow: deep_sleep_1
