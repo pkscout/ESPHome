@@ -6,7 +6,6 @@ substitutions:
   dname: ${name}-th
   uname: ${name}_th
   $awake_status_topic: ${uname}/binary_sensor/awake_status/state
-  $stay_awake_topic: ${uname}/binary_sensor/stay_awake/state
 
 esphome:
   name: $dname
@@ -81,6 +80,19 @@ deep_sleep:
   wakeup_pin: 15
   wakeup_pin_mode: KEEP_AWAKE
 
+# setup switch to prevent sleep to do OTA updates
+switch:
+  - platform: template
+    name: stay awake
+    icon: mdi:bell-ring
+    entity_category: config
+    retain: true
+    restore_mode: RESTORE_DEFAULT_OFF
+    turn_on_action:
+      - deep_sleep.prevent: deep_sleep_1
+    turn_off_action:
+      - deep_sleep.allow: deep_sleep_1
+
 # setup sensors
 number:
   - platform: roode
@@ -88,6 +100,7 @@ number:
       name: ${name} people
 
 sensor:
+  # this is all the time of flight stuff
   - platform: roode
     id: ${uname}
     distance_entry:
@@ -114,7 +127,6 @@ sensor:
       name: ${name} width entry
     roi_width_exit:
       name: ${name} width exit
-
   # this is to measure the battery voltage and percentage remaining
   - platform: custom
     lambda: |-
@@ -142,18 +154,5 @@ binary_sensor:
   - platform: status
     name: awake status
     id: awake_status
-    icon: mdi:bell-ring
+    icon: mdi:led-on
     retain: true
-  - platform: template
-    name: stay awake
-    id: stay_awake
-    retain: true
-    on_state:
-      then:
-        if:
-          condition:
-            binary_sensor.is_on: stay_awake
-          then:
-            deep_sleep.prevent: deep_sleep_1
-          else:
-            deep_sleep.allow: deep_sleep_1
