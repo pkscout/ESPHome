@@ -2,7 +2,7 @@ substitutions:
   # the first two are meant to be overridden on the command line
   name: default
   ip: 172.16.1.254
-  # this can be left alone unless they really need to be changed
+  # these can be left alone unless they really need to be changed
   dname: ${name}-th
   uname: ${name}_th
   $wake_sleep_topic: homeassistant/sensor/esphome_${uname}
