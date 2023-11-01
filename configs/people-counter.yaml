@@ -5,7 +5,7 @@ substitutions:
   # these can be left alone unless they really need to be changed
   dname: ${name}-th
   uname: ${name}_th
-  $wake_status_topic: ${uname}/binary_sensor/wake_status/state
+  $awake_status_topic: ${uname}/binary_sensor/awake_status/state
   $stay_awake_topic: ${uname}/binary_sensor/stay_awake/state
 
 esphome:
@@ -23,7 +23,7 @@ esphome:
     - priority: 100
       then:
         - lambda: |-
-           id(wake_status).publish_state(true)
+           id(awake_status).publish_state(true)
 
 esp32:
   board: adafruit_feather_esp32s3
@@ -55,10 +55,10 @@ mqtt:
   birth_message:
   # sends to a topic for tracking awake/sleep
   shutdown_message:
-    topic: ${wake_status_topic}
+    topic: ${awake_status_topic}
     payload: 'off'
   will_message:
-    topic: ${wake_status_topic}
+    topic: ${awake_status_topic}
     payload: 'off'
 
 # the ESP32 board used has i2c on non-standard pins
@@ -140,8 +140,8 @@ text_sensor:
 
 binary_sensor:
   - platform: status
-    name: wake status
-    id: wake_status
+    name: awake status
+    id: awake_status
     icon: mdi:bell-ring
     retain: true
   - platform: template
