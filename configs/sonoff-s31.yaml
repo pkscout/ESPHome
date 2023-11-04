@@ -1,11 +1,9 @@
-# inspired by https://roborooter.com/post/flashing-sonoff-s31-with-esphome/
-
 substitutions:
   # the first is meant to be overridden on the command line
   name: default
   # these can be left alone unless they really need to be changed
-  dname: ${name}-pl
-  uname: ${name}_pl
+  dname: ${name}-s31
+  uname: ${name}_s31
 
 esphome:
   name: $dname
@@ -14,6 +12,8 @@ esphome:
 
 api:
 
+ota:
+
 # Disable logging
 logger:
   baud_rate: 0 # (UART logging interferes with cse7766)
@@ -21,6 +21,8 @@ logger:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_ssid_password
+
+# Device Specific Config
 
 uart:
   rx_pin: RX
@@ -32,50 +34,43 @@ binary_sensor:
       number: GPIO0
       mode: INPUT_PULLUP
       inverted: True
-    name: "button"
+    name: ${dname} button
     on_press:
-      # Ensure the switch always operates the relay
-      - switch.toggle: relay 
+      - switch.toggle: ${uname}_relay
   - platform: status
-    name: "status"
+    name: ${dname} status
 
 sensor:
   - platform: wifi_signal
-    name: "wifi signal"
+    name:  ${dname} wifi signal
     update_interval: 60s
   - platform: cse7766
     current:
-      name: "current"
+      name: ${dname} current
       accuracy_decimals: 1
     voltage:
-      name: "voltage"
+      name: ${dname} voltage
       accuracy_decimals: 1
     power:
-      name: "power"
+      name: ${dname} power
       accuracy_decimals: 1
-      id: power
-  - platform: integration
-    name: "energy"
-    sensor: power
-    time_unit: h
-    state_class: measurement
-    unit_of_measurement: kWh
-    filters:
-      - multiply: 0.001
+      id: ${uname}_power
   - platform: total_daily_energy
-    name: "total daily energy"
-    power_id: power
-
-time:
-  - platform: sntp
-    id: the_time
+    name: ${dname} daily energy
+    power_id: ${uname}_power
 
 switch:
   - platform: gpio
-    name: "relay"
+    name: ${dname}  relay
     pin: GPIO12
-    id: relay
+    id: ${uname}_relay
     restore_mode: RESTORE_DEFAULT_OFF
 
+time:
+  - platform: sntp
+    id: ${uname}_time
+
 status_led:
-  pin: GPIO13
+  pin:
+    number: GPIO13
+    inverted: True
