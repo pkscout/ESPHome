@@ -35,6 +35,10 @@ logger:
 ota:
   password: ''
 
+time:
+  - platform: sntp
+    id: the_time
+
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_ssid_password
