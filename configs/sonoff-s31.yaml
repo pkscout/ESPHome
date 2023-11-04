@@ -1,0 +1,81 @@
+# inspired by https://roborooter.com/post/flashing-sonoff-s31-with-esphome/
+
+substitutions:
+  # the first is meant to be overridden on the command line
+  name: default
+  # these can be left alone unless they really need to be changed
+  dname: ${name}-pl
+  uname: ${name}_pl
+
+esphome:
+  name: $dname
+  platform: ESP8266
+  board: esp01_1m
+
+api:
+
+# Disable logging
+logger:
+  baud_rate: 0 # (UART logging interferes with cse7766)
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_ssid_password
+
+uart:
+  rx_pin: RX
+  baud_rate: 4800
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "button"
+    on_press:
+      # Ensure the switch always operates the relay
+      - switch.toggle: relay 
+  - platform: status
+    name: "status"
+
+sensor:
+  - platform: wifi_signal
+    name: "wifi signal"
+    update_interval: 60s
+  - platform: cse7766
+    current:
+      name: "current"
+      accuracy_decimals: 1
+    voltage:
+      name: "voltage"
+      accuracy_decimals: 1
+    power:
+      name: "power"
+      accuracy_decimals: 1
+      id: power
+  - platform: integration
+    name: "energy"
+    sensor: power
+    time_unit: h
+    state_class: measurement
+    unit_of_measurement: kWh
+    filters:
+      - multiply: 0.001
+  - platform: total_daily_energy
+    name: "total daily energy"
+    power_id: power
+
+time:
+  - platform: sntp
+    id: the_time
+
+switch:
+  - platform: gpio
+    name: "relay"
+    pin: GPIO12
+    id: relay
+    restore_mode: RESTORE_DEFAULT_OFF
+
+status_led:
+  pin: GPIO13
