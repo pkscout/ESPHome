@@ -6,7 +6,7 @@ substitutions:
   uname: ${name}_env
 
 esphome:
-  name: $dname
+  name: ${dname}
 
 esp32:
   board: featheresp32
@@ -36,19 +36,19 @@ i2c:
 
 sensor:
   - platform: bh1750
-    name: ${uname} lux
+    name: ${name} lux
     address: 0x23
     update_interval: 2s
   - platform: bme280
     temperature:
-      name: ${uname} temperature
+      name: ${name} temperature
       oversampling: 16x
       filters:
       - lambda: return x * (9.0/5.0) + 32.0;
       unit_of_measurement: "°F"
     pressure:
-      name: ${uname} pressure
+      name: ${name} pressure
     humidity:
-      name: ${uname} humidity
+      name: ${name} humidity
     address: 0x77
     update_interval: 60s

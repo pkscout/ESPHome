@@ -6,7 +6,7 @@ substitutions:
   uname: ${name}_s31
 
 esphome:
-  name: $dname
+  name: ${dname}
   
 esp8266:
   board: esp01_1m
@@ -39,34 +39,34 @@ binary_sensor:
       number: GPIO0
       mode: INPUT_PULLUP
       inverted: True
-    name: ${dname} button
+    name: ${name} button
     on_press:
       - switch.toggle: ${uname}_relay
   - platform: status
-    name: ${dname} status
+    name: ${name} status
 
 sensor:
   - platform: wifi_signal
-    name:  ${dname} wifi signal
+    name:  ${name} wifi signal
     update_interval: 60s
   - platform: cse7766
     current:
-      name: ${dname} current
+      name: ${name} current
       accuracy_decimals: 1
     voltage:
-      name: ${dname} voltage
+      name: ${name} voltage
       accuracy_decimals: 1
     power:
-      name: ${dname} power
+      name: ${name} power
       accuracy_decimals: 1
       id: ${uname}_power
   - platform: total_daily_energy
-    name: ${dname} daily energy
+    name: ${name} daily energy
     power_id: ${uname}_power
 
 switch:
   - platform: gpio
-    name: ${dname}  relay
+    name: ${name}  relay
     pin: GPIO12
     id: ${uname}_relay
     restore_mode: RESTORE_DEFAULT_OFF
