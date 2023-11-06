@@ -138,11 +138,11 @@ sensor:
       App.register_component(max17048_sensor);
       return {max17048_sensor->voltage_sensor, max17048_sensor->percentage_sensor};
     sensors:
-      - name: ${uname} voltage
+      - name: ${name} voltage
         unit_of_measurement: V
         accuracy_decimals: 2
         state_class: measurement
-      - name: ${uname} battery
+      - name: ${name} battery
         unit_of_measurement: '%'
         device_class: battery
         state_class: measurement
@@ -160,3 +160,6 @@ binary_sensor:
     id: awake_status
     icon: mdi:led-on
     retain: true
+  - platform: gpio
+    pin: 15
+    name: ${name} motion
