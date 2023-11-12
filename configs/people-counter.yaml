@@ -10,14 +10,6 @@ esphome:
   name: $dname
   includes:
     - includes/MAX17048_component.h
-  on_boot:
-    # fix for I2C not reading after coming out of deep sleep
-    - priority: 600
-      then:
-        - lambda: |-
-           Wire.begin();
-           delay(100);
-
 
 esp32:
   board: adafruit_feather_esp32s3
@@ -49,15 +41,7 @@ wifi:
 # this is recommend when using something on battery that is coming out of deep sleep
 mqtt:
   broker: !secret mqtt_broker
-  on_message:
-    - topic: ${dname}/ota_mode
-      payload: 'on'
-      then:
-        - deep_sleep.prevent: deep_sleep_1
-    - topic: ${dname}/ota_mode
-      payload: 'off'
-      then:
-        - deep_sleep.allow: deep_sleep_1
+  reboot_timeout: 0s
   # don't mark sensor as available/unavailable
   birth_message:
   shutdown_message:
@@ -77,16 +61,12 @@ roode:
 
 # wake up if PIR sensor active
 # stay awake at least 2s and as long as motion is detected
-deep_sleep:
-  id: deep_sleep_1
-  run_duration: 5s
-  wakeup_pin: 15
-  wakeup_pin_mode: KEEP_AWAKE
 
 # setup sensors
 number:
   - platform: roode
     people_counter:
+      id: people
       name: people
 
 sensor:
@@ -125,10 +105,12 @@ sensor:
       return {max17048_sensor->voltage_sensor, max17048_sensor->percentage_sensor};
     sensors:
       - name: voltage
+        id: voltage
         unit_of_measurement: V
         accuracy_decimals: 2
         state_class: measurement
       - name: battery
+        id: battery
         unit_of_measurement: '%'
         device_class: battery
         state_class: measurement
@@ -144,4 +126,24 @@ binary_sensor:
   - platform: gpio
     pin: 15
     name: motion
+    id: motion
     icon: mdi:motion-sensor
+    on_press:
+      - wifi.enable
+      - wait_until:
+          condition: 
+            wifi.connected:
+      - wait_until:
+          condition:
+            mqtt.connected:
+      - logger.log: "wifi and mqtt enabled, publishing states"
+      - lambda: |-
+          id(motion).publish_state(id(motion).state);
+          id(people).publish_state(id(people).state);
+          id(voltage).publish_state(id(voltage).state);
+          id(battery).publish_state(id(battery).state);
+    on_release:
+      - delay: 5s
+      - logger.log: "disabling wifi"
+      - wifi.disable
+    
