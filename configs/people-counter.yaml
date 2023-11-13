@@ -1,15 +1,12 @@
 substitutions:
-  # the first two are meant to be overridden on the command line
+  # this one is meant to be overridden on the command line
   name: default
-  ip: 172.16.1.254
   # these can be left alone unless they really need to be changed
-  dname: ${name}-th
-  uname: ${name}_th
+  dname: ${name}-ppl
+  uname: ${name}_ppl
 
 esphome:
   name: $dname
-  includes:
-    - includes/MAX17048_component.h
 
 esp32:
   board: adafruit_feather_esp32s3
@@ -29,23 +26,11 @@ time:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_ssid_password
-  fast_connect: true
-  manual_ip:
-    static_ip: ${ip}
-    gateway: !secret gateway
-    subnet: !secret subnet
-    dns1: !secret dns1
-    dns2: !secret dns2
 
-# use mqtt broker to communicate with Home Assistant
-# this is recommend when using something on battery that is coming out of deep sleep
-mqtt:
-  broker: !secret mqtt_broker
-  reboot_timeout: 0s
-  # don't mark sensor as available/unavailable
-  birth_message:
-  shutdown_message:
-  will_message:
+api:
+
+web_server:
+  port: 80
 
 # the ESP32 board used has i2c on non-standard pins
 i2c:
@@ -97,23 +82,6 @@ sensor:
       name: width entry
     roi_width_exit:
       name: width exit
-  # this is to measure the battery voltage and percentage remaining
-  - platform: custom
-    lambda: |-
-      auto max17048_sensor = new MAX17048Sensor();
-      App.register_component(max17048_sensor);
-      return {max17048_sensor->voltage_sensor, max17048_sensor->percentage_sensor};
-    sensors:
-      - name: voltage
-        id: voltage
-        unit_of_measurement: V
-        accuracy_decimals: 2
-        state_class: measurement
-      - name: battery
-        id: battery
-        unit_of_measurement: '%'
-        device_class: battery
-        state_class: measurement
 
 text_sensor:
   - platform: roode
@@ -121,29 +89,3 @@ text_sensor:
       name: roode version
     entry_exit_event:
       name: last direction
-
-binary_sensor:
-  - platform: gpio
-    pin: 15
-    name: motion
-    id: motion
-    icon: mdi:motion-sensor
-    on_press:
-      - wifi.enable
-      - wait_until:
-          condition: 
-            wifi.connected:
-      - wait_until:
-          condition:
-            mqtt.connected:
-      - logger.log: "wifi and mqtt enabled, publishing states"
-      - lambda: |-
-          id(motion).publish_state(id(motion).state);
-          id(people).publish_state(id(people).state);
-          id(voltage).publish_state(id(voltage).state);
-          id(battery).publish_state(id(battery).state);
-    on_release:
-      - delay: 5s
-      - logger.log: "disabling wifi"
-      - wifi.disable
-    
