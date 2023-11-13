@@ -29,9 +29,6 @@ wifi:
 
 api:
 
-web_server:
-  port: 80
-
 # the ESP32 board used has i2c on non-standard pins
 i2c:
   sda: 3
@@ -51,41 +48,40 @@ roode:
 number:
   - platform: roode
     people_counter:
-      id: people
-      name: people
+      name: ${name} people
 
 sensor:
   # this is all the time of flight stuff
   - platform: roode
     id: ${uname}
     distance_entry:
-      name: entry
+      name: ${name} entry
       filters:
         - delta: 100.0
     distance_exit:
-      name: exit
+      name: ${name} exit
       filters:
         - delta: 100.0
     min_threshold_entry:
-      name: min entry
+      name: ${name} min entry
     max_threshold_entry:
-      name: max entry
+      name: ${name} max entry
     min_threshold_exit:
-      name: min exit
+      name: ${name} min exit
     max_threshold_exit:
-      name: max exit
+      name: ${name} max exit
     roi_height_entry:
-      name: height entry
+      name: ${name} height entry
     roi_height_exit:
-      name: height exit
+      name: ${name} height exit
     roi_width_entry:
-      name: width entry
+      name: ${name} width entry
     roi_width_exit:
-      name: width exit
+      name: ${name} width exit
 
 text_sensor:
   - platform: roode
     version:
-      name: roode version
+      name: ${name} roode version
     entry_exit_event:
-      name: last direction
+      name: ${name} last direction
