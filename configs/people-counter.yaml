@@ -1,6 +1,11 @@
 substitutions:
-  # this one is meant to be overridden on the command line
+  # these are able to be overridden on the command line
   name: default
+  roih: '16'
+  roiw: '6'
+  min: '0%'
+  max: '85%'
+  orientation: parallel
   # these can be left alone unless they really need to be changed
   dname: ${name}-ppl
   uname: ${name}_ppl
@@ -40,9 +45,11 @@ external_components:
     refresh: always
 vl53l1x:
 roode:
-
-# wake up if PIR sensor active
-# stay awake at least 2s and as long as motion is detected
+  roi: { height: $roih, width: $roiw }
+  orientation: ${orientation}
+  detection_thresholds:
+    min: ${min}
+    max: ${max}
 
 # setup sensors
 number:
