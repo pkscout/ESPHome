@@ -22,7 +22,7 @@ logger:
 
 time:
   - platform: sntp
-    id: ${uname}_time
+    id: the_time
 
 wifi:
   ssid: !secret wifi_ssid
