@@ -1,0 +1,50 @@
+substitutions:
+  # the first is meant to be overridden on the command line
+  name: default
+  # these can be left alone unless they really need to be changed
+  dname: ${name}-env
+  uname: ${name}_env
+
+esphome:
+  name: ${dname}
+
+esp32:
+  board: featheresp32
+  framework:
+    type: arduino
+
+api:
+
+ota:
+  password: ''
+
+logger:
+
+time:
+  - platform: sntp
+    id: the_time
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_ssid_password
+
+# Device Specific Config
+# the ESP32 board used has i2c on non-standard pins
+i2c:
+  sda: 23
+  scl: 22
+
+sensor:
+  - platform: bme280
+    temperature:
+      name: ${name} temperature
+      oversampling: 16x
+      filters:
+      - lambda: return x * (9.0/5.0) + 32.0;
+      unit_of_measurement: "°F"
+    pressure:
+      name: ${name} pressure
+    humidity:
+      name: ${name} humidity
+    address: 0x77
+    update_interval: 60s
