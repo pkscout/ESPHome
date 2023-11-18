@@ -1,0 +1,40 @@
+substitutions:
+  # these are able to be overridden on the command line
+  name: default
+  pin: '18'
+  # these can be left alone unless they really need to be changed
+  dname: ${name}-pir
+  uname: ${name}_pir
+
+esphome:
+  name: $dname
+
+esp32:
+  board: adafruit_feather_esp32s3
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+ota:
+  password: ''
+
+time:
+  - platform: sntp
+    id: the_time
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_ssid_password
+
+api:
+
+# setup sensors
+binary_sensor:
+  - platform: gpio
+    pin: ${pin}
+    name: ${name} motion
+    device_class: motion
+    filters:
+      - delayed_off: 60s
