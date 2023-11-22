@@ -48,6 +48,9 @@ sensor:
       unit_of_measurement: "°F"
     pressure:
       name: ${name} pressure
+      filters:
+      - lamda: return x * 2.0360206576
+      unit_of_measurement: "inHg"
     humidity:
       name: ${name} humidity
     address: 0x77
