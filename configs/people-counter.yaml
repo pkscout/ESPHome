@@ -1,8 +1,9 @@
 substitutions:
   # these are able to be overridden on the command line
   name: default
-  min: '7%'
-  max: '70%'
+  min: '15%'
+  max: '85%'
+  invert: 'true'
   # these can be left alone unless they really need to be changed
   dname: ${name}-ppl
   uname: ${name}_ppl
@@ -45,6 +46,9 @@ roode:
   detection_thresholds:
     min: ${min}
     max: ${max}
+  zones:
+    invert: ${invert}
+
 
 # setup sensors
 number:
