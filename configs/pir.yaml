@@ -29,6 +29,7 @@ wifi:
   password: !secret wifi_ssid_password
 
 api:
+  reboot_timeout: 5min
 
 # setup sensors
 binary_sensor:

@@ -14,6 +14,7 @@ esp32:
     type: arduino
 
 api:
+  reboot_timeout: 5min
 
 ota:
   password: ''

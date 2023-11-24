@@ -12,6 +12,7 @@ esp8266:
   board: esp01_1m
 
 api:
+  reboot_timeout: 5min
 
 ota:
   password: ''

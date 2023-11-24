@@ -31,6 +31,7 @@ wifi:
   password: !secret wifi_ssid_password
 
 api:
+  reboot_timeout: 5min
 
 # the ESP32 board used has i2c on non-standard pins
 i2c:
