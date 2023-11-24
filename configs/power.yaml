@@ -1,0 +1,42 @@
+substitutions:
+  # these are able to be overridden on the command line
+  name: default
+  pin: '18'
+  # these can be left alone unless they really need to be changed
+  dname: ${name}-pwr
+  uname: ${name}_pwr
+
+esphome:
+  name: $dname
+
+esp32:
+  board: adafruit_feather_esp32s3
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+ota:
+  password: ''
+
+time:
+  - platform: sntp
+    id: the_time
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_ssid_password
+
+api:
+  reboot_timeout: 5min
+
+# setup sensors
+binary_sensor:
+  - platform: gpio
+    pin: 
+      number: ${pin}
+      inverted: true
+      mode:
+        input: true
+    name: ${name} power
