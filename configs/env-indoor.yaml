@@ -50,7 +50,7 @@ sensor:
     pressure:
       name: ${name} pressure
       filters:
-      - lamda: return x * 2.0360206576
+      - lambda: return x / 25.4;
       unit_of_measurement: "inHg"
     humidity:
       name: ${name} humidity
