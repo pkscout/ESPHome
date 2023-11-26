@@ -38,7 +38,7 @@ binary_sensor:
     name: ${name} motion
     device_class: motion
     filters:
-      - delayed_off: 60s
+      - delayed_off: 30s
   - platform: status
     name: ${name} status
 
