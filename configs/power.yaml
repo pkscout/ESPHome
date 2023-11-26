@@ -40,3 +40,11 @@ binary_sensor:
       mode:
         input: true
     name: ${name} power
+  - platform: status
+    name: ${name} status
+
+
+sensor:
+  - platform: wifi_signal
+    name:  ${name} wifi signal
+    update_interval: 60s

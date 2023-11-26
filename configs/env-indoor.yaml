@@ -35,7 +35,14 @@ i2c:
   sda: 23
   scl: 22
 
+binary_sensor:
+  - platform: status
+    name: ${name} status
+
 sensor:
+  - platform: wifi_signal
+    name:  ${name} wifi signal
+    update_interval: 60s
   - platform: bh1750
     name: ${name} lux
     address: 0x23

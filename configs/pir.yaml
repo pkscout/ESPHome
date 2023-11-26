@@ -39,3 +39,10 @@ binary_sensor:
     device_class: motion
     filters:
       - delayed_off: 60s
+  - platform: status
+    name: ${name} status
+
+sensor:
+  - platform: wifi_signal
+    name:  ${name} wifi signal
+    update_interval: 60s
