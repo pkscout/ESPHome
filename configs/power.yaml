@@ -33,7 +33,7 @@ api:
 
 button:
   - platform: restart
-    name: ${name} restart
+    name: ${uname} restart
 
 # setup sensors
 binary_sensor:
@@ -45,10 +45,10 @@ binary_sensor:
         input: true
     name: ${name} power
   - platform: status
-    name: ${name} status
+    name: ${uname} status
 
 
 sensor:
   - platform: wifi_signal
-    name:  ${name} wifi signal
+    name:  ${uname} wifi signal
     update_interval: 60s

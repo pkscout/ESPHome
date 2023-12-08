@@ -37,15 +37,15 @@ i2c:
 
 button:
   - platform: restart
-    name: ${name} restart
+    name: ${uname} restart
 
 binary_sensor:
   - platform: status
-    name: ${name} status
+    name: ${uname} status
 
 sensor:
   - platform: wifi_signal
-    name:  ${name} wifi signal
+    name:  ${uname} wifi signal
     update_interval: 60s
   - platform: bh1750
     name: ${name} lux
