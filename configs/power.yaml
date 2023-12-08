@@ -31,6 +31,10 @@ wifi:
 api:
   reboot_timeout: 5min
 
+button:
+  - platform: restart
+    name: ${name} restart
+
 # setup sensors
 binary_sensor:
   - platform: gpio

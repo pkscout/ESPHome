@@ -38,6 +38,10 @@ i2c:
   sda: 3
   scl: 4
 
+button:
+  - platform: restart
+    name: ${name} restart
+
 # setup time of flight people counter hardware
 external_components:
   - source: github://Lyr3x/Roode@master

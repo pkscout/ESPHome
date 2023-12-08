@@ -34,6 +34,10 @@ uart:
   rx_pin: RX
   baud_rate: 4800
 
+button:
+  - platform: restart
+    name: ${name} restart
+
 binary_sensor:
   - platform: gpio
     pin:

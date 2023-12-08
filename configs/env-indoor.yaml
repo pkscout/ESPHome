@@ -35,6 +35,10 @@ i2c:
   sda: 23
   scl: 22
 
+button:
+  - platform: restart
+    name: ${name} restart
+
 binary_sensor:
   - platform: status
     name: ${name} status
