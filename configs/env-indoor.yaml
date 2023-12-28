@@ -49,6 +49,7 @@ sensor:
     update_interval: 60s
   - platform: bh1750
     name: ${name} lux
+    icon: mdi:brightness-7
     address: 0x23
     update_interval: 2s
   - platform: bme280
