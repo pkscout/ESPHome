@@ -54,6 +54,9 @@ sensor:
   - platform: wifi_signal
     name:  ${name} wifi signal
     update_interval: 60s
+  - platform: uptime
+    id: uptime_seconds
+    internal: true
   - platform: cse7766
     current:
       name: ${name} current
@@ -68,6 +71,31 @@ sensor:
   - platform: total_daily_energy
     name: ${name} daily energy
     power_id: ${uname}_power
+
+text_sensor:
+  - platform: template
+    name: ${uname} uptime
+    entity_category: diagnostic
+    lambda: |-
+      int seconds = (id(uptime_seconds).state);
+      int days = seconds / (24 * 3600);
+      seconds = seconds % (24 * 3600);
+      int hours = seconds / 3600;
+      seconds = seconds % 3600;
+      int minutes = seconds /  60;
+      seconds = seconds % 60;
+      if ( days > 3650 ) {
+        return { "Starting up" };
+      } else if ( days ) {
+        return { (String(days) +"d " + String(hours) +"h " + String(minutes) +"m "+ String(seconds) +"s").c_str() };
+      } else if ( hours ) {
+        return { (String(hours) +"h " + String(minutes) +"m "+ String(seconds) +"s").c_str() };
+      } else if ( minutes ) {
+        return { (String(minutes) +"m "+ String(seconds) +"s").c_str() };
+      } else {
+        return { (String(seconds) +"s").c_str() };
+      }
+    icon: mdi:clock-start
 
 switch:
   - platform: gpio
