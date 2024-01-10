@@ -34,6 +34,9 @@ api:
 button:
   - platform: restart
     name: ${uname} restart
+  - platform: safe_mode
+    name: ${uname} restart safe
+    icon: mdi:restart-alert
 
 # setup sensors
 binary_sensor:

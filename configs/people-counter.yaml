@@ -56,6 +56,9 @@ roode:
 button:
   - platform: restart
     name: ${uname} restart
+  - platform: safe_mode
+    name: ${uname} restart safe
+    icon: mdi:restart-alert
 
 number:
   - platform: roode

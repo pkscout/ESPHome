@@ -37,6 +37,9 @@ uart:
 button:
   - platform: restart
     name: ${name} restart
+  - platform: safe_mode
+    name: ${uname} restart safe
+    icon: mdi:restart-alert
 
 binary_sensor:
   - platform: gpio
