@@ -88,11 +88,11 @@ sensor:
     distance_entry:
       name: ${name} entry
       filters:
-        - delta: 100.0
+        - delta: 500.0
     distance_exit:
       name: ${name} exit
       filters:
-        - delta: 100.0
+        - delta: 500.0
     min_threshold_entry:
       name: ${name} min entry
     max_threshold_entry:
