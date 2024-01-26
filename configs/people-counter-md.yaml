@@ -1,9 +1,9 @@
 substitutions:
   # these are able to be overridden on the command line
   name: default
-  min: '0%'
-  max: '70%'
-  invert: 'false'
+  min: '20%'
+  max: '50%'
+  invert: 'true'
   pin: '18'
   # these can be left alone unless they really need to be changed
   dname: ${name}-ppl
