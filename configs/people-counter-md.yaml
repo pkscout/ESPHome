@@ -1,6 +1,6 @@
 substitutions:
   # these are able to be overridden on the command line
-  name: default
+  name: house
   min: '20%'
   max: '50%'
   invert: 'true'
