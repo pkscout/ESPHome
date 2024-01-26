@@ -1,9 +1,10 @@
 substitutions:
   # these are able to be overridden on the command line
-  name: default
-  min: '0%'
-  max: '100%'
-  invert: 'false'
+  name: dining
+  min: '10mm'
+  exit_max: '2900mm'
+  entry_max: '3200mm'
+  invert: 'true'
   pin: '18'
   # these can be left alone unless they really need to be changed
   dname: ${name}-ppl
@@ -45,13 +46,16 @@ external_components:
     refresh: always
 vl53l1x:
 roode:
-  roi: { height: 4, width: 4 }
-  detection_thresholds:
-    min: ${min}
-    max: ${max}
   zones:
     invert: ${invert}
-
+    entry:
+      detection_thresholds:
+        min: ${min}
+        max: ${entry_max}
+    exit:
+      detection_thresholds:
+        min: ${min}
+        max: ${exit_max}
 
 # setup sensors
 button:
