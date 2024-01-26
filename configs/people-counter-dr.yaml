@@ -1,7 +1,7 @@
 substitutions:
   # these are able to be overridden on the command line
   name: dining
-  min: '10mm'
+  min: '1mm'
   exit_max: '2900mm'
   entry_max: '3200mm'
   invert: 'true'
