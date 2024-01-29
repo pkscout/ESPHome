@@ -2,6 +2,7 @@ substitutions:
   # these are able to be overridden on the command line
   name: default
   pin: '18'
+  delayed_off: '90s'
   # these can be left alone unless they really need to be changed
   dname: ${name}-pir
   uname: ${name}_pir
@@ -45,7 +46,7 @@ binary_sensor:
     name: ${name} motion
     device_class: motion
     filters:
-      - delayed_off: 2s
+      - delayed_off: ${delayed_off}
   - platform: status
     name: ${uname} status
 
