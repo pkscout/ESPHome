@@ -19,6 +19,8 @@ esp32:
 
 # Enable logging
 logger:
+  logs:
+    component: ERROR
 
 ota:
   password: ''
