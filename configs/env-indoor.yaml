@@ -58,7 +58,7 @@ sensor:
     icon: mdi:brightness-7
     address: 0x23
     update_interval: 2s
-  - platform: bme280
+  - platform: bme280_i2c
     temperature:
       name: ${name} temperature
       oversampling: 16x

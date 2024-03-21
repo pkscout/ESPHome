@@ -53,7 +53,7 @@ sensor:
   - platform: uptime
     id: uptime_seconds
     internal: true
-  - platform: bme280
+  - platform: bme280_i2c
     temperature:
       name: ${name} temperature
       oversampling: 16x
