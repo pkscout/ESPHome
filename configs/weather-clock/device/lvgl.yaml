@@ -40,7 +40,7 @@ lvgl:
               - label:
                   text: " "
                   id: outdoor_temperature
-                  styles: info_style
+                  styles: outdoor_style
                   text_align: left
               - label:
                   styles: small_outdoor_style
