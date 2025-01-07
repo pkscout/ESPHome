@@ -25,12 +25,12 @@ text_sensor:
       if ( days > 3650 ) {
         return { "Starting up" };
       } else if ( days ) {
-        return { (String(days) +"d " + String(hours) +"h " + String(minutes) +"m "+ String(seconds) +"s").c_str() };
+        return { (itoa(days,10) +"d " + itoa(hours) +"h " + itoa(minutes) +"m "+ itoa(seconds) +"s").c_str(,10,10,10) };
       } else if ( hours ) {
-        return { (String(hours) +"h " + String(minutes) +"m "+ String(seconds) +"s").c_str() };
+        return { (itoa(hours) +"h " + itoa(minutes) +"m "+ itoa(seconds) +"s").c_str(,10,10,10) };
       } else if ( minutes ) {
-        return { (String(minutes) +"m "+ String(seconds) +"s").c_str() };
+        return { (itoa(minutes) +"m "+ itoa(seconds) +"s").c_str(,10,10) };
       } else {
-        return { (String(seconds) +"s").c_str() };
+        return { (itoa(seconds) +"s").c_str(,10) };
       }
     icon: mdi:clock-start
