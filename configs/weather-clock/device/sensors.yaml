@@ -36,7 +36,7 @@ sensor:
             format: "%d°F"
             args: [ '(int)round(x)' ]
   - platform: homeassistant
-    entity_id: sensor.livingroom_temperature
+    entity_id: sensor.${name}_temperature
     id: indoor_temperature
     on_value:
       - lvgl.label.update:
@@ -45,7 +45,7 @@ sensor:
             format: "%d°F"
             args: [ '(int)round(x)' ]
   - platform: homeassistant
-    entity_id: sensor.livingroom_humidity
+    entity_id: sensor.${name}_humidity
     id: indoor_humidity
     on_value:
       - lvgl.label.update:

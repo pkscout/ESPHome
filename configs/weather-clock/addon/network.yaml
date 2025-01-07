@@ -6,14 +6,13 @@ sensor:
 
 # Wifi Signal Strength
   - platform: wifi_signal
-    name: Clock-LR wifi signal
+    name:  ${uname} wifi signal
     update_interval: 60s
     entity_category: diagnostic
-    internal: true
 
 text_sensor:
   - platform: template
-    name: Clock-LR uptime
+    name: ${uname} uptime
     entity_category: diagnostic
     lambda: |-
       int seconds = (id(uptime_seconds).state);

@@ -16,9 +16,8 @@ esp32:
 
 # Esphome
 esphome:
-  name: ${name}
+  name: ${dname}
   friendly_name: ${friendly_name}
-  area: ${room}
   platformio_options:
     build_unflags: -Werror=all
     board_build.flash_mode: dio

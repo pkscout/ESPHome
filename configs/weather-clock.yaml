@@ -1,7 +1,9 @@
 # ESP32-S3-Touch-LCD-7
 substitutions:
-  name: "livingroom-weather-clock"
-  friendly_name: "Living Room Weather Clock"
+  name: default
+  friendly_name: "${name} weather clock"
+  dname: ${name}-weatherclock
+  uname: ${name}_weatherclock
 
 # Wifi Setup
 wifi:
@@ -18,6 +20,6 @@ packages:
             configs/weather-clock/addon/network.yaml,
             configs/weather-clock/assets/fonts.yaml,
             configs/weather-clock/assets/icons.yaml,
-            configs/weather-clock/livingroom/sensors.yaml,
-            configs/weather-clock/livingroom/lvgl.yaml]
+            configs/weather-clock/device/sensors.yaml,
+            configs/weather-clock/device/lvgl.yaml]
     refresh: 1sec

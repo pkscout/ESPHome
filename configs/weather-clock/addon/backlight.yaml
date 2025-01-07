@@ -7,11 +7,11 @@ output:
 light:
   - platform: monochromatic
     output: gpio_06
-    name: "Clock LR Backlight Dimming"
+    name: ${uname} backlight dimming
 
 switch:
   - platform: gpio
-    id: clock_lr_backlight
+    name: ${uname} backlight
     pin: 
       ch422g: io_ex
       number: 2
