@@ -15,7 +15,7 @@ sensor:
       - lvgl.label.update:
           id: outdoor_humidity
           text:
-            format: "%d"
+            format: "%d\u0025"
             args: [ '(int)round(x)' ]
   - platform: homeassistant
     entity_id: sensor.today_high
@@ -51,5 +51,5 @@ sensor:
       - lvgl.label.update:
           id: indoor_humidity
           text:
-            format: "%d"
+            format: "%d\u0025"
             args: [ '(int)round(x)' ]
