@@ -33,12 +33,32 @@ text_sensor:
       if ( days > 3650 ) {
         return { "Starting up" };
       } else if ( days ) {
-        return { (s_days +"d " + s_hours +"h " + s_minutes +"m "+ s_seconds +"s").c_str(,10,10,10) };
+        strcopy (s, s_days);
+        strcat(s, "d ");
+        strcat(s, s_hours);
+        strcat(s, "h ");
+        strcat(s, s_minutes);
+        strcat(s, "m ");
+        strcat(s, s_seconds);
+        strcat(s, "s");
+        return { s.c_str(,10,10,10) };
       } else if ( hours ) {
-        return { (s_hours +"h " + s_minutes +"m "+ s_seconds +"s").c_str(,10,10,10) };
+        strcat(s, s_hours);
+        strcat(s, "h ");
+        strcat(s, s_minutes);
+        strcat(s, "m ");
+        strcat(s, s_seconds);
+        strcat(s, "s");
+        return { s.c_str(,10,10,10) };
       } else if ( minutes ) {
-        return { (s_minutes +"m "+ s_seconds +"s").c_str(,10,10) };
+        strcat(s, s_minutes);
+        strcat(s, "m ");
+        strcat(s, s_seconds);
+        strcat(s, "s");
+        return { s.c_str(,10,10,10) };
       } else {
-        return { s_seconds +"s").c_str(,10) };
+        strcat(s, s_seconds);
+        strcat(s, "s");
+        return { s.c_str(,10,10,10) };
       }
     icon: mdi:clock-start
