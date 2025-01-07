@@ -26,7 +26,7 @@ lvgl:
     - id: small_outdoor_style
       text_font: small_info_font
       text_color: 0x008001
-      opacity: 0.7
+      opa: 0.7
     - id: indoor_style
       text_font: info_font
       text_color: 0xBDB76B
