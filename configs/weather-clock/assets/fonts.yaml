@@ -1,10 +1,10 @@
 font:
-  - file: "gfonts://IBM+Flex+Mono"
+  - file: "gfonts://IBM+Plex+Mono"
     id: clock_font
     size: 260
     bpp: 4
 
-  - file: "gfonts://IBM+Flex+Mono"
+  - file: "gfonts://IBM+Plex+Mono"
     id: info_font
     size: 85
     bpp: 4
