@@ -33,15 +33,18 @@ lvgl:
     - id: small_indoor_style
       text_font: small_info_font
       text_color: 0xBDB76B
+      opa: 0.7
     - id: high_style
       text_font: info_font
       text_color: 0xFE0000
     - id: small_high_style
       text_font: small_info_font
       text_color: 0xFE0000
+      opa: 0.7
     - id: low_style
       text_font: info_font
       text_color: 0x1F90FF
     - id: small_low_style
       text_font: small_info_font
       text_color: 0x1F90FF
+      opa: 0.7
