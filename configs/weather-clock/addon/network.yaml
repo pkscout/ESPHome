@@ -16,21 +16,29 @@ text_sensor:
     entity_category: diagnostic
     lambda: |-
       int seconds = (id(uptime_seconds).state);
+      char s_days[5]
+      char s_hours[2]
+      char s_seconds[2]
+      char s_minutes[2]
       int days = seconds / (24 * 3600);
       seconds = seconds % (24 * 3600);
       int hours = seconds / 3600;
       seconds = seconds % 3600;
       int minutes = seconds /  60;
       seconds = seconds % 60;
+      iota(days, s_days, 10)
+      iota(hours, s_hours, 10)
+      iota(minutes, s_minutes, 10)
+      iota(seconds, s_seconds, 10)
       if ( days > 3650 ) {
         return { "Starting up" };
       } else if ( days ) {
-        return { (itoa(days,10) +"d " + itoa(hours) +"h " + itoa(minutes) +"m "+ itoa(seconds) +"s").c_str(,10,10,10) };
+        return { (s_days +"d " + s_hours +"h " + s_minutes +"m "+ s_seconds +"s").c_str(,10,10,10) };
       } else if ( hours ) {
-        return { (itoa(hours) +"h " + itoa(minutes) +"m "+ itoa(seconds) +"s").c_str(,10,10,10) };
+        return { (s_hours +"h " + s_minutes +"m "+ s_seconds +"s").c_str(,10,10,10) };
       } else if ( minutes ) {
-        return { (itoa(minutes) +"m "+ itoa(seconds) +"s").c_str(,10,10) };
+        return { (s_minutes +"m "+ s_seconds +"s").c_str(,10,10) };
       } else {
-        return { (itoa(seconds) +"s").c_str(,10) };
+        return { s_seconds +"s").c_str(,10) };
       }
     icon: mdi:clock-start
