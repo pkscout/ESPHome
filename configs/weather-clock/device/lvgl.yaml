@@ -32,7 +32,7 @@ lvgl:
             layout:
                 type: FLEX
                 flex_flow: ROW_WRAP
-                flex_align_main: left
+                flex_align_main: start
                 flex_align_cross: end
                 pad_column: 2px
                 pad_row: 0px
