@@ -15,6 +15,7 @@ text_sensor:
     name: ${uname} uptime
     entity_category: diagnostic
     lambda: |-
+      char s[20];
       char s_days[5];
       char s_hours[2];
       char s_seconds[2];
