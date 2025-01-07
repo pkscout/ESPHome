@@ -42,7 +42,7 @@ text_sensor:
         strcat(s, "m ");
         strcat(s, s_seconds);
         strcat(s, "s");
-        return { s.c_str(,10,10,10) };
+        return { s };
       } else if ( hours ) {
         strcpy(s, s_hours);
         strcat(s, "h ");
@@ -50,16 +50,16 @@ text_sensor:
         strcat(s, "m ");
         strcat(s, s_seconds);
         strcat(s, "s");
-        return { s.c_str(,10,10,10) };
+        return { s };
       } else if ( minutes ) {
         strcpy(s, s_minutes);
         strcat(s, "m ");
         strcat(s, s_seconds);
         strcat(s, "s");
-        return { s.c_str(,10,10,10) };
+        return { s };
       } else {
         strcpy(s, s_seconds);
         strcat(s, "s");
-        return { s.c_str(,10,10,10) };
+        return { s };
       }
     icon: mdi:clock-start
