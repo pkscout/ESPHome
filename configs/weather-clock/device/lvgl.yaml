@@ -4,7 +4,7 @@ lvgl:
       layout: 
         type: flex
         flex_flow: column_wrap
-      width: 100"%"
+      width: 100%
       bg_color: Black
       bg_opa: cover
 
