@@ -1,0 +1,17 @@
+font:
+  - file: "gfonts://IBM+Flex+Mono"
+    id: clock_font
+    size: 260
+    bpp: 4
+
+  - file: "gfonts://IBM+Flex+Mono"
+    id: info_font
+    size: 85
+    bpp: 4
+
+lvgl:
+  style_definitions:
+    - id: clock_style
+      text_font: clock_font
+    - id: info_style
+      text_font: info_font

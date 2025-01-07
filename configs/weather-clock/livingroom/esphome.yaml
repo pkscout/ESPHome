@@ -1,0 +1,23 @@
+# ESP32-S3-Touch-LCD-7
+substitutions:
+  name: "livingroom-weather-clock"
+  friendly_name: "Living Room Weather Clock"
+
+# Wifi Setup
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+# Packages
+packages:
+  setup:
+    url: https://github.com/pkscout/ESPHome/
+    files: [configs/weather-clock/device/esp32-s3-touch-lcd-7.yaml,
+            configs/weather-clock/addon/time.yaml,
+            configs/weather-clock/addon/backlight.yaml,
+            configs/weather-clock/addon/network.yaml,
+            configs/weather-clock/assets/fonts.yaml,
+            configs/weather-clock/assets/icons.yaml,
+            configs/weather-clock/livingroom/sensors.yaml,
+            configs/weather-clock/livingroom/lvgl.yaml]
+    refresh: 1sec

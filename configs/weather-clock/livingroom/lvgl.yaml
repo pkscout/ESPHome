@@ -1,0 +1,74 @@
+lvgl:
+  top_layer:
+    widgets:
+    
+      # Clock
+      - label:
+          text: "--:--"
+          id: display_time
+          styles: clock_style
+          align: top_mid
+          x: 0
+          y: 5
+          text_align: center
+          text_color: 0xFFFFFF
+
+      # Outdoor
+      - label:
+          text: " "
+          id: outdoor_temperature
+          styles: info_style
+          align: bottom_left
+          x: 0
+          y: -95
+          text_align: left
+          text_color: 0xFFFFFF
+      - label:
+          text: " "
+          id: outdoor_humidity
+          styles: info_style
+          align: bottom_left
+          x: 0
+          y: -5
+          text_align: left
+          text_color: 0xFFFFFF
+
+      # Forecast
+      - label:
+          text: " "
+          id: today_high
+          styles: info_style
+          align: bottom_mid
+          x: 0
+          y: -95
+          text_align: center
+          text_color: 0xFFFFFF
+      - label:
+          text: " "
+          id: today_low
+          styles: info_style
+          align: bottom_mid
+          x: 0
+          y: -5
+          text_align: left
+          text_color: 0xFFFFFF
+
+      # Indoor
+      - label:
+          text: " "
+          id: indoor_temperature
+          styles: info_style
+          align: bottom_right
+          x: 0
+          y: -95
+          text_align: right
+          text_color: 0xFFFFFF
+      - label:
+          text: " "
+          id: indoor_humidity
+          styles: info_style
+          align: bottom_right
+          x: 0
+          y: -5
+          text_align: right
+          text_color: 0xFFFFFF
