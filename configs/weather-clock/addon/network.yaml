@@ -34,7 +34,7 @@ text_sensor:
       if ( days > 3650 ) {
         return { "Starting up" };
       } else if ( days ) {
-        strcopy (s, s_days);
+        strcpy(s, s_days);
         strcat(s, "d ");
         strcat(s, s_hours);
         strcat(s, "h ");
@@ -44,21 +44,21 @@ text_sensor:
         strcat(s, "s");
         return { s.c_str(,10,10,10) };
       } else if ( hours ) {
-        strcat(s, s_hours);
-        strcat(s, "h ");
+        strcpy(s, s_hours);
+        strcpy(s, "h ");
         strcat(s, s_minutes);
         strcat(s, "m ");
         strcat(s, s_seconds);
         strcat(s, "s");
         return { s.c_str(,10,10,10) };
       } else if ( minutes ) {
-        strcat(s, s_minutes);
+        strcpy(s, s_minutes);
         strcat(s, "m ");
         strcat(s, s_seconds);
         strcat(s, "s");
         return { s.c_str(,10,10,10) };
       } else {
-        strcat(s, s_seconds);
+        strcpy(s, s_seconds);
         strcat(s, "s");
         return { s.c_str(,10,10,10) };
       }
