@@ -19,65 +19,160 @@ lvgl:
             x: 0
             y: 5
             text_align: center
-            text_color: 0xFFFFFF
   
         # Outdoor
-        - label:
-            text: " "
-            id: outdoor_temperature
-            styles: info_style
+        - obj:
+            border_width: 0
+            pad_all: 0px
             align: bottom_left
-            x: 0
+            x: 5
             y: -95
-            text_align: left
-            text_color: 0xFFFFFF
-        - label:
-            text: " "
-            id: outdoor_humidity
-            styles: info_style
+            width: 140
+            height: 90
+            layout:
+                type: FLEX
+                flex_flow: ROW_WRAP
+                flex_align_main: left
+                flex_align_cross: end
+                pad_column: 2px
+                pad_row: 0px
+            widgets:
+              - label:
+                  text: " "
+                  id: outdoor_temperature
+                  styles: info_style
+                  text_align: left
+              - label:
+                  styles: small_outdoor_style
+                  text: °F
+                  text_align: left
+        - obj:
+            border_width: 0
+            pad_all: 0px
             align: bottom_left
-            x: 0
+            x: 5
             y: -5
-            text_align: left
-            text_color: 0xFFFFFF
+            width: 140
+            height: 90
+            layout:
+                type: FLEX
+                flex_flow: ROW_WRAP
+                flex_align_main: left
+                flex_align_cross: end
+                pad_column: 2px
+                pad_row: 0px
+            widgets:
+              - label:
+                  text: " "
+                  id: outdoor_humidity
+                  styles: outdoor_style
+                  text_align: left
+              - label:
+                  styles: small_outdoor_style
+                  text: %
+                  text_align: left
   
         # Forecast
-        - label:
-            text: " "
-            id: today_high
-            styles: info_style
+        - obj:
+            border_width: 0
+            pad_all: 0px
             align: bottom_mid
             x: 0
             y: -95
-            text_align: center
-            text_color: 0xFFFFFF
-        - label:
-            text: " "
-            id: today_low
-            styles: info_style
+            width: 140
+            height: 90
+            layout:
+                type: FLEX
+                flex_flow: ROW_WRAP
+                flex_align_main: left
+                flex_align_cross: end
+                pad_column: 2px
+                pad_row: 0px
+            widgets:
+              - label:
+                  text: " "
+                  id: today_high
+                  styles: high_style
+                  text_align: left
+              - label:
+                  styles: small_high_style
+                  text: °F
+                  text_align: left
+        - obj:
+            border_width: 0
+            pad_all: 0px
             align: bottom_mid
             x: 0
             y: -5
-            text_align: left
-            text_color: 0xFFFFFF
+            width: 140
+            height: 90
+            layout:
+                type: FLEX
+                flex_flow: ROW_WRAP
+                flex_align_main: left
+                flex_align_cross: end
+                pad_column: 2px
+                pad_row: 0px
+            widgets:
+              - label:
+                  text: " "
+                  id: today_low
+                  styles: low_style
+                  text_align: left
+              - label:
+                  styles: small_low_style
+                  text: °F
+                  text_align: left
   
         # Indoor
-        - label:
-            text: " "
-            id: indoor_temperature
-            styles: info_style
+        - obj:
+            border_width: 0
+            pad_all: 0px
             align: bottom_right
-            x: 0
+            x: -5
             y: -95
-            text_align: right
-            text_color: 0xFFFFFF
-        - label:
-            text: " "
-            id: indoor_humidity
-            styles: info_style
+            width: 140
+            height: 90
+            layout:
+                type: FLEX
+                flex_flow: ROW_WRAP
+                flex_align_main: left
+                flex_align_cross: end
+                pad_column: 2px
+                pad_row: 0px
+            widgets:
+              - label:
+                  text: " "
+                  id: indoor_temperature
+                  styles: indoor_style
+                  text_align: left
+              - label:
+                  styles: small_indoor_style
+                  text: °F
+                  text_align: left
+        - obj:
+            border_width: 0
+            pad_all: 0px
             align: bottom_right
-            x: 0
+            x: -5
             y: -5
-            text_align: right
-            text_color: 0xFFFFFF
+            width: 140
+            height: 90
+            layout:
+                type: FLEX
+                flex_flow: ROW_WRAP
+                flex_align_main: left
+                flex_align_cross: end
+                pad_column: 2px
+                pad_row: 0px
+            widgets:
+              - label:
+                  text: " "
+                  id: indoor_humidity
+                  styles: indoor_style
+                  text_align: left
+              - label:
+                  styles: small_indoor_style
+                  text: %
+                  text_align: left
   

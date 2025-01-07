@@ -9,9 +9,38 @@ font:
     size: 85
     bpp: 4
 
+  - file: "gfonts://IBM+Plex+Mono"
+    id: small_info_font
+    size: 55
+    bpp: 4
+
+
 lvgl:
   style_definitions:
     - id: clock_style
       text_font: clock_font
-    - id: info_style
+      text_color: 0xDDDDDD
+    - id: outdoor_style
       text_font: info_font
+      text_color: 0x008001
+    - id: small_outdoor_style
+      text_font: small_info_font
+      text_color: 0x008001
+    - id: indoor_style
+      text_font: info_font
+      text_color: 0xBDB76B
+    - id: small_indoor_style
+      text_font: small_info_font
+      text_color: 0xBDB76B
+    - id: high_style
+      text_font: info_font
+      text_color: 0xFE0000
+    - id: small_high_style
+      text_font: small_info_font
+      text_color: 0xFE0000
+    - id: low_style
+      text_font: info_font
+      text_color: 0x1F90FF
+    - id: small_low_style
+      text_font: small_info_font
+      text_color: 0x1F90FF
