@@ -45,7 +45,7 @@ text_sensor:
         return { s.c_str(,10,10,10) };
       } else if ( hours ) {
         strcpy(s, s_hours);
-        strcpy(s, "h ");
+        strcat(s, "h ");
         strcat(s, s_minutes);
         strcat(s, "m ");
         strcat(s, s_seconds);
