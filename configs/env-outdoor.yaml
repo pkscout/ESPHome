@@ -17,7 +17,7 @@ api:
   reboot_timeout: 5min
 
 ota:
-  password: ''
+  platform: esphome
 
 logger:
 

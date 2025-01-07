@@ -23,7 +23,7 @@ logger:
     component: ERROR
 
 ota:
-  password: ''
+  platform: esphome
 
 time:
   - platform: sntp

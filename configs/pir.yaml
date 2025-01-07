@@ -19,7 +19,7 @@ esp32:
 logger:
 
 ota:
-  password: ''
+  platform: esphome
 
 time:
   - platform: sntp
