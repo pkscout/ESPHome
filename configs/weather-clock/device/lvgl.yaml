@@ -4,7 +4,7 @@ lvgl:
       layout: 
         type: flex
         flex_flow: column_wrap
-      width: 100%
+      width: 100"%"
       bg_color: Black
       bg_opa: cover
 
@@ -69,7 +69,7 @@ lvgl:
                   text_align: left
               - label:
                   styles: small_outdoor_style
-                  text: %
+                  text: "%"
                   text_align: left
   
         # Forecast
@@ -173,6 +173,6 @@ lvgl:
                   text_align: left
               - label:
                   styles: small_indoor_style
-                  text: %
+                  text: "%"
                   text_align: left
   
