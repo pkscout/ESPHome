@@ -12,42 +12,32 @@ sensor:
     on_value:
       - lvgl.label.update:
           id: outdoor_humidity
-          text:
-            format: "%d"
-            args: [ '(int)round(x)' ]
+          text: (str)(int)round(x)
   - platform: homeassistant
     entity_id: sensor.today_high
     id: ha_today_high
     on_value:
       - lvgl.label.update:
           id: today_high
-          text:
-            format: "%d"
-            args: [ '(int)round(x)' ]
+          text: (str)(int)round(x)
   - platform: homeassistant
     entity_id: sensor.today_low
     id: ha_today_low
     on_value:
       - lvgl.label.update:
           id: today_low
-          text:
-            format: "%d"
-            args: [ '(int)round(x)' ]
+          text: (str)(int)round(x)
   - platform: homeassistant
     entity_id: sensor.${name}_temperature
     id: ha_indoor_temperature
     on_value:
       - lvgl.label.update:
           id: indoor_temperature
-          text:
-            format: "%d"
-            args: [ '(int)round(x)' ]
+          text: (str)(int)round(x)
   - platform: homeassistant
     entity_id: sensor.${name}_humidity
     id: ha_indoor_humidity
     on_value:
       - lvgl.label.update:
           id: indoor_humidity
-          text:
-            format: "%d"
-            args: [ '(int)round(x)' ]
+          text: (str)(int)round(x)
