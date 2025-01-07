@@ -15,11 +15,11 @@ text_sensor:
     name: ${uname} uptime
     entity_category: diagnostic
     lambda: |-
+      char s_days[5];
+      char s_hours[2];
+      char s_seconds[2];
+      char s_minutes[2];
       int seconds = (id(uptime_seconds).state);
-      char s_days[5]
-      char s_hours[2]
-      char s_seconds[2]
-      char s_minutes[2]
       int days = seconds / (24 * 3600);
       seconds = seconds % (24 * 3600);
       int hours = seconds / 3600;
