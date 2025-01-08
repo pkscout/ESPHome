@@ -38,6 +38,9 @@ logger:
   level: DEBUG
   hardware_uart: UART0
 
+# Enable bluetooth proxy
+bluetooth_proxy:
+
 # Video memory
 psram:
   mode: octal
