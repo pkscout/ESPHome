@@ -18,7 +18,7 @@ switch:
     restore_mode: ALWAYS_ON
     internal: true
     
-  - platform: homeassistant
+  - platform: template
     name: ${uname} antiburn
     icon: mdi:television-shimmer
     optimistic: true
