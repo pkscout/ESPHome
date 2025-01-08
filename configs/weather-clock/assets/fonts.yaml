@@ -1,19 +1,27 @@
 font:
-  - file: "gfonts://IBM+Plex+Mono"
+  - file:
+      type: gfonts
+      family: IBM+Plex+Mono
+      weight: 700
     id: clock_font
     size: 260
     bpp: 4
 
-  - file: "gfonts://IBM+Plex+Mono"
+  - file:
+      type: gfonts
+      family: IBM+Plex+Mono
+      weight: 700
     id: info_font
     size: 85
     bpp: 4
 
-  - file: "gfonts://IBM+Plex+Mono"
+  - file:
+      type: gfonts
+      family: IBM+Plex+Mono
+      weight: 700
     id: small_info_font
     size: 55
     bpp: 4
-
 
 lvgl:
   style_definitions:
