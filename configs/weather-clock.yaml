@@ -1,9 +1,10 @@
 # ESP32-S3-Touch-LCD-7
 substitutions:
-  name: default
+  name: the
   friendly_name: "${name} weather clock"
   dname: ${name}-weatherclock
   uname: ${name}_weatherclock
+  tempscale: "°F"
 
 # Wifi Setup
 wifi:
