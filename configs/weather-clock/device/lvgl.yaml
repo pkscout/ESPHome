@@ -44,7 +44,7 @@ lvgl:
                   text_align: left
               - label:
                   styles: small_outdoor_style
-                  text: {tempscale}
+                  text: ${tempscale}
                   text_align: left
         - obj:
             border_width: 0
@@ -96,7 +96,7 @@ lvgl:
                   text_align: left
               - label:
                   styles: small_high_style
-                  text: {tempscale}
+                  text: ${tempscale}
                   text_align: left
         - obj:
             border_width: 0
@@ -121,7 +121,7 @@ lvgl:
                   text_align: left
               - label:
                   styles: small_low_style
-                  text: {tempscale}
+                  text: ${tempscale}
                   text_align: left
   
         # Indoor
@@ -148,7 +148,7 @@ lvgl:
                   text_align: left
               - label:
                   styles: small_indoor_style
-                  text: {tempscale}
+                  text: ${tempscale}
                   text_align: left
         - obj:
             border_width: 0
