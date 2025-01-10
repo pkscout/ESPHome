@@ -1,0 +1,113 @@
+substitutions:
+  name: default
+  dname: ${name}-clock
+  uname: ${name}_clock
+
+esphome:
+  platformio_options:
+    board_build.flash_size: 8MB
+    board_upload.maximum_size: 8388608
+  name: $dname
+  includes: 
+    # https://github.com/adafruit/Adafruit_LED_Backpack
+    - include/Adafruit_LEDBackpack.h
+  libraries:
+    - "Wire"
+    - "SPI"
+    - "Adafruit BusIO"
+    - "Adafruit GFX Library"
+    - "Adafruit LED Backpack Library"
+
+esp32:
+  board: adafruit_feather_esp32s3
+  flash_size: 8MB
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+  logs:
+    component: ERROR
+
+ota:
+  platform: esphome
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_ssid_password
+
+bluetooth_proxy:
+
+api:
+
+# the ESP32 board used has i2c on non-standard pins
+i2c:
+  sda: 3
+  scl: 4
+
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+    on_time:
+      - seconds: 0
+        minutes: /1 # Update every minute
+        then:
+          - script.execute: time_update    
+
+script:
+  - id: time_update
+    then:
+      - lambda: |-
+          static Adafruit_7segment clock = Adafruit_7segment();
+          int hours = id(homeassistant_time).now().hour;
+          int minutes = id(homeassistant_time).now().minute;
+          int displayValue = hours*100 + minutes;
+          clock.begin(0x70);
+          clock.print(displayValue, DEC);
+          clock.drawColon(1);
+          clock.writeDisplay();
+
+# setup sensors
+button:
+  - platform: restart
+    name: ${uname} restart
+  - platform: safe_mode
+    name: ${uname} restart safe
+    icon: mdi:restart-alert
+
+binary_sensor:
+  - platform: status
+    name: ${uname} status
+
+sensor:
+  - platform: wifi_signal
+    name:  ${uname} wifi signal
+    update_interval: 60s
+  - platform: uptime
+    id: uptime_seconds
+    internal: true
+
+text_sensor:
+  - platform: template
+    name: ${uname} uptime
+    entity_category: diagnostic
+    lambda: |-
+      int seconds = (id(uptime_seconds).state);
+      int days = seconds / (24 * 3600);
+      seconds = seconds % (24 * 3600);
+      int hours = seconds / 3600;
+      seconds = seconds % 3600;
+      int minutes = seconds /  60;
+      seconds = seconds % 60;
+      if ( days > 3650 ) {
+        return { "Starting up" };
+      } else if ( days ) {
+        return { (String(days) +"d " + String(hours) +"h " + String(minutes) +"m "+ String(seconds) +"s").c_str() };
+      } else if ( hours ) {
+        return { (String(hours) +"h " + String(minutes) +"m "+ String(seconds) +"s").c_str() };
+      } else if ( minutes ) {
+        return { (String(minutes) +"m "+ String(seconds) +"s").c_str() };
+      } else {
+        return { (String(seconds) +"s").c_str() };
+      }
+    icon: mdi:clock-start
