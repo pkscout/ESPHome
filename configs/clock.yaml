@@ -92,6 +92,11 @@ text_sensor:
     name: ${uname} uptime
     entity_category: diagnostic
     lambda: |-
+      char s[20];
+      char s_days[5];
+      char s_hours[2];
+      char s_seconds[2];
+      char s_minutes[2];
       int seconds = (id(uptime_seconds).state);
       int days = seconds / (24 * 3600);
       seconds = seconds % (24 * 3600);
@@ -99,15 +104,39 @@ text_sensor:
       seconds = seconds % 3600;
       int minutes = seconds /  60;
       seconds = seconds % 60;
+      itoa(days, s_days, 10);
+      itoa(hours, s_hours, 10);
+      itoa(minutes, s_minutes, 10);
+      itoa(seconds, s_seconds, 10);
       if ( days > 3650 ) {
         return { "Starting up" };
       } else if ( days ) {
-        return { (String(days) +"d " + String(hours) +"h " + String(minutes) +"m "+ String(seconds) +"s").c_str() };
+        strcpy(s, s_days);
+        strcat(s, "d ");
+        strcat(s, s_hours);
+        strcat(s, "h ");
+        strcat(s, s_minutes);
+        strcat(s, "m ");
+        strcat(s, s_seconds);
+        strcat(s, "s");
+        return { s };
       } else if ( hours ) {
-        return { (String(hours) +"h " + String(minutes) +"m "+ String(seconds) +"s").c_str() };
+        strcpy(s, s_hours);
+        strcat(s, "h ");
+        strcat(s, s_minutes);
+        strcat(s, "m ");
+        strcat(s, s_seconds);
+        strcat(s, "s");
+        return { s };
       } else if ( minutes ) {
-        return { (String(minutes) +"m "+ String(seconds) +"s").c_str() };
+        strcpy(s, s_minutes);
+        strcat(s, "m ");
+        strcat(s, s_seconds);
+        strcat(s, "s");
+        return { s };
       } else {
-        return { (String(seconds) +"s").c_str() };
+        strcpy(s, s_seconds);
+        strcat(s, "s");
+        return { s };
       }
     icon: mdi:clock-start
