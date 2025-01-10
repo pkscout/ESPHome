@@ -1,12 +1,12 @@
 # Backlight
 output:
   - platform: ledc
-    pin: GPIO06
-    id: gpio_06
+    pin: GPIO15
+    id: backlight
 
 light:
   - platform: monochromatic
-    output: gpio_06
+    output: backlight
     name: ${uname} backlight dimming
 
 switch:
