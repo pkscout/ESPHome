@@ -9,7 +9,7 @@ esphome:
     board_upload.maximum_size: 8388608
   name: $dname
   includes: 
-    # https://github.com/adafruit/Adafruit_LED_Backpack
+    # download from https://github.com/adafruit/Adafruit_LED_Backpack
     - include/Adafruit_LEDBackpack.h
   libraries:
     - "Wire"
