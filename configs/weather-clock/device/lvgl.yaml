@@ -19,7 +19,7 @@ lvgl:
   
         # Outdoor
         - obj:
-            border_width: 0
+            border_width: 1
             pad_all: 0px
             align: bottom_left
             x: 5

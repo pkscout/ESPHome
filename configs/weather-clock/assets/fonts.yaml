@@ -4,7 +4,7 @@ font:
       family: IBM+Plex+Mono
       weight: 700
     id: clock_font
-    size: 200
+    size: 260
     bpp: 4
 
   - file:
