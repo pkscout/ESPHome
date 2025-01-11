@@ -1,4 +1,14 @@
 # Backlight
+output:
+  - platform: ledc
+    pin: GPIO15
+    id: backlight
+
+light:
+  - platform: monochromatic
+    output: backlight
+    name: ${uname} backlight dimming
+
 switch:
   - platform: gpio
     name: ${uname} backlight
@@ -6,7 +16,6 @@ switch:
       ch422g: io_ex
       number: 2
     restore_mode: ALWAYS_ON
-    internal: true
     
   - platform: template
     name: ${uname} antiburn
