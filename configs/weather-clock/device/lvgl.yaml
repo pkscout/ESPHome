@@ -24,7 +24,7 @@ lvgl:
             align: bottom_left
             x: 5
             y: -95
-            width: 260
+            width: 240
             height: 90
             bg_color: Black
             layout:
@@ -50,7 +50,7 @@ lvgl:
             align: bottom_left
             x: 5
             y: -5
-            width: 260
+            width: 240
             height: 90
             bg_color: Black
             layout:
@@ -78,7 +78,7 @@ lvgl:
             align: bottom_mid
             x: 0
             y: -95
-            width: 260
+            width: 240
             height: 90
             bg_color: Black
             layout:
@@ -104,7 +104,7 @@ lvgl:
             align: bottom_mid
             x: 0
             y: -5
-            width: 260
+            width: 240
             height: 90
             bg_color: Black
             layout:
@@ -132,7 +132,7 @@ lvgl:
             align: bottom_right
             x: -5
             y: -95
-            width: 260
+            width: 240
             height: 90
             bg_color: Black
             layout:
@@ -158,7 +158,7 @@ lvgl:
             align: bottom_right
             x: -5
             y: -5
-            width: 260
+            width: 240
             height: 90
             bg_color: Black
             layout:
