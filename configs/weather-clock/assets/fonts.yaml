@@ -34,7 +34,7 @@ lvgl:
     - id: small_outdoor_style
       text_font: small_info_font
       text_color: 0x008001
-      translate_y: -5
+      translate_y: -4
       opa: 0.8
     - id: indoor_style
       text_font: info_font
@@ -42,7 +42,7 @@ lvgl:
     - id: small_indoor_style
       text_font: small_info_font
       text_color: 0xBDB76B
-      translate_y: -5
+      translate_y: -4
       opa: 0.8
     - id: high_style
       text_font: info_font
@@ -50,7 +50,7 @@ lvgl:
     - id: small_high_style
       text_font: small_info_font
       text_color: 0xFE0000
-      translate_y: -5
+      translate_y: -4
       opa: 0.8
     - id: low_style
       text_font: info_font
@@ -58,5 +58,5 @@ lvgl:
     - id: small_low_style
       text_font: small_info_font
       text_color: 0x1F90FF
-      translate_y: -5
+      translate_y: -4
       opa: 0.8
