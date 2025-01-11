@@ -46,7 +46,7 @@ text_sensor:
       if ( minutes ) {
         strcat(s, s_minutes);
         strcat(s, "m ");
-      } else {
+      if ( seconds ) {
         strcat(s, s_seconds);
         strcat(s, "s");
       }
