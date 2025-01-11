@@ -1,18 +1,12 @@
-# Clock
-script:
-  - id: time_update
-    then:
-      - lvgl.label.update:
-          id: display_time
-          text: !lambda |-
-            return id(ha_time).c_str()
-
 text_sensor:
   - platform: homeassistant
     entity_id: sensor.time_normal
     id: ha_time
     on_value:
-      - script.execute: time_update
+      - lvgl.label.update:
+          id: outdoor_temperature
+          text: !lambda |-
+            return "%s", x.c_str()
 
 sensor:
   - platform: homeassistant
