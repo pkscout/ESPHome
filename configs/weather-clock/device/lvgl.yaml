@@ -19,7 +19,7 @@ lvgl:
         # Outdoor
         - obj:
             scrollbar_mode: "OFF"
-            border_width: 0
+            border_width: 1
             pad_all: 0px
             align: bottom_left
             x: 15
@@ -31,7 +31,8 @@ lvgl:
                 type: FLEX
                 flex_flow: ROW_WRAP
                 flex_align_main: start
-                pad_column: 2px
+                flex_align_cross: end
+                pad_column: 0px
                 pad_row: 0px
             widgets:
               - label:
@@ -58,7 +59,7 @@ lvgl:
                 flex_flow: ROW_WRAP
                 flex_align_main: start
                 flex_align_cross: end
-                pad_column: 2px
+                pad_column: 0px
                 pad_row: 0px
             widgets:
               - label:
@@ -87,7 +88,7 @@ lvgl:
                 flex_flow: ROW_WRAP
                 flex_align_main: center
                 flex_align_cross: end
-                pad_column: 2px
+                pad_column: 0px
                 pad_row: 0px
             widgets:
               - label:
@@ -114,7 +115,7 @@ lvgl:
                 flex_flow: ROW_WRAP
                 flex_align_main: center
                 flex_align_cross: end
-                pad_column: 2px
+                pad_column: 0px
                 pad_row: 0px
             widgets:
               - label:
@@ -143,7 +144,7 @@ lvgl:
                 flex_flow: ROW_WRAP
                 flex_align_main: end
                 flex_align_cross: end
-                pad_column: 2px
+                pad_column: 0px
                 pad_row: 0px
             widgets:
               - label:
@@ -170,7 +171,7 @@ lvgl:
                 flex_flow: ROW_WRAP
                 flex_align_main: end
                 flex_align_cross: end
-                pad_column: 2px
+                pad_column: 0px
                 pad_row: 0px
             widgets:
               - label:
