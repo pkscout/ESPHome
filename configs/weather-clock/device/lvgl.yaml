@@ -23,7 +23,7 @@ lvgl:
             pad_all: 0px
             align: bottom_left
             x: 15
-            y: -118
+            y: -115
             width: 240
             height: 92
             bg_color: Black
@@ -79,7 +79,7 @@ lvgl:
             pad_all: 0px
             align: bottom_mid
             x: 0
-            y: -118
+            y: -115
             width: 240
             height: 92
             bg_color: Black
@@ -135,7 +135,7 @@ lvgl:
             pad_all: 0px
             align: bottom_right
             x: -15
-            y: -118
+            y: -115
             width: 240
             height: 90
             bg_color: Black

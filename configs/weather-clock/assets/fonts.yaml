@@ -12,7 +12,7 @@ font:
       family: IBM+Plex+Mono
       weight: 700
     id: info_font
-    size: 90
+    size: 88
     bpp: 4
 
   - file:
@@ -20,7 +20,7 @@ font:
       family: IBM+Plex+Mono
       weight: 700
     id: small_info_font
-    size: 90
+    size: 68
     bpp: 4
 
 lvgl:
