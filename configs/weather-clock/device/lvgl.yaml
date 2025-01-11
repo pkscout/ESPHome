@@ -52,6 +52,7 @@ lvgl:
             y: -5
             width: 260
             height: 90
+            bg_color: Black
             layout:
                 type: FLEX
                 flex_flow: ROW_WRAP
@@ -79,10 +80,11 @@ lvgl:
             y: -95
             width: 260
             height: 90
+            bg_color: Black
             layout:
                 type: FLEX
                 flex_flow: ROW_WRAP
-                flex_align_main: start
+                flex_align_main: center
                 flex_align_cross: end
                 pad_column: 2px
                 pad_row: 0px
@@ -104,10 +106,11 @@ lvgl:
             y: -5
             width: 260
             height: 90
+            bg_color: Black
             layout:
                 type: FLEX
                 flex_flow: ROW_WRAP
-                flex_align_main: start
+                flex_align_main: center
                 flex_align_cross: end
                 pad_column: 2px
                 pad_row: 0px
@@ -131,10 +134,11 @@ lvgl:
             y: -95
             width: 260
             height: 90
+            bg_color: Black
             layout:
                 type: FLEX
                 flex_flow: ROW_WRAP
-                flex_align_main: start
+                flex_align_main: end
                 flex_align_cross: end
                 pad_column: 2px
                 pad_row: 0px
@@ -156,10 +160,11 @@ lvgl:
             y: -5
             width: 260
             height: 90
+            bg_color: Black
             layout:
                 type: FLEX
                 flex_flow: ROW_WRAP
-                flex_align_main: start
+                flex_align_main: end
                 flex_align_cross: end
                 pad_column: 2px
                 pad_row: 0px
