@@ -14,17 +14,4 @@ script:
       - lvgl.label.update:
           id: display_time
           text: !lambda |-
-            char s_clock[5];
-            char s_hours[2];
-            int 24_hours = id(homeassistant_time).now().hour;
-            if ( 24_hours > 12 ) {
-              sprintf(s_hours, "%ld", (24_hours - 12));
-            } elif (24_hours == 0) {
-              sprintf(s_hours, "%ld", 12);
-            } else {
-              sprintf(s_hours, "%ld", 24_hours);
-            }
-            strcpy(clock, s_hours);
-            strcat(clock, ":");
-            strcat(clock, id(homeassistant_time).now().strftime("%M"));
-            return clock;
+            return id(homeassistant_time).now().strftime("%I:%M");
