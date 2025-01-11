@@ -5,7 +5,8 @@ sensor:
     on_value:
       - lvgl.label.update:
           id: display_time
-          text: x
+          text: !lambda |-
+            return id(ha_time);
   - platform: homeassistant
     entity_id: sensor.wc_outdoor_temperature
     id: ha_outdoor_temperature
