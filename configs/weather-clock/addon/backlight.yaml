@@ -1,7 +1,7 @@
 # Backlight
 output:
   - platform: ledc
-    pin: GPIO15
+    pin: GPIO16
     id: backlight
 
 light:
