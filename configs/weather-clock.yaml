@@ -16,7 +16,6 @@ packages:
   setup:
     url: https://github.com/pkscout/ESPHome/
     files: [configs/weather-clock/device/esp32-s3-touch-lcd-7.yaml,
-            configs/weather-clock/addon/time.yaml,
             configs/weather-clock/addon/backlight.yaml,
             configs/weather-clock/addon/network.yaml,
             configs/weather-clock/assets/fonts.yaml,
