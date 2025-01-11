@@ -33,33 +33,22 @@ text_sensor:
       itoa(seconds, s_seconds, 10);
       if ( days > 3650 ) {
         return { "Starting up" };
-      } else if ( days ) {
-        strcpy(s, s_days);
+      }
+      s[0] = '\0';
+      if ( days ) {
+        strcat(s, s_days);
         strcat(s, "d ");
+      }
+      if ( hours ) {
         strcat(s, s_hours);
         strcat(s, "h ");
-        strcat(s, s_minutes);
-        strcat(s, "m ");
-        strcat(s, s_seconds);
-        strcat(s, "s");
-        return { s };
-      } else if ( hours ) {
-        strcpy(s, s_hours);
-        strcat(s, "h ");
-        strcat(s, s_minutes);
-        strcat(s, "m ");
-        strcat(s, s_seconds);
-        strcat(s, "s");
-        return { s };
-      } else if ( minutes ) {
-        strcpy(s, s_minutes);
-        strcat(s, "m ");
-        strcat(s, s_seconds);
-        strcat(s, "s");
-        return { s };
-      } else {
-        strcpy(s, s_seconds);
-        strcat(s, "s");
-        return { s };
       }
+      if ( minutes ) {
+        strcat(s, s_minutes);
+        strcat(s, "m ");
+      } else {
+        strcat(s, s_seconds);
+        strcat(s, "s");
+      }
+      return { s };
     icon: mdi:clock-start
