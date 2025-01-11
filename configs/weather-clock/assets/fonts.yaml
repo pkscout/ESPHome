@@ -20,7 +20,7 @@ font:
       family: IBM+Plex+Mono
       weight: 700
     id: small_info_font
-    size: 62
+    size: 70
     bpp: 4
 
 lvgl:
@@ -35,7 +35,7 @@ lvgl:
       text_font: small_info_font
       text_color: 0x008001
       translate_y: -5
-      opa: 0.7
+      opa: 0.8
     - id: indoor_style
       text_font: info_font
       text_color: 0xBDB76B
@@ -43,7 +43,7 @@ lvgl:
       text_font: small_info_font
       text_color: 0xBDB76B
       translate_y: -5
-      opa: 0.7
+      opa: 0.8
     - id: high_style
       text_font: info_font
       text_color: 0xFE0000
@@ -51,7 +51,7 @@ lvgl:
       text_font: small_info_font
       text_color: 0xFE0000
       translate_y: -5
-      opa: 0.7
+      opa: 0.8
     - id: low_style
       text_font: info_font
       text_color: 0x1F90FF
@@ -59,4 +59,4 @@ lvgl:
       text_font: small_info_font
       text_color: 0x1F90FF
       translate_y: -5
-      opa: 0.7
+      opa: 0.8
