@@ -25,7 +25,7 @@ lvgl:
             x: 15
             y: -115
             width: 240
-            height: 100
+            height: 90
             bg_color: Black
             layout:
                 type: FLEX
@@ -44,15 +44,16 @@ lvgl:
                   text: ${tempscale}
                   styles: small_outdoor_style
                   text_align: left
+                  y: -115
         - obj:
             scrollbar_mode: "OFF"
             border_width: 0
             pad_all: 0px
             align: bottom_left
             x: 15
-            y: -5
+            y: -15
             width: 240
-            height: 100
+            height: 90
             bg_color: Black
             layout:
                 type: FLEX
