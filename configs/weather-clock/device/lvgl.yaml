@@ -13,11 +13,26 @@ lvgl:
             styles: clock_style
             align: top_mid
             x: 0
-            y: -50
+            y: -40
             text_align: center
 
         # Outdoor
         - obj:
+            border_width: 0
+            pad_all: 0px
+            align: bottom_left
+            x: 5
+            y: -105
+            width: 200
+            height: 90
+            bg_color: Black
+            layout:
+                type: FLEX
+                flex_flow: ROW_WRAP
+                flex_align_main: start
+                flex_align_cross: end
+                pad_column: 0px
+                pad_row: 0px
             widgets:
               - label:
                   text: "--"
@@ -33,7 +48,7 @@ lvgl:
             pad_all: 0px
             align: bottom_left
             x: 5
-            y: -5
+            y: -15
             width: 240
             height: 90
             bg_color: Black
@@ -61,7 +76,7 @@ lvgl:
             pad_all: 0px
             align: bottom_mid
             x: 0
-            y: -95
+            y: -105
             width: 240
             height: 90
             bg_color: Black
@@ -87,7 +102,7 @@ lvgl:
             pad_all: 0px
             align: bottom_mid
             x: 0
-            y: -5
+            y: -15
             width: 240
             height: 90
             bg_color: Black
@@ -115,7 +130,7 @@ lvgl:
             pad_all: 0px
             align: bottom_right
             x: -5
-            y: -95
+            y: -105
             width: 240
             height: 90
             bg_color: Black
@@ -141,7 +156,7 @@ lvgl:
             pad_all: 0px
             align: bottom_right
             x: -5
-            y: -5
+            y: -15
             width: 240
             height: 90
             bg_color: Black
