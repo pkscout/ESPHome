@@ -42,8 +42,9 @@ lvgl:
                   text_align: left
               - label:
                   text: ${tempscale}
-                  styles: outdoor_style
+                  styles: small_outdoor_style
                   text_align: left
+                  y: -10
         - obj:
             scrollbar_mode: "OFF"
             border_width: 0
