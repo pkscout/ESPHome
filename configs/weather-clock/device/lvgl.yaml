@@ -19,7 +19,7 @@ lvgl:
         # Outdoor
         - obj:
             scrollbar_mode: "OFF"
-            border_width: 1px
+            border_width: 1
             pad_all: 0px
             align: bottom_left
             x: 15
@@ -46,7 +46,7 @@ lvgl:
                   text_align: left
         - obj:
             scrollbar_mode: "OFF"
-            border_width: 1px
+            border_width: 1
             pad_all: 0px
             align: bottom_left
             x: 15
@@ -75,7 +75,7 @@ lvgl:
         # Forecast
         - obj:
             scrollbar_mode: "OFF"
-            border_width: 1px
+            border_width: 1
             pad_all: 0px
             align: bottom_mid
             x: 0
@@ -102,7 +102,7 @@ lvgl:
                   text_align: left
         - obj:
             scrollbar_mode: "OFF"
-            border_width: 1px
+            border_width: 1
             pad_all: 0px
             align: bottom_mid
             x: 0
@@ -131,7 +131,7 @@ lvgl:
         # Indoor
         - obj:
             scrollbar_mode: "OFF"
-            border_width: 1px
+            border_width: 1
             pad_all: 0px
             align: bottom_right
             x: -15
@@ -158,7 +158,7 @@ lvgl:
                   text_align: left
         - obj:
             scrollbar_mode: "OFF"
-            border_width: 1px
+            border_width: 1
             pad_all: 0px
             align: bottom_right
             x: -15
