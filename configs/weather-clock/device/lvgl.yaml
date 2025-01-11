@@ -19,8 +19,7 @@ lvgl:
         # Outdoor
         - obj:
             scrollbar_mode: "OFF"
-            border_width: 1
-            pad_all: 0px
+            pad_all: 4px
             align: bottom_left
             x: 15
             y: -115
