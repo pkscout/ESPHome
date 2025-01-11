@@ -20,7 +20,7 @@ font:
       family: IBM+Plex+Mono
       weight: 700
     id: small_info_font
-    size: 68
+    size: 62
     bpp: 4
 
 lvgl:
