@@ -10,14 +10,7 @@ light:
     name: ${uname} backlight
     restore_mode: ALWAYS_ON
 
-# switch:
-#  - platform: gpio
-#    name: ${uname} backlight
-#    pin: 
-#      ch422g: io_ex
-#      number: 2
-#    restore_mode: ALWAYS_ON
-    
+switch:
   - platform: template
     name: ${uname} antiburn
     icon: mdi:television-shimmer
@@ -39,3 +32,10 @@ light:
           then:
             - lvgl.resume:
             - lvgl.widget.redraw:
+
+#  - platform: gpio
+#    name: ${uname} backlight
+#    pin: 
+#      ch422g: io_ex
+#      number: 2
+#    restore_mode: ALWAYS_ON
