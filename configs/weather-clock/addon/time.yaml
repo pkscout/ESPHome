@@ -27,4 +27,4 @@ script:
             strcpy(clock, s_hours);
             strcat(clock, ":");
             strcat(clock, id(homeassistant_time).now().strftime("%M"));
-            return clock
+            return clock;
