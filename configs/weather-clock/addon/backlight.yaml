@@ -7,15 +7,16 @@ output:
 light:
   - platform: monochromatic
     output: backlight
-    name: ${uname} backlight dimming
-
-switch:
-  - platform: gpio
     name: ${uname} backlight
-    pin: 
-      ch422g: io_ex
-      number: 2
     restore_mode: ALWAYS_ON
+
+# switch:
+#  - platform: gpio
+#    name: ${uname} backlight
+#    pin: 
+#      ch422g: io_ex
+#      number: 2
+#    restore_mode: ALWAYS_ON
     
   - platform: template
     name: ${uname} antiburn
