@@ -19,7 +19,6 @@ packages:
             configs/weather-clock/addon/backlight.yaml,
             configs/weather-clock/addon/network.yaml,
             configs/weather-clock/assets/fonts.yaml,
-            configs/weather-clock/assets/icons.yaml,
             configs/weather-clock/device/sensors.yaml,
             configs/weather-clock/device/lvgl.yaml]
     refresh: 1sec
