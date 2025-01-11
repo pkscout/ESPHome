@@ -45,6 +45,7 @@ lvgl:
                   styles: outdoor_style
                   text_align: left
         - obj:
+            scrollbar_mode: "OFF"
             border_width: 0
             pad_all: 0px
             align: bottom_left
@@ -73,6 +74,7 @@ lvgl:
   
         # Forecast
         - obj:
+            scrollbar_mode: "OFF"
             border_width: 0
             pad_all: 0px
             align: bottom_mid
@@ -99,6 +101,7 @@ lvgl:
                   text: ${tempscale}
                   text_align: left
         - obj:
+            scrollbar_mode: "OFF"
             border_width: 0
             pad_all: 0px
             align: bottom_mid
@@ -127,6 +130,7 @@ lvgl:
   
         # Indoor
         - obj:
+            scrollbar_mode: "OFF"
             border_width: 0
             pad_all: 0px
             align: bottom_right
@@ -153,6 +157,7 @@ lvgl:
                   text: ${tempscale}
                   text_align: left
         - obj:
+            scrollbar_mode: "OFF"
             border_width: 0
             pad_all: 0px
             align: bottom_right
