@@ -23,7 +23,7 @@ lvgl:
             align: bottom_left
             x: 5
             y: -105
-            width: 200
+            width: 240
             height: 90
             bg_color: Black
             layout:
@@ -35,6 +35,7 @@ lvgl:
                 pad_row: 0px
             widgets:
               - label:
+                  scrollable: false
                   text: "--"
                   id: outdoor_temperature
                   styles: outdoor_style
