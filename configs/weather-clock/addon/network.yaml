@@ -10,6 +10,17 @@ sensor:
     id: uptime_seconds
     internal: true
 
+button:
+  - platform: restart
+    name: ${uname} restart
+  - platform: safe_mode
+    name: ${uname} restart safe
+    icon: mdi:restart-alert
+
+binary_sensor:
+  - platform: status
+    name: ${uname} status
+
 text_sensor:
   - platform: template
     name: ${uname} uptime
