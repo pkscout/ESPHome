@@ -33,12 +33,6 @@ lvgl:
                 flex_align_cross: end
                 pad_column: 2px
                 pad_row: 0px
-            widgets:
-              - label:
-                  text: "--"
-                  id: outdoor_temperature
-                  styles: outdoor_style
-                  text_align: left
         - obj:
             border_width: 0
             pad_all: 0px
