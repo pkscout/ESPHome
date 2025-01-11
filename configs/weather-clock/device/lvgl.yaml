@@ -15,7 +15,16 @@ lvgl:
             x: 0
             y: -20
             text_align: center
-  
+        - label:
+            text: "--"
+            id: outdoor_temperature
+            styles: outdoor_style
+            text_align: left
+        - label:
+            styles: small_outdoor_style
+            text: ${tempscale}
+            text_align: left
+
         # Outdoor
         - obj:
             border_width: 0
