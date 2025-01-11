@@ -1,11 +1,14 @@
-sensor:
+text_sensor:
   - platform: homeassistant
     entity_id: sensor.time_normal
     id: ha_time
     on_value:
       - lvgl.label.update:
           id: display_time
-          text: (str)x
+          text:  - lambda: |-
+            "%s", x.c_str();
+
+sensor:
   - platform: homeassistant
     entity_id: sensor.wc_outdoor_temperature
     id: ha_outdoor_temperature
