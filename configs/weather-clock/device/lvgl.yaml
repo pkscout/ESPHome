@@ -22,10 +22,10 @@ lvgl:
             border_width: 0
             pad_all: 0px
             align: bottom_left
-            x: 5
-            y: -105
+            x: 15
+            y: -115
             width: 240
-            height: 90
+            height: 95
             bg_color: Black
             layout:
                 type: FLEX
@@ -49,10 +49,10 @@ lvgl:
             border_width: 0
             pad_all: 0px
             align: bottom_left
-            x: 5
-            y: -15
+            x: 15
+            y: -25
             width: 240
-            height: 90
+            height: 95
             bg_color: Black
             layout:
                 type: FLEX
@@ -79,9 +79,9 @@ lvgl:
             pad_all: 0px
             align: bottom_mid
             x: 0
-            y: -105
+            y: -115
             width: 240
-            height: 90
+            height: 95
             bg_color: Black
             layout:
                 type: FLEX
@@ -106,9 +106,9 @@ lvgl:
             pad_all: 0px
             align: bottom_mid
             x: 0
-            y: -15
+            y: -25
             width: 240
-            height: 90
+            height: 95
             bg_color: Black
             layout:
                 type: FLEX
@@ -134,10 +134,10 @@ lvgl:
             border_width: 0
             pad_all: 0px
             align: bottom_right
-            x: -5
-            y: -105
+            x: -15
+            y: -115
             width: 240
-            height: 90
+            height: 95
             bg_color: Black
             layout:
                 type: FLEX
@@ -161,10 +161,10 @@ lvgl:
             border_width: 0
             pad_all: 0px
             align: bottom_right
-            x: -5
+            x: -15
             y: -15
             width: 240
-            height: 90
+            height: 95
             bg_color: Black
             layout:
                 type: FLEX
