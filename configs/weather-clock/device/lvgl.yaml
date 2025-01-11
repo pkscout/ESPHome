@@ -13,26 +13,11 @@ lvgl:
             styles: clock_style
             align: top_mid
             x: 0
-            y: -20
+            y: -50
             text_align: center
 
         # Outdoor
         - obj:
-            border_width: 0
-            pad_all: 0px
-            align: bottom_left
-            x: 5
-            y: -95
-            width: 240
-            height: 90
-            bg_color: Black
-            layout:
-                type: FLEX
-                flex_flow: ROW_WRAP
-                flex_align_main: start
-                flex_align_cross: end
-                pad_column: 0px
-                pad_row: 0px
             widgets:
               - label:
                   text: "--"
