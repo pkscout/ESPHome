@@ -3,7 +3,6 @@ lvgl:
     - id: main_page
       width: 100%
       bg_color: Black
-      bg_opa: cover
 
       widgets:
       
@@ -14,7 +13,7 @@ lvgl:
             styles: clock_style
             align: top_mid
             x: 0
-            y: 5
+            y: -10
             text_align: center
   
         # Outdoor
@@ -36,7 +35,7 @@ lvgl:
                 pad_row: 0px
             widgets:
               - label:
-                  text: " "
+                  text: "--"
                   id: outdoor_temperature
                   styles: outdoor_style
                   text_align: left
@@ -62,7 +61,7 @@ lvgl:
                 pad_row: 0px
             widgets:
               - label:
-                  text: " "
+                  text: "--"
                   id: outdoor_humidity
                   styles: outdoor_style
                   text_align: left
@@ -90,7 +89,7 @@ lvgl:
                 pad_row: 0px
             widgets:
               - label:
-                  text: " "
+                  text: "--"
                   id: today_high
                   styles: high_style
                   text_align: left
@@ -116,7 +115,7 @@ lvgl:
                 pad_row: 0px
             widgets:
               - label:
-                  text: " "
+                  text: "--"
                   id: today_low
                   styles: low_style
                   text_align: left
@@ -144,7 +143,7 @@ lvgl:
                 pad_row: 0px
             widgets:
               - label:
-                  text: " "
+                  text: "--"
                   id: indoor_temperature
                   styles: indoor_style
                   text_align: left
@@ -170,7 +169,7 @@ lvgl:
                 pad_row: 0px
             widgets:
               - label:
-                  text: " "
+                  text: "--"
                   id: indoor_humidity
                   styles: indoor_style
                   text_align: left
