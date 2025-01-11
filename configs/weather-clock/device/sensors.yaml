@@ -15,7 +15,9 @@ sensor:
     on_value:
       - lvgl.label.update:
           id: outdoor_temperature
-          text: (str)(int)round(x)
+          text:
+            format: "%d"
+            args: ['(int)round(x)']
   - platform: homeassistant
     entity_id: sensor.wc_outdoor_humidity
     id: ha_outdoor_humidity
