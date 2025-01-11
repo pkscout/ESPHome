@@ -1,11 +1,16 @@
+# Clock
+script:
+  - id: time_update
+    then:
+      - lvgl.label.update:
+          id: display_time
+          text: !lambda |-
+            return id(ha_time)
+
 text_sensor:
   - platform: homeassistant
     entity_id: sensor.time_normal
     id: ha_time
-    on_value:
-      - lvgl.label.update:
-          id: display_time
-          text: "%s", x.c_str();
 
 sensor:
   - platform: homeassistant
