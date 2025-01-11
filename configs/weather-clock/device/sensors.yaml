@@ -11,6 +11,8 @@ text_sensor:
   - platform: homeassistant
     entity_id: sensor.time_normal
     id: ha_time
+    on_value:
+      - script.execute: time_update
 
 sensor:
   - platform: homeassistant
