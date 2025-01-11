@@ -37,9 +37,9 @@ logger:
   hardware_uart: UART0
 
 # Enable bluetooth proxy
-esp32_ble_tracker:
+# esp32_ble_tracker:
 
-bluetooth_proxy:
+# bluetooth_proxy:
 
 # Video memory
 psram:
