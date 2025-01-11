@@ -18,6 +18,7 @@ lvgl:
 
         # Outdoor
         - obj:
+            scrollbar_mode: "OFF"
             border_width: 0
             pad_all: 0px
             align: bottom_left
@@ -35,7 +36,6 @@ lvgl:
                 pad_row: 0px
             widgets:
               - label:
-                  scrollable: false
                   text: "--"
                   id: outdoor_temperature
                   styles: outdoor_style
