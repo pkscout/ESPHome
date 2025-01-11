@@ -79,33 +79,6 @@ lvgl:
             pad_all: 0px
             align: bottom_mid
             x: 0
-            y: -115
-            width: 240
-            height: 100
-            bg_color: Black
-            layout:
-                type: FLEX
-                flex_flow: ROW_WRAP
-                flex_align_main: center
-                flex_align_cross: end
-                pad_column: 0px
-                pad_row: 0px
-            widgets:
-              - label:
-                  text: "--"
-                  id: today_high
-                  styles: high_style
-                  text_align: left
-              - label:
-                  styles: small_high_style
-                  text: ${tempscale}
-                  text_align: left
-        - obj:
-            scrollbar_mode: "OFF"
-            border_width: 0
-            pad_all: 0px
-            align: bottom_mid
-            x: 0
             y: -25
             width: 240
             height: 100
@@ -127,35 +100,35 @@ lvgl:
                   styles: small_low_style
                   text: ${tempscale}
                   text_align: left
-  
-        # Indoor
         - obj:
             scrollbar_mode: "OFF"
             border_width: 0
             pad_all: 0px
-            align: bottom_right
-            x: -15
+            align: bottom_mid
+            x: 0
             y: -115
             width: 240
-            height: 90
+            height: 100
             bg_color: Black
             layout:
                 type: FLEX
                 flex_flow: ROW_WRAP
-                flex_align_main: end
+                flex_align_main: center
                 flex_align_cross: end
                 pad_column: 0px
                 pad_row: 0px
             widgets:
               - label:
                   text: "--"
-                  id: indoor_temperature
-                  styles: indoor_style
+                  id: today_high
+                  styles: high_style
                   text_align: left
               - label:
-                  styles: small_indoor_style
+                  styles: small_high_style
                   text: ${tempscale}
                   text_align: left
+  
+        # Indoor
         - obj:
             scrollbar_mode: "OFF"
             border_width: 0
@@ -183,4 +156,30 @@ lvgl:
                   styles: small_indoor_style
                   text: "%"
                   text_align: left
-  
+          - obj:
+            scrollbar_mode: "OFF"
+            border_width: 0
+            pad_all: 0px
+            align: bottom_right
+            x: -15
+            y: -115
+            width: 240
+            height: 90
+            bg_color: Black
+            layout:
+                type: FLEX
+                flex_flow: ROW_WRAP
+                flex_align_main: end
+                flex_align_cross: end
+                pad_column: 0px
+                pad_row: 0px
+            widgets:
+              - label:
+                  text: "--"
+                  id: indoor_temperature
+                  styles: indoor_style
+                  text_align: left
+              - label:
+                  styles: small_indoor_style
+                  text: ${tempscale}
+                  text_align: left
