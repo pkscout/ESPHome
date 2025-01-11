@@ -5,7 +5,7 @@ script:
       - lvgl.label.update:
           id: display_time
           text: !lambda |-
-            return id(ha_time)
+            return id(ha_time).c_str()
 
 text_sensor:
   - platform: homeassistant
