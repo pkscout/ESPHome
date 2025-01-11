@@ -14,9 +14,9 @@ script:
       - lvgl.label.update:
           id: display_time
           text: !lambda |-
-            clock = id(homeassistant_time).now().strftime("%I:%M");
+            string clock = id(homeassistant_time).now().strftime("%I:%M");
             if (clock[0] == 0) {
-              return clock.remove(0);
+              return clock.Substring(1);
             } else {
               return clock;
             };
