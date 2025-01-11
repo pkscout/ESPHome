@@ -18,11 +18,11 @@ script:
             char s_hours[2];
             int 24_hours = id(homeassistant_time).now().hour;
             if ( 24_hours > 12 ) {
-              itoa(24_hours - 12, s_hours, 10);
+              sprintf(s_hours, "%ld", (24_hours - 12));
             } elif (24_hours == 0) {
-              itoa(12, s_hours, 10);
+              sprintf(s_hours, "%ld", 12);
             } else {
-              itoa(24_hours, s_hours, 10);
+              sprintf(s_hours, "%ld", 24_hours);
             }
             strcpy(clock, s_hours);
             strcat(clock, ":");
