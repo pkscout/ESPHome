@@ -4,7 +4,7 @@ text_sensor:
     id: ha_time
     on_value:
       - lvgl.label.update:
-          id: outdoor_temperature
+          id: display_time
           text: !lambda |-
             return "%s", x.c_str();
 
