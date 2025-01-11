@@ -164,7 +164,7 @@ lvgl:
             x: -15
             y: -115
             width: 240
-            height: 90
+            height: 100
             bg_color: Black
             layout:
                 type: FLEX
