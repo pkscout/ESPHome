@@ -42,6 +42,17 @@ lvgl:
                 flex_align_cross: end
                 pad_column: 2px
                 pad_row: 0px
+            widgets:
+              - label:
+                  text: "--"
+                  id: test1
+                  styles: outdoor_style
+                  text_align: left
+              - label:
+                  styles: test2
+                  text: "%"
+                  text_align: left
+
         - obj:
             border_width: 0
             pad_all: 0px
