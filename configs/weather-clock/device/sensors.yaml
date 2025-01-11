@@ -6,7 +6,7 @@ text_sensor:
       - lvgl.label.update:
           id: outdoor_temperature
           text: !lambda |-
-            return "%s", x.c_str()
+            return "%s", x.c_str();
 
 sensor:
   - platform: homeassistant
