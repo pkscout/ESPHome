@@ -26,15 +26,18 @@ lvgl:
             width: 240
             height: 90
             bg_color: Black
+            layout:
+                type: FLEX
+                flex_flow: ROW_WRAP
+                flex_align_main: start
+                flex_align_cross: end
+                pad_column: 2px
+                pad_row: 0px
             widgets:
               - label:
                   text: "--"
                   id: outdoor_temperature
                   styles: outdoor_style
-                  text_align: left
-              - label:
-                  styles: small_outdoor_style
-                  text: ${tempscale}
                   text_align: left
         - obj:
             border_width: 0
