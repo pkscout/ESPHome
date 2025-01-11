@@ -335,7 +335,7 @@ lvgl:
                 flex_flow: ROW_WRAP
                 flex_align_main: start
                 flex_align_cross: end
-                pad_column: 0px
+                pad_column: 5px
                 pad_row: 0px
             widgets:
               - label:
@@ -445,8 +445,8 @@ lvgl:
                 flex_flow: ROW_WRAP
                 flex_align_main: end
                 flex_align_cross: end
-                pad_column: 0px
-                pad_row: 4px
+                pad_column: 5px
+                pad_row: 0px
             widgets:
               - label:
                   text: "--"
@@ -473,7 +473,7 @@ lvgl:
                 flex_align_main: end
                 flex_align_cross: end
                 pad_column: 0px
-                pad_row: 4px
+                pad_row: 0px
             widgets:
               - label:
                   text: "--"
