@@ -26,6 +26,7 @@ lvgl:
             y: -95
             width: 260
             height: 90
+            bg_color: Black
             layout:
                 type: FLEX
                 flex_flow: ROW_WRAP
