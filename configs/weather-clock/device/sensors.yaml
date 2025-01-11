@@ -5,8 +5,7 @@ text_sensor:
     on_value:
       - lvgl.label.update:
           id: display_time
-          text: !lambda: |-
-            return "%s", x.c_str();
+          text: "%s", x.c_str();
 
 sensor:
   - platform: homeassistant
