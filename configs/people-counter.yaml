@@ -25,10 +25,6 @@ logger:
 ota:
   platform: esphome
 
-time:
-  - platform: sntp
-    id: the_time
-
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_ssid_password
@@ -82,9 +78,6 @@ sensor:
   - platform: wifi_signal
     name:  ${uname} wifi signal
     update_interval: 60s
-  - platform: uptime
-    id: uptime_seconds
-    internal: true
   # this is all the time of flight stuff
   - platform: roode
     id: ${uname}
@@ -119,26 +112,3 @@ text_sensor:
       name: ${name} roode version
     entry_exit_event:
       name: ${name} last direction
-  - platform: template
-    name: ${uname} uptime
-    entity_category: diagnostic
-    lambda: |-
-      int seconds = (id(uptime_seconds).state);
-      int days = seconds / (24 * 3600);
-      seconds = seconds % (24 * 3600);
-      int hours = seconds / 3600;
-      seconds = seconds % 3600;
-      int minutes = seconds /  60;
-      seconds = seconds % 60;
-      if ( days > 3650 ) {
-        return { "Starting up" };
-      } else if ( days ) {
-        return { (String(days) +"d " + String(hours) +"h " + String(minutes) +"m "+ String(seconds) +"s").c_str() };
-      } else if ( hours ) {
-        return { (String(hours) +"h " + String(minutes) +"m "+ String(seconds) +"s").c_str() };
-      } else if ( minutes ) {
-        return { (String(minutes) +"m "+ String(seconds) +"s").c_str() };
-      } else {
-        return { (String(seconds) +"s").c_str() };
-      }
-    icon: mdi:clock-start

@@ -21,10 +21,6 @@ ota:
 
 logger:
 
-time:
-  - platform: sntp
-    id: the_time
-
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_ssid_password
@@ -50,9 +46,6 @@ sensor:
   - platform: wifi_signal
     name:  ${uname} wifi signal
     update_interval: 60s
-  - platform: uptime
-    id: uptime_seconds
-    internal: true
   - platform: bh1750
     name: ${name} lux
     icon: mdi:brightness-7
@@ -74,28 +67,3 @@ sensor:
       name: ${name} humidity
     address: 0x77
     update_interval: 60s
-
-text_sensor:
-  - platform: template
-    name: ${uname} uptime
-    entity_category: diagnostic
-    lambda: |-
-      int seconds = (id(uptime_seconds).state);
-      int days = seconds / (24 * 3600);
-      seconds = seconds % (24 * 3600);
-      int hours = seconds / 3600;
-      seconds = seconds % 3600;
-      int minutes = seconds /  60;
-      seconds = seconds % 60;
-      if ( days > 3650 ) {
-        return { "Starting up" };
-      } else if ( days ) {
-        return { (String(days) +"d " + String(hours) +"h " + String(minutes) +"m "+ String(seconds) +"s").c_str() };
-      } else if ( hours ) {
-        return { (String(hours) +"h " + String(minutes) +"m "+ String(seconds) +"s").c_str() };
-      } else if ( minutes ) {
-        return { (String(minutes) +"m "+ String(seconds) +"s").c_str() };
-      } else {
-        return { (String(seconds) +"s").c_str() };
-      }
-    icon: mdi:clock-start
