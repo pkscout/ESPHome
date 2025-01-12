@@ -24,10 +24,7 @@ esp32:
   framework:
     type: arduino
 
-# Enable logging
 logger:
-  logs:
-    component: ERROR
 
 ota:
   platform: esphome
@@ -35,8 +32,6 @@ ota:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_ssid_password
-
-bluetooth_proxy:
 
 api:
 
