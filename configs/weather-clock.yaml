@@ -200,7 +200,7 @@ sensor:
             format: "%d"
             args: ['(int)round(x)']
 
-# Backlight (output, light, and switch sections)
+# Backlight
 output:
   - platform: ledc
     pin: GPIO16
@@ -243,6 +243,7 @@ switch:
     restore_mode: ALWAYS_ON
     internal: true
 
+#fonts and styles for display
 font:
   - file:
       type: gfonts
@@ -268,6 +269,7 @@ font:
     size: 70
     bpp: 4
 
+#actual weather clock layout
 lvgl:
   style_definitions:
     - id: clock_style
