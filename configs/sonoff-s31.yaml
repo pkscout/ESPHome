@@ -30,6 +30,11 @@ wifi:
 uart:
   rx_pin: RX
   baud_rate: 4800
+  parity: EVEN
+
+time:
+  - platform: sntp
+    id: the_time
 
 button:
   - platform: restart
