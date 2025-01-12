@@ -83,7 +83,6 @@ number:
            clock.begin(0x70);
            clock.setBrightness(x);
 
-# setup sensors
 button:
   - platform: restart
     name: ${uname} restart
@@ -99,6 +98,3 @@ sensor:
   - platform: wifi_signal
     name:  ${uname} wifi signal
     update_interval: 60s
-  - platform: uptime
-    id: uptime_seconds
-    internal: true
