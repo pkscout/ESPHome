@@ -1,7 +1,7 @@
 substitutions:
   name: default
-  dname: ${name}-clock
-  uname: ${name}_clock
+  dname: ${name}-clk
+  uname: ${name}_clk
 
 esphome:
   platformio_options:
@@ -61,11 +61,32 @@ script:
           static Adafruit_7segment clock = Adafruit_7segment();
           int hours = id(homeassistant_time).now().hour;
           int minutes = id(homeassistant_time).now().minute;
+          if (hours > 12) {
+            hours = hours - 12;
+          } else if ( hours == 0) {
+            hours = 12;
+          };
           int displayValue = hours*100 + minutes;
           clock.begin(0x70);
           clock.print(displayValue, DEC);
           clock.drawColon(1);
           clock.writeDisplay();
+
+# setup display dimmer
+number:
+  - platform: template
+    name: ${uname} brightness
+    min_value: 0
+    max_value: 15
+    step: 1
+    optimistic: true
+    restore_value: true
+    initial_value: 10
+    set_action:
+      - lambda: |-
+           static Adafruit_7segment clock = Adafruit_7segment();
+           clock.begin(0x70);
+           clock.setBrightness(x);
 
 # setup sensors
 button:
