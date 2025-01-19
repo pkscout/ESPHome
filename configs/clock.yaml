@@ -48,6 +48,15 @@ time:
         minutes: /1 # Update every minute
         then:
           - script.execute: time_update    
+    on_time_sync:
+      then:
+        - script.execute: time_update
+
+globals:
+  - id: brightness
+    type: int
+    restore_value: yes
+    initial_value: '10'
 
 script:
   - id: time_update
@@ -63,6 +72,7 @@ script:
           };
           int displayValue = hours*100 + minutes;
           clock.begin(0x70);
+          clock.setBrightness(id(brightness));
           clock.print(displayValue, DEC);
           clock.drawColon(1);
           clock.writeDisplay();
@@ -79,9 +89,8 @@ number:
     initial_value: 10
     set_action:
       - lambda: |-
-           static Adafruit_7segment clock = Adafruit_7segment();
-           clock.begin(0x70);
-           clock.setBrightness(x);
+          id(brightness) = x;
+      - script.execute: time_update
 
 button:
   - platform: restart
