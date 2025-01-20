@@ -56,7 +56,7 @@ globals:
   - id: brightness
     type: int
     restore_value: yes
-    initial_value: '10'
+    initial_value: '8'
 
 script:
   - id: time_update
@@ -86,7 +86,7 @@ number:
     step: 1
     optimistic: true
     restore_value: true
-    initial_value: 10
+    initial_value: 8
     set_action:
       - lambda: |-
           id(brightness) = x;
