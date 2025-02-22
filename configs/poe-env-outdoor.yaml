@@ -1,0 +1,64 @@
+substitutions:
+  # the first is meant to be overridden on the command line
+  name: outdoor
+  # these can be left alone unless they really need to be changed
+  dname: ${name}-env
+  uname: ${name}_env
+
+esphome:
+  name: ${dname}
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+  - platform: esphome
+
+ethernet:
+  type: LAN8720
+  mdc_pin: GPIO23
+  mdio_pin: GPIO18
+  clk_mode: GPIO17_OUT
+  phy_addr: 0
+  power_pin: GPIO12
+  
+i2c:
+  sda: 1
+  scl: 3
+
+button:
+  - platform: restart
+    name: ${uname} restart
+  - platform: safe_mode
+    name: ${uname} restart safe
+    icon: mdi:restart-alert
+
+binary_sensor:
+  - platform: status
+    name: ${uname} status
+
+sensor:
+  - platform: bme280_i2c
+    temperature:
+      name: ${name} temperature
+      oversampling: 16x
+      filters:
+      - lambda: return (x * (9.0/5.0) + 32.0) - 2;
+      unit_of_measurement: "°F"
+    pressure:
+      name: ${name} pressure
+      filters:
+      - lambda: return x / 25.4;
+      unit_of_measurement: "inHg"
+    humidity:
+      name: ${name} humidity
+    address: 0x77
+    update_interval: 60s
