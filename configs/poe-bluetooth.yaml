@@ -1,0 +1,54 @@
+substitutions:
+  # the first is meant to be overridden on the command line
+  name: default
+  # these can be left alone unless they really need to be changed
+  dname: ${name}-proxy
+  uname: ${name}_proxy
+
+esphome:
+  name: ${dname}
+
+esp32:
+  board: wesp32
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+  - platform: esphome
+
+ethernet:
+  type: RTL8201
+  mdc_pin: GPIO16
+  mdio_pin: GPIO17
+  clk_mode: GPIO0_IN
+  phy_addr: 0
+  phy_registers:
+    - address: 0x10
+      value: 0x1FFA
+      page_id: 0x07  
+
+esp32_ble_tracker:
+  scan_parameters:
+    interval: 1100ms
+    window: 1100ms
+    active: true
+
+bluetooth_proxy:
+  active: true
+
+button:
+  - platform: restart
+    name: ${uname} restart
+  - platform: safe_mode
+    name: ${uname} restart safe
+    icon: mdi:restart-alert
+
+binary_sensor:
+  - platform: status
+    name: ${uname} status
