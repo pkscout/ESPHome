@@ -200,20 +200,17 @@ binary_sensor:
         pullup: true
       inverted: true
     name: vol_up
+    id: vol_up
     internal: true
-    on_multi_click:
-      - timing:
-          - ON for at most 350ms
-        then:
-          - homeassistant.event:
-              event: esphome.remote_button_pressed
-              data: {button: "${uname} vol_up", type: "single"}
-      - timing:
-          - ON for at least 500ms
-        then:
-          - homeassistant.event:
-              event: esphome.remote_button_pressed
-              data: {button: "${uname} vol_up", type: "long"}
+    on_press:
+      - while:
+          condition:
+            binary_sensor.is_on: vol_up
+          then:
+            - homeassistant.event:
+                event: esphome.remote_button_pressed
+                data: {button: "${uname} vol_up", type: "single"}
+            - delay: 0.3s
   - platform: gpio
     pin:
       number: GPIO13
@@ -266,20 +263,18 @@ binary_sensor:
         pullup: true
       inverted: true
     name: vol_down
+    id: vol_down
     internal: true
-    on_multi_click:
-      - timing:
-          - ON for at most 350ms
-        then:
-          - homeassistant.event:
-              event: esphome.remote_button_pressed
-              data: {button: "${uname} vol_down", type: "single"}
-      - timing:
-          - ON for at least 500ms
-        then:
-          - homeassistant.event:
-              event: esphome.remote_button_pressed
-              data: {button: "${uname} vol_down", type: "long"}
+    on_press:
+      - while:
+          condition:
+            binary_sensor.is_on: vol_down
+          then:
+            - homeassistant.event:
+                event: esphome.remote_button_pressed
+                data: {button: "${uname} vol_down", type: "single"}
+            - delay: 0.3s
+
   - platform: gpio
     pin:
       number: GPIO16
