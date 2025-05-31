@@ -70,24 +70,40 @@ sensor:
     name:  wifi signal
     update_interval: 60s
   - platform: adc
+    name: battery voltage
+    id: battery_voltage 
     pin: GPIO36
-    attenuation: 11db
-    name: battery
-    update_interval: 60s
+    attenuation: auto
+    update_interval: 1s
+    accuracy_decimals: 1
     filters:
-      - multiply: 3.3
-      - lambda: |-
-          float v = x;
-          float percentage = 118.142 - 80.909 * v + 16.183 * v * v;
-          if (percentage > 100.0) {
-            percentage = 100.0;
-          }
-          if (percentage < 0.0) {
-            percentage = 0.0;
-          }
-          return percentage;
-    unit_of_measurement: "%"
+      - multiply: 30.3
+    #use moving median to smooth spikes
+      - median:
+          window_size: 10
+          send_every: 10
+          send_first_at: 10
+      - delta: 0.1 #Only send values to HA if they change 
+      - throttle: 60s #Limit values sent to Ha
+#Convert the Voltage to a battery  level (%)
+  - platform: copy
+    source_id: battery_voltage
+    name: battery level
+    icon: "mdi:battery"
+    unit_of_measurement: '%'
     accuracy_decimals: 0
+    filters:
+      - calibrate_linear:
+      # Map from voltage to Battery level
+          - 0.41 -> 0
+          - 3.1 -> 100
+      #Handle/cap boundaries
+      - lambda: |
+          if (x < 0) return 0; 
+          else if (x > 100) return 100;
+          else return (x);
+      - delta: 0.5 #Only send values to HA if they change 
+      - throttle: 60s #Limit values sent to Ha
 
 binary_sensor:
   - platform: status
