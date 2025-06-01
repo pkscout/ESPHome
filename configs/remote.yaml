@@ -96,7 +96,7 @@ sensor:
       - calibrate_linear:
       # Map from voltage to Battery level
           - 0.41 -> 0
-          - 3.1 -> 100
+          - 3.7 -> 100
       #Handle/cap boundaries
       - lambda: |
           if (x < 0) return 0; 
