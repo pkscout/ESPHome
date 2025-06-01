@@ -83,9 +83,8 @@ sensor:
           window_size: 10
           send_every: 10
           send_first_at: 10
-      - delta: 0.1 #Only send values to HA if they change 
-      - throttle: 60s #Limit values sent to Ha
-  #Convert the Voltage to a battery  level (%)
+      - delta: 0.1
+      - throttle: 60s
   - platform: copy
     source_id: battery_voltage
     name: battery level
@@ -97,13 +96,12 @@ sensor:
       # Map from voltage to Battery level
           - 0.41 -> 0
           - 3.7 -> 100
-      #Handle/cap boundaries
       - lambda: |
           if (x < 0) return 0; 
           else if (x > 100) return 100;
           else return (x);
-      - delta: 0.5 #Only send values to HA if they change 
-      - throttle: 60s #Limit values sent to Ha
+      - delta: 0.5
+      - throttle: 60s
 
 binary_sensor:
   - platform: status
@@ -210,7 +208,7 @@ binary_sensor:
             - homeassistant.event:
                 event: esphome.remote_button_pressed
                 data: {button: "${uname} vol_up", type: "single"}
-            - delay: 0.3s
+            - delay: 0.6s
   - platform: gpio
     pin:
       number: GPIO13
@@ -273,7 +271,7 @@ binary_sensor:
             - homeassistant.event:
                 event: esphome.remote_button_pressed
                 data: {button: "${uname} vol_down", type: "single"}
-            - delay: 0.3s
+            - delay: 0.6s
 
   - platform: gpio
     pin:
@@ -337,7 +335,7 @@ binary_sensor:
             - homeassistant.event:
                 event: esphome.remote_button_pressed
                 data: {button: "${uname} up", type: "single"}
-            - delay: 0.3s
+            - delay: 0.6s
   - platform: gpio
     pin:
       number: GPIO19
@@ -356,7 +354,7 @@ binary_sensor:
             - homeassistant.event:
                 event: esphome.remote_button_pressed
                 data: {button: "${uname} left", type: "single"}
-            - delay: 0.3s
+            - delay: 0.6s
   - platform: gpio
     pin:
       number: GPIO22
@@ -397,7 +395,7 @@ binary_sensor:
             - homeassistant.event:
                 event: esphome.remote_button_pressed
                 data: {button: "${uname} right", type: "single"}
-            - delay: 0.3s
+            - delay: 0.6s
   - platform: gpio
     pin:
       number: GPIO25
@@ -416,7 +414,7 @@ binary_sensor:
             - homeassistant.event:
                 event: esphome.remote_button_pressed
                 data: {button: "${uname} down", type: "single"}
-            - delay: 0.3s
+            - delay: 0.6s
   - platform: gpio
     pin:
       number: GPIO26
@@ -435,7 +433,7 @@ binary_sensor:
             - homeassistant.event:
                 event: esphome.remote_button_pressed
                 data: {button: "${uname} rew", type: "single"}
-            - delay: 0.3s
+            - delay: 0.6s
   - platform: gpio
     pin:
       number: GPIO27
@@ -454,7 +452,7 @@ binary_sensor:
             - homeassistant.event:
                 event: esphome.remote_button_pressed
                 data: {button: "${uname} ff", type: "single"}
-            - delay: 0.3s
+            - delay: 0.6s
   - platform: gpio
     pin:
       number: GPIO32
