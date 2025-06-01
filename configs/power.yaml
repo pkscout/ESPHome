@@ -7,7 +7,7 @@ substitutions:
   uname: ${name}_pwr
 
 esphome:
-  name: $dname
+  name: ${dname}
 
 esp32:
   board: adafruit_feather_esp32s3
@@ -29,9 +29,9 @@ api:
 
 button:
   - platform: restart
-    name: ${uname} restart
+    name: restart
   - platform: safe_mode
-    name: ${uname} restart safe
+    name: restart safe
     icon: mdi:restart-alert
 
 binary_sensor:
@@ -41,11 +41,11 @@ binary_sensor:
       inverted: true
       mode:
         input: true
-    name: ${name} power
+    name: power
   - platform: status
-    name: ${uname} status
+    name: status
 
 sensor:
   - platform: wifi_signal
-    name:  ${uname} wifi signal
+    name:  wifi signal
     update_interval: 60s

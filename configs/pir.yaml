@@ -8,7 +8,7 @@ substitutions:
   uname: ${name}_pir
 
 esphome:
-  name: $dname
+  name: ${dname}
 
 esp32:
   board: adafruit_feather_esp32s3
@@ -30,23 +30,23 @@ api:
 
 button:
   - platform: restart
-    name: ${uname} restart
+    name: restart
   - platform: safe_mode
-    name: ${uname} restart safe
+    name: restart safe
     icon: mdi:restart-alert
 
 # setup sensors
 binary_sensor:
   - platform: gpio
     pin: ${pin}
-    name: ${name} motion
+    name: motion
     device_class: motion
     filters:
       - delayed_off: ${delayed_off}
   - platform: status
-    name: ${uname} status
+    name: status
 
 sensor:
   - platform: wifi_signal
-    name:  ${uname} wifi signal
+    name:  wifi signal
     update_interval: 60s

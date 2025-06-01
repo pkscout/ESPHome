@@ -33,32 +33,32 @@ i2c:
 
 button:
   - platform: restart
-    name: ${uname} restart
+    name: restart
   - platform: safe_mode
-    name: ${uname} restart safe
+    name: restart safe
     icon: mdi:restart-alert
 
 binary_sensor:
   - platform: status
-    name: ${uname} status
+    name: status
 
 sensor:
   - platform: wifi_signal
-    name:  ${uname} wifi signal
+    name:  wifi signal
     update_interval: 60s
   - platform: bme280_i2c
     temperature:
-      name: ${name} temperature
+      name: temperature
       oversampling: 16x
       filters:
       - lambda: return (x * (9.0/5.0) + 32.0) - 2;
       unit_of_measurement: "°F"
     pressure:
-      name: ${name} pressure
+      name: pressure
       filters:
       - lambda: return x / 25.4;
       unit_of_measurement: "inHg"
     humidity:
-      name: ${name} humidity
+      name: humidity
     address: 0x77
     update_interval: 60s

@@ -121,14 +121,14 @@ wifi:
 
 button:
   - platform: restart
-    name: ${uname} restart
+    name: restart
   - platform: safe_mode
-    name: ${uname} restart safe
+    name: restart safe
     icon: mdi:restart-alert
 
 binary_sensor:
   - platform: status
-    name: ${uname} status
+    name: status
 
 text_sensor:
   - platform: homeassistant
@@ -142,7 +142,7 @@ text_sensor:
 
 sensor:
   - platform: wifi_signal
-    name:  ${uname} wifi signal
+    name:  wifi signal
     update_interval: 60s
     entity_category: diagnostic
   - platform: homeassistant
@@ -209,12 +209,12 @@ output:
 light:
   - platform: monochromatic
     output: backlight
-    name: ${uname} backlight
+    name: backlight
     restore_mode: ALWAYS_ON
 
 switch:
   - platform: template
-    name: ${uname} antiburn
+    name: antiburn
     icon: mdi:television-shimmer
     optimistic: true
     entity_category: "config"

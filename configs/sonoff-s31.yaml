@@ -38,9 +38,9 @@ time:
 
 button:
   - platform: restart
-    name: ${name} restart
+    name: restart
   - platform: safe_mode
-    name: ${uname} restart safe
+    name: restart safe
     icon: mdi:restart-alert
 
 binary_sensor:
@@ -49,36 +49,36 @@ binary_sensor:
       number: GPIO0
       mode: INPUT_PULLUP
       inverted: True
-    name: ${name} button
+    name: button
     on_press:
-      - switch.toggle: ${uname}_relay
+      - switch.toggle: relay
   - platform: status
-    name: ${name} status
+    name: status
 
 sensor:
   - platform: wifi_signal
-    name:  ${name} wifi signal
+    name:  wifi signal
     update_interval: 60s
   - platform: cse7766
     current:
-      name: ${name} current
+      name: current
       accuracy_decimals: 1
     voltage:
-      name: ${name} voltage
+      name: voltage
       accuracy_decimals: 1
     power:
-      name: ${name} power
+      name: power
       accuracy_decimals: 1
-      id: ${uname}_power
+      id: power
   - platform: total_daily_energy
-    name: ${name} daily energy
-    power_id: ${uname}_power
+    name: daily energy
+    power_id: power
 
 switch:
   - platform: gpio
-    name: ${name}  relay
+    name:  relay
     pin: GPIO12
-    id: ${uname}_relay
+    id: relay
     restore_mode: RESTORE_DEFAULT_OFF
 
 status_led:

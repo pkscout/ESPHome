@@ -10,7 +10,7 @@ substitutions:
   uname: ${name}_ppl
 
 esphome:
-  name: $dname
+  name: ${dname}
 
 esp32:
   board: adafruit_feather_esp32s3
@@ -54,61 +54,61 @@ roode:
 # setup sensors
 button:
   - platform: restart
-    name: ${uname} restart
+    name: restart
   - platform: safe_mode
-    name: ${uname} restart safe
+    name: restart safe
     icon: mdi:restart-alert
 
 number:
   - platform: roode
     people_counter:
-      name: ${name} people
+      name: people
 
 binary_sensor:
   - platform: gpio
     pin: ${pin}
-    name: ${name} motion
+    name: motion
     device_class: motion
     filters:
       - delayed_off: 2s
   - platform: status
-    name: ${uname} status
+    name: status
 
 sensor:
   - platform: wifi_signal
-    name:  ${uname} wifi signal
+    name:  wifi signal
     update_interval: 60s
   # this is all the time of flight stuff
   - platform: roode
     id: ${uname}
     distance_entry:
-      name: ${name} entry
+      name: entry
       filters:
         - delta: 500.0
     distance_exit:
-      name: ${name} exit
+      name: exit
       filters:
         - delta: 500.0
     min_threshold_entry:
-      name: ${name} min entry
+      name: min entry
     max_threshold_entry:
-      name: ${name} max entry
+      name: max entry
     min_threshold_exit:
-      name: ${name} min exit
+      name: min exit
     max_threshold_exit:
-      name: ${name} max exit
+      name: max exit
     roi_height_entry:
-      name: ${name} height entry
+      name: height entry
     roi_height_exit:
-      name: ${name} height exit
+      name: height exit
     roi_width_entry:
-      name: ${name} width entry
+      name: width entry
     roi_width_exit:
-      name: ${name} width exit
+      name: width exit
 
 text_sensor:
   - platform: roode
     version:
-      name: ${name} roode version
+      name: roode version
     entry_exit_event:
-      name: ${name} last direction
+      name: last direction

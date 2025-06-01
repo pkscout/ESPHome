@@ -7,7 +7,7 @@ esphome:
   platformio_options:
     board_build.flash_size: 8MB
     board_upload.maximum_size: 8388608
-  name: $dname
+  name: ${dname}
   includes: 
     - <Adafruit_LEDBackpack.h>
   libraries:
@@ -79,7 +79,7 @@ script:
 # setup display dimmer
 number:
   - platform: template
-    name: ${uname} brightness
+    name: brightness
     min_value: 0
     max_value: 15
     step: 1
@@ -93,16 +93,16 @@ number:
 
 button:
   - platform: restart
-    name: ${uname} restart
+    name: restart
   - platform: safe_mode
-    name: ${uname} restart safe
+    name: restart safe
     icon: mdi:restart-alert
 
 binary_sensor:
   - platform: status
-    name: ${uname} status
+    name: status
 
 sensor:
   - platform: wifi_signal
-    name:  ${uname} wifi signal
+    name:  wifi signal
     update_interval: 60s
