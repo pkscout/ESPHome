@@ -118,9 +118,6 @@ binary_sensor:
     internal: true
     on_press:
       then:
-        - homeassistant.event:
-            event: esphome.remote_button_pressed
-            data: {button: "${uname} power", type: "single"}
         - switch.template.publish:
             id: active
             state: OFF
@@ -133,19 +130,11 @@ binary_sensor:
       inverted: true
     name: back
     internal: true
-    on_multi_click:
-      - timing:
-          - ON for at most 350ms
+    on_press:
         then:
           - homeassistant.event:
               event: esphome.remote_button_pressed
-              data: {button: "${uname} back", type: "single"}
-      - timing:
-          - ON for at least 500ms
-        then:
-          - homeassistant.event:
-              event: esphome.remote_button_pressed
-              data: {button: "${uname} back", type: "long"}
+              data: {button: "${uname} back"}
   - platform: gpio
     pin:
       number: GPIO4
@@ -177,19 +166,11 @@ binary_sensor:
       inverted: true
     name: menu
     internal: true
-    on_multi_click:
-      - timing:
-          - ON for at most 350ms
+    on_press:
         then:
           - homeassistant.event:
               event: esphome.remote_button_pressed
-              data: {button: "${uname} menu", type: "single"}
-      - timing:
-          - ON for at least 500ms
-        then:
-          - homeassistant.event:
-              event: esphome.remote_button_pressed
-              data: {button: "${uname} menu", type: "long"}
+              data: {button: "${uname} menu"}
   - platform: gpio
     pin:
       number: GPIO12
@@ -218,19 +199,11 @@ binary_sensor:
       inverted: true
     name: play_pause
     internal: true
-    on_multi_click:
-      - timing:
-          - ON for at most 350ms
+    on_press:
         then:
           - homeassistant.event:
               event: esphome.remote_button_pressed
-              data: {button: "${uname} play_pause", type: "single"}
-      - timing:
-          - ON for at least 500ms
-        then:
-          - homeassistant.event:
-              event: esphome.remote_button_pressed
-              data: {button: "${uname} play_pause", type: "long"}
+              data: {button: "${uname} play_pause"}
   - platform: gpio
     pin:
       number: GPIO14
@@ -240,19 +213,11 @@ binary_sensor:
       inverted: true
     name: next
     internal: true
-    on_multi_click:
-      - timing:
-          - ON for at most 350ms
+    on_press:
         then:
           - homeassistant.event:
               event: esphome.remote_button_pressed
-              data: {button: "${uname} next", type: "single"}
-      - timing:
-          - ON for at least 500ms
-        then:
-          - homeassistant.event:
-              event: esphome.remote_button_pressed
-              data: {button: "${uname} next", type: "long"}
+              data: {button: "${uname} next"}
   - platform: gpio
     pin:
       number: GPIO15
@@ -282,19 +247,11 @@ binary_sensor:
       inverted: true
     name: stop
     internal: true
-    on_multi_click:
-      - timing:
-          - ON for at most 350ms
+    on_press:
         then:
           - homeassistant.event:
               event: esphome.remote_button_pressed
-              data: {button: "${uname} stop", type: "single"}
-      - timing:
-          - ON for at least 500ms
-        then:
-          - homeassistant.event:
-              event: esphome.remote_button_pressed
-              data: {button: "${uname} stop", type: "long"}
+              data: {button: "${uname} stop"}
   - platform: gpio
     pin:
       number: GPIO17
@@ -304,19 +261,11 @@ binary_sensor:
       inverted: true
     name: prev
     internal: true
-    on_multi_click:
-      - timing:
-          - ON for at most 350ms
+    on_press:
         then:
           - homeassistant.event:
               event: esphome.remote_button_pressed
-              data: {button: "${uname} prev", type: "single"}
-      - timing:
-          - ON for at least 500ms
-        then:
-          - homeassistant.event:
-              event: esphome.remote_button_pressed
-              data: {button: "${uname} prev", type: "long"}
+              data: {button: "${uname} prev"}
   - platform: gpio
     pin:
       number: GPIO18
@@ -364,19 +313,11 @@ binary_sensor:
       inverted: true
     name: select
     internal: true
-    on_multi_click:
-      - timing:
-          - ON for at most 350ms
+    on_press:
         then:
           - homeassistant.event:
               event: esphome.remote_button_pressed
-              data: {button: "${uname} select", type: "single"}
-      - timing:
-          - ON for at least 500ms
-        then:
-          - homeassistant.event:
-              event: esphome.remote_button_pressed
-              data: {button: "${uname} select", type: "long"}
+              data: {button: "${uname} select"}
   - platform: gpio
     pin:
       number: GPIO23
@@ -462,19 +403,11 @@ binary_sensor:
       inverted: true
     name: tv
     internal: true
-    on_multi_click:
-      - timing:
-          - ON for at most 350ms
+    on_press:
         then:
           - homeassistant.event:
               event: esphome.remote_button_pressed
-              data: {button: "${uname} tv", type: "single"}
-      - timing:
-          - ON for at least 500ms
-        then:
-          - homeassistant.event:
-              event: esphome.remote_button_pressed
-              data: {button: "${uname} tv", type: "long"}
+              data: {button: "${uname} tv"}
   - platform: gpio
     pin:
       number: GPIO33
@@ -484,19 +417,11 @@ binary_sensor:
       inverted: true
     name: kodi
     internal: true
-    on_multi_click:
-      - timing:
-          - ON for at most 350ms
+    on_press:
         then:
           - homeassistant.event:
               event: esphome.remote_button_pressed
-              data: {button: "${uname} kodi", type: "single"}
-      - timing:
-          - ON for at least 500ms
-        then:
-          - homeassistant.event:
-              event: esphome.remote_button_pressed
-              data: {button: "${uname} appletv", type: "long"}
+              data: {button: "${uname} kodi"}
   - platform: gpio
     pin:
       number: GPIO34
@@ -505,19 +430,11 @@ binary_sensor:
       inverted: true
     name: mute
     internal: true
-    on_multi_click:
-      - timing:
-          - ON for at most 350ms
+    on_press:
         then:
           - homeassistant.event:
               event: esphome.remote_button_pressed
-              data: {button: "${uname} mute", type: "single"}
-      - timing:
-          - ON for at least 500ms
-        then:
-          - homeassistant.event:
-              event: esphome.remote_button_pressed
-              data: {button: "${uname} mute", type: "long"}
+              data: {button: "${uname} mute"}
   - platform: gpio
     pin:
       number: GPIO35
@@ -526,16 +443,8 @@ binary_sensor:
       inverted: true
     name: appletv
     internal: true
-    on_multi_click:
-      - timing:
-          - ON for at most 350ms
+    on_press:
         then:
           - homeassistant.event:
               event: esphome.remote_button_pressed
-              data: {button: "${uname} appletv", type: "single"}
-      - timing:
-          - ON for at least 500ms
-        then:
-          - homeassistant.event:
-              event: esphome.remote_button_pressed
-              data: {button: "${uname} kodi", type: "long"}
+              data: {button: "${uname} appletv"}
