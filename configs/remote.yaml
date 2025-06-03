@@ -70,39 +70,25 @@ sensor:
     name:  wifi signal
     update_interval: 60s
   - platform: adc
-    name: battery voltage
-    id: battery_voltage 
     pin: GPIO36
-    attenuation: auto
-    update_interval: 1s
-    accuracy_decimals: 1
-    filters:
-      - multiply: 30.3
-      #use moving median to smooth spikes
-      - median:
-          window_size: 10
-          send_every: 10
-          send_first_at: 10
-      - delta: 0.1
-      - throttle: 60s
-  - platform: copy
-    source_id: battery_voltage
+    attenuation: 11db
     name: battery level
     icon: "mdi:battery"
-    unit_of_measurement: '%'
-    accuracy_decimals: 0
     filters:
-      - calibrate_linear:
-      # Map from voltage to Battery level
-          - 0.41 -> 0
-          - 3.7 -> 100
-      - lambda: |
-          if (x < 0) return 0; 
-          else if (x > 100) return 100;
-          else return (x);
-      - delta: 0.5
-      - throttle: 60s
-
+      - multiply: 3.3
+      - lambda: |-
+          float v = x;
+          float percentage = 118.142 - 80.909 * v + 16.183 * v * v;
+          if (percentage > 100.0) {
+            percentage = 100.0;
+          }
+          if (percentage < 0.0) {
+            percentage = 0.0;
+          }
+          return percentage;
+    unit_of_measurement: "%"
+    accuracy_decimals: 0
+    
 binary_sensor:
   - platform: status
     name: status
@@ -188,7 +174,7 @@ binary_sensor:
           then:
             - homeassistant.event:
                 event: esphome.remote_button_pressed
-                data: {button: "${uname} vol_up", type: "single"}
+                data: {button: "${uname} vol_up"}
             - delay: 0.6s
   - platform: gpio
     pin:
@@ -235,7 +221,7 @@ binary_sensor:
           then:
             - homeassistant.event:
                 event: esphome.remote_button_pressed
-                data: {button: "${uname} vol_down", type: "single"}
+                data: {button: "${uname} vol_down"}
             - delay: 0.6s
 
   - platform: gpio
@@ -277,14 +263,10 @@ binary_sensor:
     id: up
     internal: true
     on_press:
-      - while:
-          condition:
-            binary_sensor.is_on: up
-          then:
-            - homeassistant.event:
-                event: esphome.remote_button_pressed
-                data: {button: "${uname} up", type: "single"}
-            - delay: 0.6s
+      then:
+        - homeassistant.event:
+            event: esphome.remote_button_pressed
+            data: {button: "${uname} up"}
   - platform: gpio
     pin:
       number: GPIO19
@@ -296,14 +278,10 @@ binary_sensor:
     id: left
     internal: true
     on_press:
-      - while:
-          condition:
-            binary_sensor.is_on: left
-          then:
-            - homeassistant.event:
-                event: esphome.remote_button_pressed
-                data: {button: "${uname} left", type: "single"}
-            - delay: 0.6s
+      then:
+        - homeassistant.event:
+            event: esphome.remote_button_pressed
+            data: {button: "${uname} left"}
   - platform: gpio
     pin:
       number: GPIO22
@@ -329,14 +307,10 @@ binary_sensor:
     id: right
     internal: true
     on_press:
-      - while:
-          condition:
-            binary_sensor.is_on: right
-          then:
-            - homeassistant.event:
-                event: esphome.remote_button_pressed
-                data: {button: "${uname} right", type: "single"}
-            - delay: 0.6s
+      then:
+        - homeassistant.event:
+            event: esphome.remote_button_pressed
+            data: {button: "${uname} right"}
   - platform: gpio
     pin:
       number: GPIO25
@@ -348,14 +322,10 @@ binary_sensor:
     id: down
     internal: true
     on_press:
-      - while:
-          condition:
-            binary_sensor.is_on: down
-          then:
-            - homeassistant.event:
-                event: esphome.remote_button_pressed
-                data: {button: "${uname} down", type: "single"}
-            - delay: 0.6s
+      then:
+        - homeassistant.event:
+            event: esphome.remote_button_pressed
+            data: {button: "${uname} down"}
   - platform: gpio
     pin:
       number: GPIO26
@@ -367,14 +337,10 @@ binary_sensor:
     id: rew
     internal: true
     on_press:
-      - while:
-          condition:
-            binary_sensor.is_on: rew
-          then:
-            - homeassistant.event:
-                event: esphome.remote_button_pressed
-                data: {button: "${uname} rew", type: "single"}
-            - delay: 0.6s
+      then:
+        - homeassistant.event:
+            event: esphome.remote_button_pressed
+            data: {button: "${uname} rew"}
   - platform: gpio
     pin:
       number: GPIO27
@@ -386,14 +352,10 @@ binary_sensor:
     id: ff
     internal: true
     on_press:
-      - while:
-          condition:
-            binary_sensor.is_on: ff
-          then:
-            - homeassistant.event:
-                event: esphome.remote_button_pressed
-                data: {button: "${uname} ff", type: "single"}
-            - delay: 0.6s
+      then:
+        - homeassistant.event:
+            event: esphome.remote_button_pressed
+            data: {button: "${uname} ff"}
   - platform: gpio
     pin:
       number: GPIO32
