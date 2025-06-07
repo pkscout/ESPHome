@@ -78,7 +78,7 @@ sensor:
       - multiply: 3.3
       - lambda: |-
           float v = x;
-          float percentage = 118.142 - 80.909 * v + 16.183 * v * v;
+          float percentage = 134.142 - 80.909 * v + 16.183 * v * v;
           if (percentage > 100.0) {
             percentage = 100.0;
           }
@@ -223,7 +223,6 @@ binary_sensor:
                 event: esphome.remote_button_pressed
                 data: {button: "${uname} vol_down"}
             - delay: 0.6s
-
   - platform: gpio
     pin:
       number: GPIO16
