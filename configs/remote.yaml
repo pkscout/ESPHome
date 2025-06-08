@@ -72,13 +72,16 @@ sensor:
   - platform: adc
     pin: GPIO36
     attenuation: 11db
+    device_class: battery
+    unit_of_measurement: "%"
+    accuracy_decimals: 0
     name: battery level
-    icon: "mdi:battery"
+    update_interval: 60s
     filters:
       - multiply: 3.3
       - lambda: |-
           float v = x;
-          float percentage = 134.142 - 80.909 * v + 16.183 * v * v;
+          float percentage = 118.142 - 80.909 * v + 16.183 * v * v;
           if (percentage > 100.0) {
             percentage = 100.0;
           }
@@ -86,8 +89,6 @@ sensor:
             percentage = 0.0;
           }
           return percentage;
-    unit_of_measurement: "%"
-    accuracy_decimals: 0
     
 binary_sensor:
   - platform: status
