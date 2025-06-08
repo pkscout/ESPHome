@@ -69,26 +69,6 @@ sensor:
   - platform: wifi_signal
     name:  wifi signal
     update_interval: 60s
-  - platform: adc
-    pin: GPIO36
-    attenuation: 11db
-    device_class: battery
-    unit_of_measurement: "%"
-    accuracy_decimals: 0
-    name: battery level
-    update_interval: 60s
-    filters:
-      - multiply: 3.3
-      - lambda: |-
-          float v = x;
-          float percentage = 118.142 - 80.909 * v + 16.183 * v * v;
-          if (percentage > 100.0) {
-            percentage = 100.0;
-          }
-          if (percentage < 0.0) {
-            percentage = 0.0;
-          }
-          return percentage;
     
 binary_sensor:
   - platform: status
