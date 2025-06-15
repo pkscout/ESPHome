@@ -21,7 +21,7 @@ esphome:
             }
 
 esp32:
-  board: esp32dev
+  board: lolin32_lite
   framework:
     type: arduino
 
@@ -69,7 +69,47 @@ sensor:
   - platform: wifi_signal
     name:  wifi signal
     update_interval: 60s
-    
+  - platform: adc
+    pin: GPIO36
+    name: battery voltage
+    id: battvolt
+    device_class: voltage
+    accuracy_decimals: 1
+    attenuation: auto
+    update_interval: 60s
+    on_value:
+      then:
+        - component.update: battlevel
+    filters:
+      - lambda: return x * (10000 + 10000)/10000;
+  - platform: template
+    name: battery level
+    id: battlevel
+    device_class: battery
+    accuracy_decimals: 0
+    unit_of_measurement: "%"
+    update_interval: 1200s
+    lambda: return id(battvolt).state;
+    filters:
+      - calibrate_linear:
+         method: exact
+         datapoints:
+          - 0.00 -> 0.0
+          - 3.30 -> 1.0
+          - 3.39 -> 10.0
+          - 3.72 -> 50.0
+          - 4.05 -> 90.0
+          - 4.14 -> 100.0
+      - lambda: |-
+          if (x <= 100) {
+            return x;
+          } else {
+            return 100;
+          }
+          if (x < 0) {
+            return 0;
+          }
+
 binary_sensor:
   - platform: status
     name: status
