@@ -18,7 +18,8 @@ esphome:
     - "Adafruit LED Backpack Library"
 
 esp32:
-  board: adafruit_feather_esp32s3
+  # board: adafruit_feather_esp32s3
+  variant: esp32s3
   flash_size: 8MB
   framework:
     type: arduino
