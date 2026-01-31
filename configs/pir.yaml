@@ -49,4 +49,3 @@ binary_sensor:
 sensor:
   - platform: wifi_signal
     name:  wifi signal
-    update_interval: 60s

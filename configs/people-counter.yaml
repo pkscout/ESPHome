@@ -77,7 +77,6 @@ binary_sensor:
 sensor:
   - platform: wifi_signal
     name:  wifi signal
-    update_interval: 60s
   # this is all the time of flight stuff
   - platform: roode
     id: ${uname}

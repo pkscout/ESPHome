@@ -143,7 +143,6 @@ text_sensor:
 sensor:
   - platform: wifi_signal
     name:  wifi signal
-    update_interval: 60s
     entity_category: diagnostic
   - platform: homeassistant
     entity_id: sensor.wc_outdoor_temperature

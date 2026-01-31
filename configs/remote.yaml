@@ -68,7 +68,6 @@ switch:
 sensor:
   - platform: wifi_signal
     name:  wifi signal
-    update_interval: 60s
   - platform: adc
     pin: GPIO36
     name: battery voltage
