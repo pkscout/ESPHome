@@ -38,7 +38,13 @@ i2c:
 time:
   - platform: homeassistant
     id: homeassistant_time
-    update_interval: 1s
+    on_time:
+      - seconds: 0
+        minutes: /1 # Update every minute
+        then:
+          - lambda: |-
+              id(homeassistant_time).update();
+              id(sevenseg).update();
 
 # setup display dimmer
 number:
