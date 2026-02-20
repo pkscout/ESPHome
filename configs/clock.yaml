@@ -1,6 +1,3 @@
-# this only works with ESPHome 2025.9.3 or earlier
-# changes with arduino in later versions cause unexpected issues with I2C
-
 substitutions:
   name: default
   dname: ${name}-clk
@@ -11,20 +8,16 @@ esphome:
     board_build.flash_size: 8MB
     board_upload.maximum_size: 8388608
   name: ${dname}
-  includes: 
-    - <Adafruit_LEDBackpack.h>
-  libraries:
-    - "Wire"
-    - "SPI"
-    - "Adafruit BusIO"
-    - "Adafruit GFX Library"
-    - "Adafruit LED Backpack Library"
 
 esp32:
   board: adafruit_feather_esp32s3
   flash_size: 8MB
   framework:
-    type: arduino
+    type: esp-idf
+
+external_components:
+  - source: github://pr#8520
+    components: [ ht16k33_char ]
 
 logger:
 
@@ -45,44 +38,13 @@ i2c:
 time:
   - platform: homeassistant
     id: homeassistant_time
-    on_time:
-      - seconds: 0
-        minutes: /1 # Update every minute
-        then:
-          - script.execute: time_update    
-    on_time_sync:
-      then:
-        - script.execute: time_update
-
-globals:
-  - id: brightness
-    type: int
-    restore_value: yes
-    initial_value: '8'
-
-script:
-  - id: time_update
-    then:
-      - lambda: |-
-          static Adafruit_7segment clock = Adafruit_7segment();
-          int hours = id(homeassistant_time).now().hour;
-          int minutes = id(homeassistant_time).now().minute;
-          if (hours > 12) {
-            hours = hours - 12;
-          } else if ( hours == 0) {
-            hours = 12;
-          };
-          int displayValue = hours*100 + minutes;
-          clock.begin(0x70);
-          clock.setBrightness(id(brightness));
-          clock.print(displayValue, DEC);
-          clock.drawColon(1);
-          clock.writeDisplay();
+    update_interval: 1s
 
 # setup display dimmer
 number:
   - platform: template
     name: brightness
+    id: brightness
     min_value: 0
     max_value: 15
     step: 1
@@ -91,8 +53,16 @@ number:
     initial_value: 8
     set_action:
       - lambda: |-
-          id(brightness) = x;
-      - script.execute: time_update
+          id(sevenseg).update();
+
+display:
+  - platform: ht16k33_char
+    device: ADAFRUIT_7_SEG_.56IN
+    id: sevenseg
+    brightness: 8
+    lambda: |-
+      it.brightness(id(brightness).state);
+      it.clock_display(0,true,false,true,id(homeassistant_time).now());
 
 button:
   - platform: restart
