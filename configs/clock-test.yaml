@@ -31,9 +31,11 @@ wifi:
 api:
 
 # the ESP32 board used has i2c on non-standard pins
+# i2c needs to start later so that display is found
 i2c:
   sda: 3
   scl: 4
+  setup_priority: 600
 
 time:
   - platform: homeassistant
