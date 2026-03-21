@@ -4,20 +4,19 @@ substitutions:
   uname: ${name}_clk
 
 esphome:
-  platformio_options:
-    board_build.flash_size: 8MB
-    board_upload.maximum_size: 8388608
   name: ${dname}
+  on_boot:
+    priority: -100
+    then:
+      - lambda: |-
+          id(homeassistant_time).update();
+          id(sevenseg).update();
 
 esp32:
-  board: adafruit_feather_esp32s3
-  flash_size: 8MB
+  board: lolin_s2_mini
+  variant: ESP32S2
   framework:
     type: esp-idf
-
-external_components:
-  - source: github://pr#8520
-    components: [ ht16k33_char ]
 
 logger:
 
@@ -30,13 +29,6 @@ wifi:
 
 api:
 
-# the ESP32 board used has i2c on non-standard pins
-# i2c needs to start later so that display is found
-i2c:
-  sda: 3
-  scl: 4
-  setup_priority: 600
-
 time:
   - platform: homeassistant
     id: homeassistant_time
@@ -47,6 +39,11 @@ time:
           - lambda: |-
               id(homeassistant_time).update();
               id(sevenseg).update();
+    on_time_sync:
+      then:
+        - lambda: |-
+            id(homeassistant_time).update();
+            id(sevenseg).update();
 
 # setup display dimmer
 number:
@@ -54,23 +51,24 @@ number:
     name: brightness
     id: brightness
     min_value: 0
-    max_value: 15
+    max_value: 7
     step: 1
     optimistic: true
     restore_value: true
-    initial_value: 8
+    initial_value: 4
     set_action:
       - lambda: |-
           id(sevenseg).update();
 
 display:
-  - platform: ht16k33_char
-    device: ADAFRUIT_7_SEG_.56IN
+  - platform: tm1637
     id: sevenseg
-    brightness: 8
+    clk_pin: GPIO35
+    dio_pin: GPIO37
+    intensity: 4
     lambda: |-
-      it.brightness(id(brightness).state);
-      it.clock_display(0,true,false,true,id(homeassistant_time).now());
+      it.set_intensity(id(brightness).state);
+      it.strftime("%H.%M", id(homeassistant_time).now());
 
 button:
   - platform: restart

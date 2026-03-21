@@ -19,6 +19,10 @@ esphome:
     - "Adafruit BusIO"
     - "Adafruit GFX Library"
     - "Adafruit LED Backpack Library"
+  on_boot:
+    priority: -100
+    then:
+      - script.execute: time_update 
 
 esp32:
   board: adafruit_feather_esp32s3
