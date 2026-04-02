@@ -33,16 +33,13 @@ time:
   - platform: homeassistant
     id: homeassistant_time
     on_time:
-      - seconds: 0
-        minutes: /1 # Update every minute
+        seconds: /5 # Update 5 seconds
         then:
           - lambda: |-
               id(homeassistant_time).update();
-              id(sevenseg).update();
     on_time_sync:
       then:
         - lambda: |-
-            id(homeassistant_time).update();
             id(sevenseg).update();
 
 # setup display dimmer
@@ -55,7 +52,7 @@ number:
     step: 1
     optimistic: true
     restore_value: true
-    initial_value: 4
+    initial_value: 3
     set_action:
       - lambda: |-
           id(sevenseg).update();
@@ -65,10 +62,10 @@ display:
     id: sevenseg
     clk_pin: GPIO35
     dio_pin: GPIO37
-    intensity: 4
+    intensity: 3
     lambda: |-
       it.set_intensity(id(brightness).state);
-      it.strftime("%H.%M", id(homeassistant_time).now());
+      it.strftime("%l.%M", id(homeassistant_time).now());
 
 button:
   - platform: restart
