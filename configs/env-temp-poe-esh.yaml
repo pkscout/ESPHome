@@ -45,13 +45,28 @@ binary_sensor:
   - platform: status
     name: status
 
+number:
+  - platform: template
+    name: "temp offset"
+    unit_of_measurement: "°F"
+    id: offset
+    optimistic: true
+    min_value: -10
+    max_value: 10
+    restore_value: true
+    initial_value: 0
+    step: 0.1
+    entity_category: "config"
+    mode: "box"
+    icon: mdi:arrow-collapse-vertical
+
 sensor:
   - platform: bme280_i2c
     temperature:
       name: temperature
       oversampling: 16x
       filters:
-      - lambda: return (x * (9.0/5.0) + 32.0) - 4;
+      - lambda: return (x * (9.0/5.0) + 32.0) + id(offset).state;
       unit_of_measurement: "°F"
     pressure:
       name: pressure
