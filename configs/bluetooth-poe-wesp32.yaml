@@ -26,7 +26,9 @@ ethernet:
   type: RTL8201
   mdc_pin: GPIO16
   mdio_pin: GPIO17
-  clk_mode: GPIO0_IN
+  clk:
+    mode: CLK_EXT_IN
+    pin: 0
   phy_addr: 0
   phy_registers:
     - address: 0x10
