@@ -31,7 +31,16 @@ ethernet:
     pin: 17
   phy_addr: 0
   power_pin: GPIO12
-  
+
+esp32_ble_tracker:
+  scan_parameters:
+    interval: 1100ms
+    window: 1100ms
+    active: true
+
+bluetooth_proxy:
+  active: true
+
 i2c:
   sda: 1
   scl: 3

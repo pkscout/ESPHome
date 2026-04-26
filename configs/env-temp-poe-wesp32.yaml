@@ -33,6 +33,15 @@ ethernet:
       value: 0x1FFA
       page_id: 0x07  
 
+esp32_ble_tracker:
+  scan_parameters:
+    interval: 1100ms
+    window: 1100ms
+    active: true
+
+bluetooth_proxy:
+  active: true
+
 i2c:
   sda: 15
   scl: 4
