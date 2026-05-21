@@ -66,54 +66,9 @@ touchscreen:
 
 # Display
 display:
-  - platform: rpi_dpi_rgb
+  - platform: mipi_rgb
+    model: ESP32-S3-TOUCH-LCD-7-800X480
     id: device_display
-    update_interval: never
-    auto_clear_enabled: false
-    color_order: RGB
-    pclk_frequency: 16MHz
-    dimensions:
-      width: 800
-      height: 480
-    reset_pin:
-      ch422g: io_ex
-      number: 3
-    de_pin:
-      number: 5
-    hsync_pin:
-      number: 46
-      ignore_strapping_warning: true
-    vsync_pin:
-      number: 3
-      ignore_strapping_warning: true
-    pclk_pin: 7
-    pclk_inverted: true
-    hsync_back_porch: 8
-    hsync_front_porch: 8
-    hsync_pulse_width: 4
-    vsync_back_porch: 16
-    vsync_front_porch: 16
-    vsync_pulse_width: 4
-    data_pins:
-      red:
-        - 1         #r3.
-        - 2         #r4.
-        - 42        #r5
-        - 41        #r6
-        - 40        #r7
-      blue:
-        - 14        #b3
-        - 38        #b4
-        - 18        #b5
-        - 17        #b6
-        - 10        #b7
-      green:
-        - 39        #g2
-        - 0         #g3.
-        - 45        #g4
-        - 48        #g5
-        - 47        #g6
-        - 21        #g7
 
 wifi:
   ssid: !secret wifi_ssid
