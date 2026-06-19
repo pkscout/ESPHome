@@ -79,4 +79,4 @@ sensor:
     filters:
     - lambda: return (x) + id(offset).state;
     address: 0x23
-    update_interval: 2s
+    update_interval: 30s
