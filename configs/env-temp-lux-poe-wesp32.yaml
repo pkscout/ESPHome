@@ -1,0 +1,112 @@
+substitutions:
+  # the first is meant to be overridden on the command line
+  name: default
+  # these can be left alone unless they really need to be changed
+  dname: ${name}-env
+  uname: ${name}_env
+
+esphome:
+  name: ${dname}
+
+esp32:
+  board: wesp32
+  framework:
+    type: esp-idf
+
+api:
+
+ota:
+  platform: esphome
+
+logger:
+
+ethernet:
+  type: RTL8201
+  mdc_pin: GPIO16
+  mdio_pin: GPIO17
+  clk:
+    mode: CLK_EXT_IN
+    pin: 0
+  phy_addr: 0
+  phy_registers:
+    - address: 0x10
+      value: 0x1FFA
+      page_id: 0x07  
+
+esp32_ble_tracker:
+  scan_parameters:
+    interval: 1100ms
+    window: 1100ms
+    active: true
+
+bluetooth_proxy:
+  active: true
+
+i2c:
+  sda: 15
+  scl: 4
+
+button:
+  - platform: restart
+    name: restart
+  - platform: safe_mode
+    name: restart safe
+    icon: mdi:restart-alert
+
+binary_sensor:
+  - platform: status
+    name: status
+
+number:
+  - platform: template
+    name: "temp offset"
+    unit_of_measurement: "°F"
+    id: temp_offset
+    optimistic: true
+    min_value: -10
+    max_value: 10
+    restore_value: true
+    initial_value: 0
+    step: 0.1
+    entity_category: "config"
+    mode: "box"
+    icon: mdi:arrow-collapse-vertical
+  - platform: template
+    name: "lux offset"
+    unit_of_measurement: "lux"
+    id: lux_offset
+    optimistic: true
+    min_value: -100
+    max_value: 100
+    restore_value: true
+    initial_value: 0
+    step: 1
+    entity_category: "config"
+    mode: "box"
+    icon: mdi:arrow-collapse-vertical
+
+
+sensor:
+  - platform: bme280_i2c
+    temperature:
+      name: temperature
+      oversampling: 16x
+      filters:
+      - lambda: return (x * (9.0/5.0) + 32.0) + id(temp_offset).state;
+      unit_of_measurement: "°F"
+    pressure:
+      name: pressure
+      filters:
+      - lambda: return x / 25.4;
+      unit_of_measurement: "inHg"
+    humidity:
+      name: humidity
+    address: 0x77
+    update_interval: 60s
+  - platform: bh1750
+    name: lux
+    icon: mdi:brightness-7
+    filters:
+    - lambda: return (x) + id(lux_offset).state;
+    address: 0x23
+    update_interval: 30s
