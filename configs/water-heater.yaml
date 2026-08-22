@@ -1,0 +1,45 @@
+substitutions:
+  name: ph65s10bpy
+  friendly_name: GE PH65S10BPY
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+
+esp32:
+  board: seeed_xiao_esp32c3
+  framework:
+    type: esp-idf
+
+logger:
+
+api:
+
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_ssid_password
+
+external_components:
+  - source: github://mguaylam/esphome-gea
+    components: [gea]
+
+# FirstBuild adapter + XIAO ESP32-C3
+#
+# GEA3:
+#   TX = GPIO21
+#   RX = GPIO20
+#   230400 baud, 8N1, full duplex
+uart:
+  id: uart_gea
+  tx_pin: GPIO21
+  rx_pin: GPIO20
+  baud_rate: 230400
+
+gea:
+  id: gea_hub
+  uart_id: uart_gea
+  protocol: gea3
+  erd_lookup: true
