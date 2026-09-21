@@ -42,4 +42,5 @@ gea:
   id: gea_hub
   uart_id: uart_gea
   protocol: gea3
+  dest_address: 0xC0
   erd_lookup: true
