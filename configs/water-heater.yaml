@@ -26,12 +26,17 @@ external_components:
   - source: github://mguaylam/esphome-gea
     components: [gea]
 
-# FirstBuild adapter + XIAO ESP32-C3
+# ============================================================
+# GEA3 / FIRSTBUILD HOME ASSISTANT ADAPTER
+#
+# FirstBuild adapter + Seeed XIAO ESP32-C3
 #
 # GEA3:
 #   TX = GPIO21
 #   RX = GPIO20
 #   230400 baud, 8N1, full duplex
+# ============================================================
+
 uart:
   id: uart_gea
   tx_pin: GPIO21
@@ -44,3 +49,514 @@ gea:
   protocol: gea3
   dest_address: 0xC0
   erd_lookup: true
+
+
+# ============================================================
+# TEMPERATURES
+# ============================================================
+
+sensor:
+
+  # ----------------------------------------------------------
+  # Water heater temperature sensors
+  # ----------------------------------------------------------
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "T1 Temperature"
+    id: t1_temperature
+    erd: 0x405F
+    decode: int16_be
+    multiplier: 0.1
+    unit_of_measurement: "°F"
+    accuracy_decimals: 1
+    device_class: temperature
+    state_class: measurement
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "T2 Temperature"
+    id: t2_temperature
+    erd: 0x4060
+    decode: int16_be
+    multiplier: 0.1
+    unit_of_measurement: "°F"
+    accuracy_decimals: 1
+    device_class: temperature
+    state_class: measurement
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "T3a Temperature"
+    id: t3a_temperature
+    erd: 0x4061
+    decode: int16_be
+    multiplier: 0.1
+    unit_of_measurement: "°F"
+    accuracy_decimals: 1
+    device_class: temperature
+    state_class: measurement
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "T3b Temperature"
+    id: t3b_temperature
+    erd: 0x4062
+    decode: int16_be
+    multiplier: 0.1
+    unit_of_measurement: "°F"
+    accuracy_decimals: 1
+    device_class: temperature
+    state_class: measurement
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "T4 Temperature"
+    id: t4_temperature
+    erd: 0x4063
+    decode: int16_be
+    multiplier: 0.1
+    unit_of_measurement: "°F"
+    accuracy_decimals: 1
+    device_class: temperature
+    state_class: measurement
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "T5 Temperature"
+    id: t5_temperature
+    erd: 0x4064
+    decode: int16_be
+    multiplier: 0.1
+    unit_of_measurement: "°F"
+    accuracy_decimals: 1
+    device_class: temperature
+    state_class: measurement
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "T6 Temperature"
+    id: t6_temperature
+    erd: 0x406E
+    decode: uint16_be
+    multiplier: 0.1
+    unit_of_measurement: "°F"
+    accuracy_decimals: 1
+    device_class: temperature
+    state_class: measurement
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "T7 Temperature"
+    id: t7_temperature
+    erd: 0x40B9
+    decode: int16_be
+    multiplier: 0.1
+    unit_of_measurement: "°F"
+    accuracy_decimals: 1
+    device_class: temperature
+    state_class: measurement
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Groundwater Temperature"
+    id: groundwater_temperature
+    erd: 0x40B8
+    decode: int16_be
+    multiplier: 0.1
+    unit_of_measurement: "°F"
+    accuracy_decimals: 1
+    device_class: temperature
+    state_class: measurement
+
+  # ----------------------------------------------------------
+  # Controller temperatures
+  # ----------------------------------------------------------
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "MC CPU Temperature"
+    id: mc_cpu_temperature
+    erd: 0x40BA
+    decode: int16_be
+    multiplier: 0.1
+    unit_of_measurement: "°F"
+    accuracy_decimals: 1
+    device_class: temperature
+    state_class: measurement
+    entity_category: diagnostic
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "MC Circuit Board Temperature"
+    id: mc_board_temperature
+    erd: 0x40BB
+    decode: int16_be
+    multiplier: 0.1
+    unit_of_measurement: "°F"
+    accuracy_decimals: 1
+    device_class: temperature
+    state_class: measurement
+    entity_category: diagnostic
+
+
+# ============================================================
+# WATER HEATER STATUS
+# ============================================================
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Water Heater Setpoint (Read)"
+    id: user_setpoint_sensor
+    erd: 0x4024
+    decode: int16_be
+    multiplier: 0.1
+    unit_of_measurement: "°F"
+    accuracy_decimals: 1
+    device_class: temperature
+    state_class: measurement
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Actual Setpoint"
+    id: actual_setpoint
+    erd: 0x4026
+    decode: int16_be
+    multiplier: 0.1
+    unit_of_measurement: "°F"
+    accuracy_decimals: 1
+    device_class: temperature
+    state_class: measurement
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Vacation Setpoint"
+    id: vacation_setpoint_sensor
+    erd: 0x4025
+    decode: int16_be
+    multiplier: 0.1
+    unit_of_measurement: "°F"
+    accuracy_decimals: 1
+    device_class: temperature
+    state_class: measurement
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Timed Mode Hours Remaining"
+    id: timed_mode_hours
+    erd: 0x4028
+    decode: uint16_be
+    unit_of_measurement: "h"
+    accuracy_decimals: 0
+    state_class: measurement
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Tank Size"
+    id: tank_size
+    erd: 0x4041
+    decode: uint8
+    unit_of_measurement: "gal"
+    accuracy_decimals: 0
+    entity_category: diagnostic
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Minimum Setpoint"
+    id: minimum_setpoint
+    erd: 0x4047
+    decode: uint16_be
+    byte_offset: 0
+    multiplier: 0.1
+    unit_of_measurement: "°F"
+    accuracy_decimals: 1
+    device_class: temperature
+    entity_category: diagnostic
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Maximum Setpoint"
+    id: maximum_setpoint
+    erd: 0x4047
+    decode: uint16_be
+    byte_offset: 2
+    multiplier: 0.1
+    unit_of_measurement: "°F"
+    accuracy_decimals: 1
+    device_class: temperature
+    entity_category: diagnostic
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Maximum Vacation Hours"
+    id: max_vacation_hours
+    erd: 0x4049
+    decode: uint16_be
+    unit_of_measurement: "h"
+    accuracy_decimals: 0
+    entity_category: diagnostic
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Maximum Standard Electric Hours"
+    id: max_standard_electric_hours
+    erd: 0x404A
+    decode: uint16_be
+    unit_of_measurement: "h"
+    accuracy_decimals: 0
+    entity_category: diagnostic
+
+
+# ============================================================
+# WATER AVAILABILITY
+# ============================================================
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Minutes Until Recharged"
+    id: minutes_until_recharged
+    erd: 0x40CE
+    decode: uint16_be
+    unit_of_measurement: "min"
+    accuracy_decimals: 0
+    state_class: measurement
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Usable Hot Water"
+    id: usable_hot_water
+    erd: 0x40D0
+    decode: uint8
+    unit_of_measurement: "gal"
+    accuracy_decimals: 0
+    state_class: measurement
+
+
+# ============================================================
+# ELECTRICAL
+# ============================================================
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Measured Current"
+    id: measured_current
+    erd: 0x4065
+    decode: uint16_be
+    unit_of_measurement: "A"
+    accuracy_decimals: 1
+    device_class: current
+    state_class: measurement
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Measured Voltage"
+    id: measured_voltage
+    erd: 0x4066
+    decode: uint16_be
+    unit_of_measurement: "V"
+    accuracy_decimals: 0
+    device_class: voltage
+    state_class: measurement
+
+
+# ============================================================
+# MAINTENANCE / DIAGNOSTICS
+# ============================================================
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Anode Remaining"
+    id: anode_remaining
+    erd: 0x40C2
+    decode: uint8
+    unit_of_measurement: "%"
+    accuracy_decimals: 0
+    state_class: measurement
+    entity_category: diagnostic
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Anode Service Hours"
+    id: anode_service_hours
+    erd: 0x404D
+    decode: uint32_be
+    unit_of_measurement: "h"
+    accuracy_decimals: 0
+    state_class: measurement
+    entity_category: diagnostic
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Reset Count"
+    id: reset_count
+    erd: 0x40C0
+    decode: uint16_be
+    accuracy_decimals: 0
+    state_class: total_increasing
+    entity_category: diagnostic
+
+
+# ============================================================
+# BINARY STATUS
+# ============================================================
+
+binary_sensor:
+
+  - platform: template
+    name: "GEA Bus Connected"
+    id: gea_bus_connected
+    entity_category: diagnostic
+    lambda: |-
+      return id(gea_hub).is_bus_connected();
+
+  # ----------------------------------------------------------
+  # Heating equipment status
+  #
+  # 0x4068 byte 1:
+  #   0x02 = compressor
+  #   0x04 = upper heating element
+  #   0x08 = lower heating element
+  #   0x10 = fan
+  #
+  # These mappings have been verified during an actual
+  # heat-pump heating cycle on this PH65S10BPY.
+  # ----------------------------------------------------------
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Compressor Running"
+    id: compressor_running
+    erd: 0x4068
+    byte_offset: 1
+    bitmask: 0x02
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Upper Heating Element"
+    id: upper_element
+    erd: 0x4068
+    byte_offset: 1
+    bitmask: 0x04
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Lower Heating Element"
+    id: lower_element
+    erd: 0x4068
+    byte_offset: 1
+    bitmask: 0x08
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Fan Running"
+    id: fan_running
+    erd: 0x4068
+    byte_offset: 1
+    bitmask: 0x10
+
+  # ----------------------------------------------------------
+  # Appliance diagnostics
+  # ----------------------------------------------------------
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Anode Alarm"
+    id: anode_alarm
+    erd: 0x4081
+    bitmask: 0x01
+    entity_category: diagnostic
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Accessory Low Battery"
+    id: accessory_low_battery
+    erd: 0x4082
+    bitmask: 0x01
+    entity_category: diagnostic
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Leak Detected"
+    id: leak_detected
+    erd: 0x4083
+    bitmask: 0x01
+    device_class: moisture
+    entity_category: diagnostic
+
+  - platform: gea
+    gea_id: gea_hub
+    name: "Service Requested"
+    id: service_requested
+    erd: 0x40C6
+    bitmask: 0x01
+    entity_category: diagnostic
+
+
+# ============================================================
+# CONTROLS
+# ============================================================
+
+number:
+
+  # ----------------------------------------------------------
+  # Normal operating temperature
+  #
+  # The heater reports an underlying capability of 95–150°F,
+  # but HA intentionally limits this control to 95–125°F.
+  # This matches the user-facing safety warning in the GE app.
+  # ----------------------------------------------------------
+
+  - platform: gea
+    gea_id: gea_hub
+    id: water_heater_setpoint
+    name: "Water Heater Setpoint"
+    erd: 0x4024
+    decode: int16_be
+    multiplier: 0.1
+    min_value: 95
+    max_value: 125
+    step: 1
+    unit_of_measurement: "°F"
+    device_class: temperature
+    mode: slider
+
+
+select:
+
+  # ----------------------------------------------------------
+  # Operating mode
+  #
+  # 0 = Hybrid
+  # 1 = Standard Electric
+  # 2 = Heat Pump
+  # 3 = High Demand
+  # 4 = Vacation
+  # ----------------------------------------------------------
+
+  - platform: gea
+    gea_id: gea_hub
+    id: operating_mode
+    name: "Operating Mode"
+    erd: 0x4020
+    decode: uint8
+    options:
+      0: "Hybrid"
+      1: "Standard Electric"
+      2: "Heat Pump"
+      3: "High Demand"
+      4: "Vacation"
+
+  # ----------------------------------------------------------
+  # Mixing valve tank capacity
+  # ----------------------------------------------------------
+
+  - platform: gea
+    gea_id: gea_hub
+    id: mixing_valve_capacity
+    name: "Mixing Valve Tank Capacity"
+    erd: 0x402A
+    decode: uint8
+    options:
+      0: "Normal"
+      1: "High"
+      2: "X-High"
