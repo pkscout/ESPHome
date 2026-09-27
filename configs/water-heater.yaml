@@ -520,7 +520,18 @@ number:
     device_class: temperature
     mode: slider
 
-
+  # Vacation Timer
+  - platform: gea
+    gea_id: gea_hub
+    id: vacation_hours
+    name: "Vacation Hour Timer"
+    erd: 0x4028
+    decode: uint16_be
+    min_value: 1
+    max_value: 4776
+    step: 1
+    unit_of_measurement: "h"
+    
 select:
 
   # ----------------------------------------------------------
