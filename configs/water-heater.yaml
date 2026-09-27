@@ -515,7 +515,7 @@ number:
     name: "Vacation Hour Timer"
     erd: 0x4028
     decode: uint16_be
-    min_value: 1
+    min_value: 0
     max_value: 4776
     step: 1
     unit_of_measurement: "h"
