@@ -206,18 +206,6 @@ sensor:
 
   - platform: gea
     gea_id: gea_hub
-    name: "Water Heater Setpoint (Read)"
-    id: user_setpoint_sensor
-    erd: 0x4024
-    decode: int16_be
-    multiplier: 0.1
-    unit_of_measurement: "°F"
-    accuracy_decimals: 1
-    device_class: temperature
-    state_class: measurement
-
-  - platform: gea
-    gea_id: gea_hub
     name: "Actual Setpoint"
     id: actual_setpoint
     erd: 0x4026
