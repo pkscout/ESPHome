@@ -11,6 +11,7 @@ esp32:
   board: esp32-p4-devkit
   variant: esp32p4
   flash_size: 16MB
+  cpu_frequency: 360MHz  # Added for stability
   framework:
     type: esp-idf
   partitions: clock-weather-v2-partitions.csv
@@ -51,7 +52,9 @@ ethernet:
   type: IP101
   mdc_pin: GPIO31
   mdio_pin: GPIO32
-  clk_mode: GPIO0_IN
+  clk:
+    mode: CLK_EXT_IN
+    pin: 0
   phy_addr: 1
   power_pin: GPIO44
 
