@@ -1,0 +1,401 @@
+substitutions:
+  name: the
+  dname: ${name}-wclk
+  uname: ${name}_wclk
+  tempscale: "°F"
+
+esphome:
+  name: ${dname}
+
+esp32:
+  board: esp32-p4-devkit
+  variant: esp32p4
+  flash_size: 16MB
+  framework:
+    type: esp-idf
+  partitions: clock-weather-v2-partitions.csv
+
+# Enable external RAM for the display frame buffer
+psram:
+  mode: hex
+  speed: 200MHz
+
+# Enable the internal LDO to power the MIPI-DSI lanes
+esp_ldo:
+  - id: ldo_mipi_tx
+    channel: 1
+    voltage: 2500mV
+    allow_internal_channel: true
+
+# Import the specific JD9165 display driver from Espressif's repository
+# external_components:
+#   - source:
+#       type: git
+#       url: https://github.com/espressif/esp-iot-solution.git
+#       ref: 6a112f4ddfeaf30ec360567ea9260a39e195c385
+#     components: [ esp_lcd_jd9165 ]
+
+# Enable logging over the USB/TTL port
+logger:
+  level: DEBUG
+
+# Enable Home Assistant API
+api:
+
+# Enable Over-The-Air updates
+ota:
+  - platform: esphome
+
+# Configure Ethernet instead of Wi-Fi
+ethernet:
+  type: IP101
+  mdc_pin: GPIO31
+  mdio_pin: GPIO32
+  clk_mode: GPIO0_IN
+  phy_addr: 1
+  power_pin: GPIO44
+
+# Configure the Backlight PWM Output
+output:
+  - platform: ledc
+    pin: GPIO26  # Verify this pin in your schematic
+    id: backlight
+    frequency: 1220 Hz
+
+light:
+  - platform: monochromatic
+    output: backlight
+    name: backlight
+    restore_mode: ALWAYS_ON
+
+# Configure the MIPI-DSI Display
+display:
+  - platform: mipi_dsi
+    id: device_display
+    model: WAVESHARE-ESP32-P4-WIFI6-TOUCH-LCD-7B
+#    width: 1024
+#    height: 600
+#    data_lanes: 2
+    lanes: 2
+    reset_pin: GPIO45  # Verify this pin in your schematic
+#    ldo_channel: ldo_mipi_tx
+
+# Standard Sensors and Buttons
+button:
+  - platform: restart
+    name: restart
+  - platform: safe_mode
+    name: restart safe
+    icon: mdi:restart-alert
+
+binary_sensor:
+  - platform: status
+    name: status
+
+text_sensor:
+  - platform: homeassistant
+    entity_id: sensor.time_normal
+    id: ha_time
+    on_value:
+      - lvgl.label.update:
+          id: display_time
+          text: !lambda |-
+            return id(ha_time).state.c_str();
+
+sensor:
+  - platform: homeassistant
+    entity_id: sensor.wc_outdoor_temperature
+    id: ha_outdoor_temperature
+    on_value:
+      - lvgl.label.update:
+          id: outdoor_temperature
+          text:
+            format: "%d"
+            args: ['(int)round(x)']
+  - platform: homeassistant
+    entity_id: sensor.wc_outdoor_humidity
+    id: ha_outdoor_humidity
+    on_value:
+      - lvgl.label.update:
+          id: outdoor_humidity
+          text:
+            format: "%d"
+            args: ['(int)round(x)']
+  - platform: homeassistant
+    entity_id: sensor.wc_today_high
+    id: ha_today_high
+    on_value:
+      - lvgl.label.update:
+          id: today_high
+          text:
+            format: "%d"
+            args: ['(int)round(x)']
+  - platform: homeassistant
+    entity_id: sensor.wc_today_low
+    id: ha_today_low
+    on_value:
+      - lvgl.label.update:
+          id: today_low
+          text:
+            format: "%d"
+            args: ['(int)round(x)']
+  - platform: homeassistant
+    entity_id: sensor.wc_${name}_temperature
+    id: ha_indoor_temperature
+    on_value:
+      - lvgl.label.update:
+          id: indoor_temperature
+          text:
+            format: "%d"
+            args: ['(int)round(x)']
+  - platform: homeassistant
+    entity_id: sensor.wc_${name}_humidity
+    id: ha_indoor_humidity
+    on_value:
+      - lvgl.label.update:
+          id: indoor_humidity
+          text:
+            format: "%d"
+            args: ['(int)round(x)']
+
+# Fonts and styles for display
+font:
+  - file:
+      type: gfonts
+      family: IBM+Plex+Mono
+      weight: 700
+    id: clock_font
+    size: 260
+    bpp: 4
+  - file:
+      type: gfonts
+      family: IBM+Plex+Mono
+      weight: 700
+    id: info_font
+    size: 85
+    bpp: 4
+  - file:
+      type: gfonts
+      family: IBM+Plex+Mono
+      weight: 700
+    id: small_info_font
+    size: 70
+    bpp: 4
+
+# Actual weather clock layout
+lvgl:
+  style_definitions:
+    - id: clock_style
+      text_font: clock_font
+      text_color: 0xDDDDDD
+    - id: outdoor_style
+      text_font: info_font
+      text_color: 0x008001
+    - id: small_outdoor_style
+      text_font: small_info_font
+      text_color: 0x008001
+      translate_y: -4
+      opa: 0.8
+    - id: indoor_style
+      text_font: info_font
+      text_color: 0xBDB76B
+    - id: small_indoor_style
+      text_font: small_info_font
+      text_color: 0xBDB76B
+      translate_y: -4
+      opa: 0.8
+    - id: high_style
+      text_font: info_font
+      text_color: 0xFE0000
+    - id: small_high_style
+      text_font: small_info_font
+      text_color: 0xFE0000
+      translate_y: -4
+      opa: 0.8
+    - id: low_style
+      text_font: info_font
+      text_color: 0x1F90FF
+    - id: small_low_style
+      text_font: small_info_font
+      text_color: 0x1F90FF
+      translate_y: -4
+      opa: 0.8
+  pages:
+    - id: main_page
+      width: 100%
+      bg_color: Black
+      widgets:
+        # Clock
+        - label:
+            text: "--:--"
+            id: display_time
+            styles: clock_style
+            align: top_mid
+            x: 0
+            y: -40
+            text_align: center
+        # Outdoor
+        - obj:
+            scrollbar_mode: "OFF"
+            border_width: 0
+            pad_all: 0px
+            align: bottom_left
+            x: 15
+            y: -25
+            width: 240
+            height: 100
+            bg_color: Black
+            layout:
+                type: FLEX
+                flex_flow: ROW_WRAP
+                flex_align_main: start
+                flex_align_cross: end
+                pad_column: 5px
+                pad_row: 0px
+            widgets:
+              - label:
+                  text: "--"
+                  id: outdoor_humidity
+                  styles: outdoor_style
+                  text_align: left
+              - label:
+                  styles: small_outdoor_style
+                  text: "%"
+                  text_align: left
+        - obj:
+            scrollbar_mode: "OFF"
+            border_width: 0
+            pad_all: 0px
+            align: bottom_left
+            x: 15
+            y: -115
+            width: 240
+            height: 100
+            bg_color: Black
+            layout:
+                type: FLEX
+                flex_flow: ROW_WRAP
+                flex_align_main: start
+                flex_align_cross: end
+                pad_column: 0px
+                pad_row: 0px
+            widgets:
+              - label:
+                  text: "--"
+                  id: outdoor_temperature
+                  styles: outdoor_style
+                  text_align: left
+              - label:
+                  text: ${tempscale}
+                  styles: small_outdoor_style
+                  text_align: left
+        # Forecast
+        - obj:
+            scrollbar_mode: "OFF"
+            border_width: 0
+            pad_all: 0px
+            align: bottom_mid
+            x: 0
+            y: -25
+            width: 240
+            height: 100
+            bg_color: Black
+            layout:
+                type: FLEX
+                flex_flow: ROW_WRAP
+                flex_align_main: center
+                flex_align_cross: end
+                pad_column: 0px
+                pad_row: 0px
+            widgets:
+              - label:
+                  text: "--"
+                  id: today_low
+                  styles: low_style
+                  text_align: left
+              - label:
+                  styles: small_low_style
+                  text: ${tempscale}
+                  text_align: left
+        - obj:
+            scrollbar_mode: "OFF"
+            border_width: 0
+            pad_all: 0px
+            align: bottom_mid
+            x: 0
+            y: -115
+            width: 240
+            height: 100
+            bg_color: Black
+            layout:
+                type: FLEX
+                flex_flow: ROW_WRAP
+                flex_align_main: center
+                flex_align_cross: end
+                pad_column: 0px
+                pad_row: 0px
+            widgets:
+              - label:
+                  text: "--"
+                  id: today_high
+                  styles: high_style
+                  text_align: left
+              - label:
+                  styles: small_high_style
+                  text: ${tempscale}
+                  text_align: left
+        # Indoor
+        - obj:
+            scrollbar_mode: "OFF"
+            border_width: 0
+            pad_all: 0px
+            align: bottom_right
+            x: -15
+            y: -25
+            width: 240
+            height: 100
+            bg_color: Black
+            layout:
+                type: FLEX
+                flex_flow: ROW_WRAP
+                flex_align_main: end
+                flex_align_cross: end
+                pad_column: 5px
+                pad_row: 0px
+            widgets:
+              - label:
+                  text: "--"
+                  id: indoor_humidity
+                  styles: indoor_style
+                  text_align: left
+              - label:
+                  styles: small_indoor_style
+                  text: "%"
+                  text_align: left
+        - obj:
+            scrollbar_mode: "OFF"
+            border_width: 0
+            pad_all: 0px
+            align: bottom_right
+            x: -15
+            y: -115
+            width: 240
+            height: 100
+            bg_color: Black
+            layout:
+                type: FLEX
+                flex_flow: ROW_WRAP
+                flex_align_main: end
+                flex_align_cross: end
+                pad_column: 0px
+                pad_row: 0px
+            widgets:
+              - label:
+                  text: "--"
+                  id: indoor_temperature
+                  styles: indoor_style
+                  text_align: left
+              - label:
+                  styles: small_indoor_style
+                  text: ${tempscale}
+                  text_align: left
