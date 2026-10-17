@@ -7,8 +7,6 @@ substitutions:
   dname: ${name}-wclk
   uname: ${name}_wclk
   tempscale: "°F"
-  screen_height: 600
-  screen_width: 1024
 
 esphome:
   name: ${dname}
@@ -59,9 +57,6 @@ api:
 ota:
   - platform: esphome
 
-# -------------------------------------------
-# Internal outputs
-# -------------------------------------------
 output:
   - id: gpio_backlight_pwm
     platform: ledc
@@ -81,18 +76,12 @@ light:
     default_transition_length: 0s
     gamma_correct: 1.0
 
-# -------------------------------------------
-# i2c bus
-# -------------------------------------------
 i2c:
   - id: bus_a
     sda: GPIO7
     scl: GPIO8
     frequency: 400kHz
 
-# -------------------------------------------
-# Touchscreen
-# -------------------------------------------
 touchscreen:
   - platform: gt911
     id: my_touchscreen
@@ -103,21 +92,7 @@ touchscreen:
       swap_xy: false
       mirror_x: false
       mirror_y: false
-#   on_touch:
-#     - logger.log:
-#           format: Touch at (%d, %d)
-#           args: [touch.x, touch.y]
-#     - lambda: |-
-#           ESP_LOGI("cal", "x=%d, y=%d, x_raw=%d, y_raw=%0d",
-#               touch.x,
-#               touch.y,
-#               touch.x_raw,
-#               touch.y_raw
-#               );
 
-# -------------------------------------------
-# Display
-# -------------------------------------------
 display:
   - platform: mipi_dsi
     model: CUSTOM
