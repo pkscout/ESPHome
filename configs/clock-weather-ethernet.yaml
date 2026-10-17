@@ -1,40 +1,52 @@
+# Guition-ESP32-P4-JC1060P470c V2 ("New Panel") 7" Capacitive touch
+#
+# Hardware configuration file
+
 substitutions:
   name: the
   dname: ${name}-wclk
   uname: ${name}_wclk
   tempscale: "°F"
+  screen_height: 600
+  screen_width: 1024
 
 esphome:
   name: ${dname}
 
 esp32:
-  board: esp32-p4-devkit
+  board: esp32-p4-evboard
   variant: esp32p4
+  # esp32-p4-evboard is pre-rev3 silicon; stated explicitly so the mismatch
+  # is obvious if this is ever rebased onto a production-rev3 board.
+  engineering_sample: true
   flash_size: 16MB
-  cpu_frequency: 360MHz  # Added for stability
+  cpu_frequency: 360MHz
   framework:
     type: esp-idf
-  partitions: clock-weather-v2-partitions.csv
+    advanced:
+      execute_from_psram: true
+      enable_idf_experimental_features: true
 
-# Enable external RAM for the display frame buffer
+esp_ldo:
+  - channel: 3
+    voltage: 2.5V
+
 psram:
   mode: hex
   speed: 200MHz
 
-# Enable the internal LDO to power the MIPI-DSI lanes
-esp_ldo:
-  - id: ldo_mipi_tx
-    channel: 1
-    voltage: 2500mV
-    allow_internal_channel: true
+preferences:
+  flash_write_interval: 5min
 
-# Import the specific JD9165 display driver from Espressif's repository
-# external_components:
-#   - source:
-#       type: git
-#       url: https://github.com/espressif/esp-iot-solution.git
-#       ref: 6a112f4ddfeaf30ec360567ea9260a39e195c385
-#     components: [ esp_lcd_jd9165 ]
+ethernet:
+  type: IP101
+  mdc_pin: GPIO31
+  mdio_pin: GPIO52
+  clk:
+    pin: GPIO50
+    mode: CLK_EXT_IN
+  phy_addr: 1
+  power_pin: GPIO51
 
 # Enable logging over the USB/TTL port
 logger:
@@ -47,41 +59,168 @@ api:
 ota:
   - platform: esphome
 
-# Configure Ethernet instead of Wi-Fi
-ethernet:
-  type: IP101
-  mdc_pin: GPIO31
-  mdio_pin: GPIO32
-  clk:
-    mode: CLK_EXT_IN
-    pin: 0
-  phy_addr: 1
-  power_pin: GPIO44
-
-# Configure the Backlight PWM Output
+# -------------------------------------------
+# Internal outputs
+# -------------------------------------------
 output:
-  - platform: ledc
-    pin: GPIO26  # Verify this pin in your schematic
-    id: backlight
-    frequency: 1220 Hz
+  - id: gpio_backlight_pwm
+    platform: ledc
+    pin: GPIO23
+      #    frequency: 100Hz
+      #    inverted: false
+    #min_power: 0.1 # To prevent the backlight from being too dim
+    #    max_power: 0.8 # To prevent overheating due to excessive lighting
 
 light:
   - platform: monochromatic
-    output: backlight
-    name: backlight
+    output: gpio_backlight_pwm
+    name: Display Backlight
+    icon: mdi:lightbulb-on
+    id: display_backlight
     restore_mode: ALWAYS_ON
+    default_transition_length: 0s
+    gamma_correct: 1.0
 
-# Configure the MIPI-DSI Display
+# -------------------------------------------
+# i2c bus
+# -------------------------------------------
+i2c:
+  - id: bus_a
+    sda: GPIO7
+    scl: GPIO8
+    frequency: 400kHz
+
+# -------------------------------------------
+# Touchscreen
+# -------------------------------------------
+touchscreen:
+  - platform: gt911
+    id: my_touchscreen
+    reset_pin: GPIO22
+    interrupt_pin: GPIO21
+    address: 0x5D
+    transform:
+      swap_xy: false
+      mirror_x: false
+      mirror_y: false
+#   on_touch:
+#     - logger.log:
+#           format: Touch at (%d, %d)
+#           args: [touch.x, touch.y]
+#     - lambda: |-
+#           ESP_LOGI("cal", "x=%d, y=%d, x_raw=%d, y_raw=%0d",
+#               touch.x,
+#               touch.y,
+#               touch.x_raw,
+#               touch.y_raw
+#               );
+
+# -------------------------------------------
+# Display
+# -------------------------------------------
 display:
   - platform: mipi_dsi
-    id: device_display
-    model: WAVESHARE-ESP32-P4-WIFI6-TOUCH-LCD-7B
-#    width: 1024
-#    height: 600
-#    data_lanes: 2
+    model: CUSTOM
+    id: my_display
+    update_interval: never
+    color_order: RGB
+    # Panel LCD_RST is GPIO0 on the JC1060P470C_I_W_Y schematic (FPC1 pin 4).
+    # The -c profile ships GPIO05, which only reaches the expansion header. A
+    # wrong reset pin also suppresses ESPHome's software reset, so a warm reboot
+    # (flash, OTA, restart) keeps the previous firmware's panel registers until
+    # the next power cycle.
+    reset_pin:
+      number: GPIO0
+    # Initialise the panel before the backlight restores its state (light setup
+    # runs at priority ~799); an un-initialised JD9165 shows a bright lavender
+    # field, so the backlight must not come on before init.
+    setup_priority: 850
+    auto_clear_enabled: false
+    dimensions:
+      width: 1024
+      height: 600
+    pixel_mode: 16bit
+    color_depth: 16
     lanes: 2
-    reset_pin: GPIO45  # Verify this pin in your schematic
-#    ldo_channel: ldo_mipi_tx
+    lane_bit_rate: 750Mbps
+    pclk_frequency: 52MHz
+    hsync_pulse_width: 24
+    hsync_back_porch: 136
+    hsync_front_porch: 160
+    vsync_pulse_width: 2
+    vsync_back_porch: 21
+    vsync_front_porch: 12
+    # JD9165 vendor init for the 2026 "New Panel". ESPHome appends
+    # PIXFMT/MADCTL/INVOFF/SLPOUT/DISPON, so do not add 0x3A, 0x36 or 0x29.
+    # Both delays and the trailing 0x11 are load-bearing (see below).
+    init_sequence:
+      # The JD9165 needs 120ms after reset before it accepts the vendor table.
+      # ESPHome holds only SLPOUT until 120ms after reset, not the vendor
+      # table, so the wait is declared here. Without it the panel comes up
+      # white on a warm reboot; a cold boot survives on power-on settling.
+      - delay 120ms
+      - [0x30, 0x00]
+      - [0xF7, 0x49, 0x61, 0x02, 0x00]
+      - [0x30, 0x01]
+      - [0x04, 0x0C]
+      - [0x05, 0x08]
+      - [0x0B, 0x11]
+      - [0x20, 0x04]
+      - [0x1F, 0x05]
+      - [0x23, 0x38]
+      - [0x28, 0x18]
+      - [0x29, 0x29]
+      - [0x2A, 0x01]
+      - [0x2B, 0x29]
+      - [0x2C, 0x01]
+      - [0x30, 0x02]
+      - [0x00, 0x05]
+      - [0x01, 0x22]
+      - [0x02, 0x08]
+      - [0x03, 0x12]
+      - [0x04, 0x16]
+      - [0x05, 0x64]
+      - [0x06, 0x00]
+      - [0x07, 0x00]
+      - [0x08, 0x78]
+      - [0x09, 0x00]
+      - [0x0A, 0x04]
+      - [0x0B, 0x16, 0x17, 0x0B, 0x0D, 0x0D, 0x0D, 0x11, 0x10, 0x07, 0x07, 0x09]
+      - [0x0C, 0x09, 0x1E, 0x1E, 0x1C, 0x1C, 0x0D, 0x0D, 0x0D, 0x0D, 0x0D, 0x0D]
+      - [0x0D, 0x0A, 0x05, 0x0B, 0x0D, 0x0D, 0x0D, 0x11, 0x10, 0x06, 0x06, 0x08]
+      - [0x0E, 0x08, 0x1F, 0x1F, 0x1D, 0x1D, 0x0D, 0x0D, 0x0D, 0x0D, 0x0D, 0x0D]
+      - [0x0F, 0x0A, 0x05, 0x0D, 0x0B, 0x0D, 0x0D, 0x11, 0x10, 0x1D, 0x1D, 0x1F]
+      - [0x10, 0x1F, 0x08, 0x08, 0x06, 0x06, 0x0D, 0x0D, 0x0D, 0x0D, 0x0D, 0x0D]
+      - [0x11, 0x16, 0x17, 0x0D, 0x0B, 0x0D, 0x0D, 0x11, 0x10, 0x1C, 0x1C, 0x1E]
+      - [0x12, 0x1E, 0x09, 0x09, 0x07, 0x07, 0x0D, 0x0D, 0x0D, 0x0D, 0x0D, 0x0D]
+      - [0x13, 0x00, 0x00, 0x00, 0x00]
+      - [0x14, 0x00, 0x00, 0x41, 0x41]
+      - [0x15, 0x00, 0x00, 0x00, 0x00]
+      - [0x17, 0x00]
+      - [0x18, 0x85]
+      - [0x19, 0x06, 0x09]
+      - [0x1A, 0x05, 0x08]
+      - [0x1B, 0x0A, 0x04]
+      - [0x26, 0x00]
+      - [0x27, 0x00]
+      - [0x30, 0x06]
+      - [0x12, 0x3F, 0x25, 0x27, 0x35, 0x1D, 0x1B, 0x1B, 0x1A, 0x18, 0x0A, 0x2A, 0x21, 0x19, 0x30]
+      - [0x13, 0x3F, 0x26, 0x27, 0x35, 0x1E, 0x1C, 0x1C, 0x1A, 0x18, 0x0B, 0x2A, 0x21, 0x19, 0x30]
+      - [0x30, 0x0A]
+      - [0x02, 0x4F]
+      - [0x0B, 0x40]
+      - [0x30, 0x0D]
+      - [0x0D, 0x04]
+      - [0x10, 0x05]
+      - [0x11, 0x0C]
+      - [0x12, 0x05]
+      - [0x13, 0x0C]
+      - [0x30, 0x00]
+      # Deliberate SLPOUT for vendor-timing fidelity: Guition's driver waits
+      # 120ms between sleep-out and display-on, while ESPHome appends its own
+      # SLPOUT then DISPON only ~10ms later. This pair restores that margin.
+      - [0x11]
+      - delay 120ms
 
 # Standard Sensors and Buttons
 button:
@@ -187,6 +326,8 @@ font:
 
 # Actual weather clock layout
 lvgl:
+  # Special LVGL settings required for this display
+  rotation: ${rotation | default("0")}
   style_definitions:
     - id: clock_style
       text_font: clock_font
