@@ -301,8 +301,6 @@ font:
 
 # Actual weather clock layout
 lvgl:
-  # Special LVGL settings required for this display
-  rotation: ${rotation | default("0")}
   style_definitions:
     - id: clock_style
       text_font: clock_font
@@ -313,7 +311,7 @@ lvgl:
     - id: small_outdoor_style
       text_font: small_info_font
       text_color: 0x008001
-      translate_y: -4
+      translate_y: -5
       opa: 0.8
     - id: indoor_style
       text_font: info_font
@@ -321,7 +319,7 @@ lvgl:
     - id: small_indoor_style
       text_font: small_info_font
       text_color: 0xBDB76B
-      translate_y: -4
+      translate_y: -5
       opa: 0.8
     - id: high_style
       text_font: info_font
@@ -329,7 +327,7 @@ lvgl:
     - id: small_high_style
       text_font: small_info_font
       text_color: 0xFE0000
-      translate_y: -4
+      translate_y: -5
       opa: 0.8
     - id: low_style
       text_font: info_font
@@ -337,7 +335,7 @@ lvgl:
     - id: small_low_style
       text_font: small_info_font
       text_color: 0x1F90FF
-      translate_y: -4
+      translate_y: -5
       opa: 0.8
   pages:
     - id: main_page
@@ -351,7 +349,7 @@ lvgl:
             styles: clock_style
             align: top_mid
             x: 0
-            y: -40
+            y: -50
             text_align: center
         # Outdoor
         - obj:
@@ -359,17 +357,17 @@ lvgl:
             border_width: 0
             pad_all: 0px
             align: bottom_left
-            x: 15
-            y: -25
-            width: 240
-            height: 100
+            x: 20
+            y: -30
+            width: 300
+            height: 125
             bg_color: Black
             layout:
                 type: FLEX
                 flex_flow: ROW_WRAP
                 flex_align_main: start
                 flex_align_cross: end
-                pad_column: 5px
+                pad_column: 6px
                 pad_row: 0px
             widgets:
               - label:
@@ -386,10 +384,10 @@ lvgl:
             border_width: 0
             pad_all: 0px
             align: bottom_left
-            x: 15
-            y: -115
-            width: 240
-            height: 100
+            x: 20
+            y: -145
+            width: 300
+            height: 125
             bg_color: Black
             layout:
                 type: FLEX
@@ -415,9 +413,9 @@ lvgl:
             pad_all: 0px
             align: bottom_mid
             x: 0
-            y: -25
-            width: 240
-            height: 100
+            y: -30
+            width: 300
+            height: 125
             bg_color: Black
             layout:
                 type: FLEX
@@ -442,9 +440,9 @@ lvgl:
             pad_all: 0px
             align: bottom_mid
             x: 0
-            y: -115
-            width: 240
-            height: 100
+            y: -145
+            width: 300
+            height: 125
             bg_color: Black
             layout:
                 type: FLEX
@@ -469,17 +467,17 @@ lvgl:
             border_width: 0
             pad_all: 0px
             align: bottom_right
-            x: -15
-            y: -25
-            width: 240
-            height: 100
+            x: -20
+            y: -30
+            width: 300
+            height: 125
             bg_color: Black
             layout:
                 type: FLEX
                 flex_flow: ROW_WRAP
                 flex_align_main: end
                 flex_align_cross: end
-                pad_column: 5px
+                pad_column: 6px
                 pad_row: 0px
             widgets:
               - label:
@@ -496,10 +494,10 @@ lvgl:
             border_width: 0
             pad_all: 0px
             align: bottom_right
-            x: -15
-            y: -115
-            width: 240
-            height: 100
+            x: -20
+            y: -145
+            width: 300
+            height: 125
             bg_color: Black
             layout:
                 type: FLEX
