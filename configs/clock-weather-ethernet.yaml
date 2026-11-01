@@ -282,21 +282,21 @@ font:
       family: IBM+Plex+Mono
       weight: 700
     id: clock_font
-    size: 260
+    size: 325
     bpp: 4
   - file:
       type: gfonts
       family: IBM+Plex+Mono
       weight: 700
     id: info_font
-    size: 85
+    size: 105
     bpp: 4
   - file:
       type: gfonts
       family: IBM+Plex+Mono
       weight: 700
     id: small_info_font
-    size: 70
+    size: 85
     bpp: 4
 
 # Actual weather clock layout
