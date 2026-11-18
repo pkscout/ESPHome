@@ -62,6 +62,8 @@ display:
   - platform: mipi_rgb
     model: ESP32-S3-TOUCH-LCD-7-800X480
     id: device_display
+    # For older boards, this overrides the default and stops ESPHome from claiming the CH422G pin
+    enable_pin: null 
 
 wifi:
   ssid: !secret wifi_ssid
