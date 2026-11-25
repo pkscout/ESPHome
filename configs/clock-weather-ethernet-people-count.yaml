@@ -4,7 +4,7 @@
 
 substitutions:
   name: the
-  room: default
+  room: none
   dname: ${name}-wclk
   uname: ${name}_wclk
   tempscale: "°F"
@@ -301,30 +301,33 @@ sensor:
     entity_id: sensor.${room}_count
     id: ha_${room}_count
     on_value:
-      - lvgl.obj.update:
-          id: seg1
-          bg_color: !lambda 'return (x >= 1) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);'
-      - lvgl.obj.update:
-          id: seg2
-          bg_color: !lambda 'return (x >= 2) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);'
-      - lvgl.obj.update:
-          id: seg3
-          bg_color: !lambda 'return (x >= 3) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);'
-      - lvgl.obj.update:
-          id: seg4
-          bg_color: !lambda 'return (x >= 4) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);'
-      - lvgl.obj.update:
-          id: seg5
-          bg_color: !lambda 'return (x >= 5) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);'
-      - lvgl.obj.update:
-          id: seg6
-          bg_color: !lambda 'return (x >= 6) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);'
-      - lvgl.obj.update:
-          id: seg7
-          bg_color: !lambda 'return (x >= 7) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);'
-      - lvgl.obj.update:
-          id: seg8
-          bg_color: !lambda 'return (x >= 8) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);'
+      - if:
+          # if the room is passed in, show the count segments at the bottom of the display
+          condition:
+            lambda: 'return !id(ha_${room}_count).has_state() || std::isnan(id(ha_${room}_count).state);'
+          then:
+            - lvgl.obj.update: { id: seg1, hidden: true }
+            - lvgl.obj.update: { id: seg2, hidden: true }
+            - lvgl.obj.update: { id: seg3, hidden: true }
+            - lvgl.obj.update: { id: seg4, hidden: true }
+            - lvgl.obj.update: { id: seg5, hidden: true }
+            - lvgl.obj.update: { id: seg6, hidden: true }
+            - lvgl.obj.update: { id: seg7, hidden: true }
+            - lvgl.obj.update: { id: seg8, hidden: true }
+            - lvgl.obj.update: { id: button_left, clickable: false }
+            - lvgl.obj.update: { id: button_right, clickable: false }
+          else:
+            - lvgl.obj.update: { id: seg1, hidden: false, bg_color: !lambda 'return (x >= 1) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);' }
+            - lvgl.obj.update: { id: seg2, hidden: false, bg_color: !lambda 'return (x >= 2) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);' }
+            - lvgl.obj.update: { id: seg3, hidden: false, bg_color: !lambda 'return (x >= 3) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);' }
+            - lvgl.obj.update: { id: seg4, hidden: false, bg_color: !lambda 'return (x >= 4) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);' }
+            - lvgl.obj.update: { id: seg5, hidden: false, bg_color: !lambda 'return (x >= 5) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);' }
+            - lvgl.obj.update: { id: seg6, hidden: false, bg_color: !lambda 'return (x >= 6) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);' }
+            - lvgl.obj.update: { id: seg7, hidden: false, bg_color: !lambda 'return (x >= 7) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);' }
+            - lvgl.obj.update: { id: seg8, hidden: false, bg_color: !lambda 'return (x >= 8) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);' }
+            - lvgl.obj.update: { id: button_left, clickable: true }
+            - lvgl.obj.update: { id: button_left, clickable: true }
+
 font:
   - file:
       type: gfonts
@@ -584,14 +587,15 @@ lvgl:
                 pad_column: 10px
                 pad_row: 0px
             widgets:
-              - obj: { id: seg2, width: 115, height: 5, border_width: 0, bg_color: 0x333333 }
-              - obj: { id: seg3, width: 115, height: 5, border_width: 0, bg_color: 0x333333 }
-              - obj: { id: seg4, width: 115, height: 5, border_width: 0, bg_color: 0x333333 }
-              - obj: { id: seg5, width: 115, height: 5, border_width: 0, bg_color: 0x333333 }
-              - obj: { id: seg6, width: 115, height: 5, border_width: 0, bg_color: 0x333333 }
-              - obj: { id: seg7, width: 115, height: 5, border_width: 0, bg_color: 0x333333 }
+              - obj: { id: seg2, width: 115, height: 5, border_width: 0, bg_color: 0x333333, hidden: true }
+              - obj: { id: seg3, width: 115, height: 5, border_width: 0, bg_color: 0x333333, hidden: true }
+              - obj: { id: seg4, width: 115, height: 5, border_width: 0, bg_color: 0x333333, hidden: true }
+              - obj: { id: seg5, width: 115, height: 5, border_width: 0, bg_color: 0x333333, hidden: true }
+              - obj: { id: seg6, width: 115, height: 5, border_width: 0, bg_color: 0x333333, hidden: true }
+              - obj: { id: seg7, width: 115, height: 5, border_width: 0, bg_color: 0x333333, hidden: true }
         # Left Button Overlay (Segment 1)
         - obj:
+            id: button_left
             width: 230
             height: 230
             align: bottom_left
@@ -600,7 +604,7 @@ lvgl:
             bg_color: Black
             bg_opa: 0
             border_width: 0
-            clickable: true
+            clickable: false
             on_click:
               - logger.log: "Left button pressed!"
               - homeassistant.service:
@@ -616,8 +620,10 @@ lvgl:
                   border_width: 0
                   bg_color: 0x333333
                   clickable: false
+                  hidden: true
         # Right Button Overlay (Segment 8)
         - obj:
+            id: button_right
             width: 230
             height: 230
             align: bottom_right
@@ -626,7 +632,7 @@ lvgl:
             bg_color: Black
             bg_opa: 0
             border_width: 0
-            clickable: true
+            clickable: false
             on_click:
               - logger.log: "Right button pressed!"
               - homeassistant.service:
@@ -642,3 +648,4 @@ lvgl:
                   border_width: 0
                   bg_color: 0x333333
                   clickable: false
+                  hidden: true
