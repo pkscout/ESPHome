@@ -391,6 +391,7 @@ lvgl:
     - id: main_page
       width: 100%
       bg_color: Black
+      scrollbar_mode: "OFF"
       widgets:
         # Clock
         - label:
@@ -408,7 +409,7 @@ lvgl:
             pad_all: 0px
             align: bottom_left
             x: 20
-            y: -50
+            y: -30
             width: 300
             height: 125
             bg_color: Black
@@ -435,7 +436,7 @@ lvgl:
             pad_all: 0px
             align: bottom_left
             x: 20
-            y: -165
+            y: -145
             width: 300
             height: 125
             bg_color: Black
@@ -462,7 +463,7 @@ lvgl:
             pad_all: 0px
             align: bottom_mid
             x: 0
-            y: -50
+            y: -30
             width: 300
             height: 125
             bg_color: Black
@@ -489,7 +490,7 @@ lvgl:
             pad_all: 0px
             align: bottom_mid
             x: 0
-            y: -165
+            y: -145
             width: 300
             height: 125
             bg_color: Black
@@ -517,7 +518,7 @@ lvgl:
             pad_all: 0px
             align: bottom_right
             x: -20
-            y: -50
+            y: -30
             width: 300
             height: 125
             bg_color: Black
@@ -544,7 +545,7 @@ lvgl:
             pad_all: 0px
             align: bottom_right
             x: -20
-            y: -165
+            y: -145
             width: 300
             height: 125
             bg_color: Black
@@ -571,9 +572,9 @@ lvgl:
             pad_all: 0px
             align: bottom_mid
             x: 0
-            y: -10
+            y: 0
             width: 720
-            height: 30
+            height: 10
             bg_color: Black
             layout:
                 type: FLEX
@@ -583,19 +584,19 @@ lvgl:
                 pad_column: 10px
                 pad_row: 0px
             widgets:
-              - obj: { id: seg2, width: 115, height: 10, border_width: 0, bg_color: 0x333333 }
-              - obj: { id: seg3, width: 115, height: 10, border_width: 0, bg_color: 0x333333 }
-              - obj: { id: seg4, width: 115, height: 10, border_width: 0, bg_color: 0x333333 }
-              - obj: { id: seg5, width: 115, height: 10, border_width: 0, bg_color: 0x333333 }
-              - obj: { id: seg6, width: 115, height: 10, border_width: 0, bg_color: 0x333333 }
-              - obj: { id: seg7, width: 115, height: 10, border_width: 0, bg_color: 0x333333 }
+              - obj: { id: seg2, width: 115, height: 5, border_width: 0, bg_color: 0x333333 }
+              - obj: { id: seg3, width: 115, height: 5, border_width: 0, bg_color: 0x333333 }
+              - obj: { id: seg4, width: 115, height: 5, border_width: 0, bg_color: 0x333333 }
+              - obj: { id: seg5, width: 115, height: 5, border_width: 0, bg_color: 0x333333 }
+              - obj: { id: seg6, width: 115, height: 5, border_width: 0, bg_color: 0x333333 }
+              - obj: { id: seg7, width: 115, height: 5, border_width: 0, bg_color: 0x333333 }
         # Left Button Overlay (Segment 1)
         - obj:
             width: 230
             height: 230
             align: bottom_left
             x: 7
-            y: -10
+            y: 15
             bg_color: Black
             bg_opa: 0
             border_width: 0
@@ -610,7 +611,7 @@ lvgl:
               - obj:
                   id: seg1
                   width: 115
-                  height: 10
+                  height: 5
                   align: bottom_left
                   border_width: 0
                   bg_color: 0x333333
@@ -621,7 +622,7 @@ lvgl:
             height: 230
             align: bottom_right
             x: -7
-            y: -10
+            y: 15
             bg_color: Black
             bg_opa: 0
             border_width: 0
@@ -636,7 +637,7 @@ lvgl:
               - obj:
                   id: seg8
                   width: 115
-                  height: 10
+                  height: 5
                   align: bottom_right
                   border_width: 0
                   bg_color: 0x333333
