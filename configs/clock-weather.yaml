@@ -510,7 +510,7 @@ lvgl:
               - homeassistant.service:
                   service: button.press
                   data:
-                    entity_id: button.${room}_adjust_1_2
+                    entity_id: button.${room}_adjust_1
             widgets:
               - obj:
                   id: seg1
@@ -538,7 +538,7 @@ lvgl:
               - homeassistant.service:
                   service: button.press
                   data:
-                    entity_id: button.${room}_adjust_1
+                    entity_id: button.${room}_adjust_1_2
             widgets:
               - obj:
                   id: seg8
