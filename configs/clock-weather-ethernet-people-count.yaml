@@ -4,6 +4,7 @@
 
 substitutions:
   name: the
+  room: default
   dname: ${name}-wclk
   uname: ${name}_wclk
   tempscale: "°F"
@@ -297,8 +298,8 @@ sensor:
             format: "%d"
             args: ['(int)round(x)']
   - platform: homeassistant
-    entity_id: sensor.great_room_count
-    id: ha_great_room_count
+    entity_id: sensor.${room}_count
+    id: ha_${room}_count
     on_value:
       - lvgl.obj.update:
           id: seg1
@@ -604,7 +605,7 @@ lvgl:
               - homeassistant.service:
                   service: button.press
                   data:
-                    entity_id: button.great_room_adjust_1_2
+                    entity_id: button.${room}_adjust_1_2
             widgets:
               - obj:
                   id: seg1
@@ -630,7 +631,7 @@ lvgl:
               - homeassistant.service:
                   service: button.press
                   data:
-                    entity_id: button.great_room_adjust_1
+                    entity_id: button.${room}_adjust_1
             widgets:
               - obj:
                   id: seg8
