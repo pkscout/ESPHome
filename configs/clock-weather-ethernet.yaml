@@ -4,6 +4,7 @@
 
 substitutions:
   name: the
+  room: none
   dname: ${name}-wclk
   uname: ${name}_wclk
   tempscale: "°F"
@@ -297,6 +298,36 @@ sensor:
           text:
             format: "%d"
             args: ['(int)round(x)']
+  - platform: homeassistant
+    entity_id: sensor.${room}_count
+    id: ha_${room}_count
+    on_value:
+      - if:
+          # if the room is passed in, show the count segments at the bottom of the display
+          condition:
+            lambda: 'return !id(ha_${room}_count).has_state() || std::isnan(id(ha_${room}_count).state);'
+          then:
+            - lvgl.obj.update: { id: seg1, hidden: true }
+            - lvgl.obj.update: { id: seg2, hidden: true }
+            - lvgl.obj.update: { id: seg3, hidden: true }
+            - lvgl.obj.update: { id: seg4, hidden: true }
+            - lvgl.obj.update: { id: seg5, hidden: true }
+            - lvgl.obj.update: { id: seg6, hidden: true }
+            - lvgl.obj.update: { id: seg7, hidden: true }
+            - lvgl.obj.update: { id: seg8, hidden: true }
+            - lvgl.obj.update: { id: button_left, clickable: false }
+            - lvgl.obj.update: { id: button_right, clickable: false }
+          else:
+            - lvgl.obj.update: { id: seg1, hidden: false, bg_color: !lambda 'return (x >= 1) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);' }
+            - lvgl.obj.update: { id: seg2, hidden: false, bg_color: !lambda 'return (x >= 2) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);' }
+            - lvgl.obj.update: { id: seg3, hidden: false, bg_color: !lambda 'return (x >= 3) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);' }
+            - lvgl.obj.update: { id: seg4, hidden: false, bg_color: !lambda 'return (x >= 4) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);' }
+            - lvgl.obj.update: { id: seg5, hidden: false, bg_color: !lambda 'return (x >= 5) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);' }
+            - lvgl.obj.update: { id: seg6, hidden: false, bg_color: !lambda 'return (x >= 6) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);' }
+            - lvgl.obj.update: { id: seg7, hidden: false, bg_color: !lambda 'return (x >= 7) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);' }
+            - lvgl.obj.update: { id: seg8, hidden: false, bg_color: !lambda 'return (x >= 8) ? lv_color_hex(0xFFFFFF) : lv_color_hex(0x333333);' }
+            - lvgl.obj.update: { id: button_left, clickable: true }
+            - lvgl.obj.update: { id: button_left, clickable: true }
 
 # Fonts and styles for display
 font:
@@ -324,6 +355,7 @@ font:
 
 # Actual weather clock layout
 lvgl:
+  touchscreens: my_touchscreen
   style_definitions:
     - id: clock_style
       text_font: clock_font
@@ -364,6 +396,7 @@ lvgl:
     - id: main_page
       width: 100%
       bg_color: Black
+      scrollbar_mode: "OFF"
       widgets:
         # Clock
         - label:
@@ -539,3 +572,83 @@ lvgl:
                   styles: small_indoor_style
                   text: ${tempscale}
                   text_align: left
+        - obj:
+            scrollbar_mode: "OFF"
+            border_width: 0
+            pad_all: 0px
+            align: bottom_mid
+            x: 0
+            y: 0
+            width: 720
+            height: 10
+            bg_color: Black
+            layout:
+                type: FLEX
+                flex_flow: ROW
+                flex_align_main: center
+                flex_align_cross: center
+                pad_column: 10px
+                pad_row: 0px
+            widgets:
+              - obj: { id: seg2, width: 115, height: 5, border_width: 0, bg_color: 0x333333, hidden: true }
+              - obj: { id: seg3, width: 115, height: 5, border_width: 0, bg_color: 0x333333, hidden: true }
+              - obj: { id: seg4, width: 115, height: 5, border_width: 0, bg_color: 0x333333, hidden: true }
+              - obj: { id: seg5, width: 115, height: 5, border_width: 0, bg_color: 0x333333, hidden: true }
+              - obj: { id: seg6, width: 115, height: 5, border_width: 0, bg_color: 0x333333, hidden: true }
+              - obj: { id: seg7, width: 115, height: 5, border_width: 0, bg_color: 0x333333, hidden: true }
+        # Left Button Overlay (Segment 1)
+        - obj:
+            id: button_left
+            width: 230
+            height: 230
+            align: bottom_left
+            x: 7
+            y: 15
+            bg_color: Black
+            bg_opa: 0
+            border_width: 0
+            clickable: false
+            on_click:
+              - logger.log: "Left button pressed!"
+              - homeassistant.service:
+                  service: button.press
+                  data:
+                    entity_id: button.${room}_adjust_1_2
+            widgets:
+              - obj:
+                  id: seg1
+                  width: 115
+                  height: 5
+                  align: bottom_left
+                  border_width: 0
+                  bg_color: 0x333333
+                  clickable: false
+                  hidden: true
+        # Right Button Overlay (Segment 8)
+        - obj:
+            id: button_right
+            width: 230
+            height: 230
+            align: bottom_right
+            x: -7
+            y: 15
+            bg_color: Black
+            bg_opa: 0
+            border_width: 0
+            clickable: false
+            on_click:
+              - logger.log: "Right button pressed!"
+              - homeassistant.service:
+                  service: button.press
+                  data:
+                    entity_id: button.${room}_adjust_1
+            widgets:
+              - obj:
+                  id: seg8
+                  width: 115
+                  height: 5
+                  align: bottom_right
+                  border_width: 0
+                  bg_color: 0x333333
+                  clickable: false
+                  hidden: true
