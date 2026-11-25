@@ -572,6 +572,7 @@ lvgl:
                   styles: small_indoor_style
                   text: ${tempscale}
                   text_align: left
+        # People Count segments
         - obj:
             scrollbar_mode: "OFF"
             border_width: 0
